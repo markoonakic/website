@@ -1,0 +1,14 @@
+{{ $page := . }}
+
+{{ if $page.IsHome }}
+<script src="/js/belgrade-clock.js"></script>
+{{ end }}
+
+{{ if eq $page.Layout "search" }}
+<script src="/js/search.js"></script>
+{{ end }}
+
+{{ if and $page.IsPage (ne $page.TableOfContents `<nav id="TableOfContents"></nav>`) }}
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+{{ end }}

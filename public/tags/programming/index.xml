@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xml:lang="en-us" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+            <language>en-us</language>
+            <lastBuildDate>Wed, 05 Feb 2025 00:00:00 UTC</lastBuildDate>
+            <link>http://localhost:1313/tags/programming/</link><image>
+                <url>http://localhost:1313//favicon.svg</url>
+                <title>Marko Nakić</title>
+                <link>http://localhost:1313/tags/programming/</link>
+            </image>
+            <atom:link href="http://localhost:1313/tags/programming/index.xml" hreflang="en-us" rel="self" type="application/rss+xml"/><atom:link href="http://localhost:1313/tags/programming/" hreflang="en-us" rel="alternate" type="text/html"/><atom:link href="http://localhost:1313/tags/programming/index.xml" hreflang="en-us" rel="alternate" type="application/rss&#43;xml"/>
+            <title>Programming · Tags · Marko Nakić</title>
+                <item>
+                        <description><![CDATA[<p>This post explores advanced JavaScript patterns and techniques that can help you write more efficient and maintainable code.</p><h2 id=design-patterns>Design Patterns</h2><p>JavaScript has many useful design patterns that can solve common problems in elegant ways.</p><h2 id=common-patterns>Common Patterns</h2><ul><li>Module Pattern</li><li>Observer Pattern</li><li>Factory Pattern</li></ul><h2 id=best-practices>Best Practices</h2><p>Always consider readability and maintainability when choosing patterns.</p>]]></description>
+                        <guid isPermaLink="false">tag:localhost:1313,2025-01-20:/posts/test-post-2/</guid>
+                        <link>http://localhost:1313/posts/test-post-2/</link><atom:link href="http://localhost:1313/posts/test-post-2/" hreflang="en-us" rel="alternate" type="text/html"/>
+                        <pubDate>Mon, 20 Jan 2025 00:00:00 UTC</pubDate>
+                        <title>Advanced JavaScript Patterns</title>
+                </item>
+    </channel>
+</rss>
+

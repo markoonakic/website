@@ -1,0 +1,9 @@
+{{ define "main" }}
+{{ partial "page.html" . }}
+{{ $pages := partial "get-posts.html" . }}
+<div id="page-posts">
+    {{ range $pages }}
+        {{ partial "list-item-blog.html" (dict "item" . "list" $) }}
+    {{ end }}
+</div>
+{{ end }}

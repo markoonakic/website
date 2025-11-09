@@ -1,0 +1,673 @@
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html    lang="en-us" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta content="Marko Nakić" name="apple-mobile-web-app-title">
+
+    
+
+    
+
+    
+        <meta content="Advanced, Javascript, Optimization, Performance" name="keywords">
+    
+
+    <meta content="#df4655" name="theme-color">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    
+        <title>Performance Optimization Tips · Posts · Marko Nakić</title>
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/test-post-6/">
+  <meta property="og:site_name" content="Marko Nakić">
+  <meta property="og:title" content="Performance Optimization Tips">
+  <meta property="og:description" content="Tips and tricks for optimizing your website’s performance and improving user experience.
+test1 Image Optimization Test Optimize images by using modern formats like WebP and proper compression.
+Code Splitting Split your JavaScript bundles to load only what’s needed for each page.
+Caching Strategies Implement proper caching to reduce server load and improve load times.
+Monitoring Use tools like Lighthouse to monitor and improve your site’s performance.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-02-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-02-05T00:00:00+00:00">
+    <meta property="article:tag" content="Performance">
+    <meta property="article:tag" content="Javascript">
+    <meta property="article:tag" content="Advanced">
+    <meta property="article:tag" content="Optimization">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Performance Optimization Tips">
+  <meta name="twitter:description" content="Tips and tricks for optimizing your website’s performance and improving user experience.
+test1 Image Optimization Test Optimize images by using modern formats like WebP and proper compression.
+Code Splitting Split your JavaScript bundles to load only what’s needed for each page.
+Caching Strategies Implement proper caching to reduce server load and improve load times.
+Monitoring Use tools like Lighthouse to monitor and improve your site’s performance.">
+
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    
+
+    <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3" id="site" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+    <header id="site-header">
+        
+            <div class="display-1 fw-bold  text-center" id="site-title">
+                <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+            </div>
+        
+
+        
+
+        
+            
+                <nav aria-label="" class="row-tall" id="site-menu">
+                    <ul class="align-items-center justify-content-center nav ">
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/about/"    >About</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/index/"    >Index</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/tags/"    >Tags</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/search/"    ><i class="bi bi-search"></i></a>
+
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            
+        
+    </header>
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+<article class=" align-items-center d-flex flex-column  kind-page status-published" id="page">
+    
+
+
+
+
+
+
+    
+        
+        
+        
+        
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <header class="mw-100 text-center" id="page-header">
+
+        
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
+                
+                    <h1 class="fw-bold mb-0" id="page-title" >Performance Optimization Tips</h1>
+                
+                
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+                    <p class=" row-short   text-secondary " id="page-keywords">
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/advanced/" >Advanced</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/javascript/" >Javascript</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/optimization/" >Optimization</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/performance/" >Performance</a>
+                                
+                            
+                        
+                    </p>
+                
+
+                
+
+                
+
+                
+                    <p class="row-short text-secondary" id="page-date">
+                        <time datetime="2025-02-05" >February 5, 2025</time>
+                        <span class="meta-separator">·</span>
+                        <span>Marko Nakić</span>
+                    </p>
+                
+            </div>
+        
+
+        
+
+        
+            <div class="align-items-center d-flex flex-column row-tall text-center" id="page-toc">
+                <details class="toc-collapsible">
+                    <summary class="toc-summary">Table of Contents</summary>
+                    <div class="toc-anim-wrapper">
+                        <div class="toc-content">
+                            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#image-optimization">Image Optimization</a>
+      <ul>
+        <li><a href="#test">Test</a></li>
+      </ul>
+    </li>
+    <li><a href="#code-splitting">Code Splitting</a></li>
+    <li><a href="#caching-strategies">Caching Strategies</a></li>
+    <li><a href="#monitoring">Monitoring</a></li>
+  </ul>
+</nav>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        
+
+    </header>
+
+
+
+    
+        <main class="mw-100" id="page-content" >
+            
+                <p>Tips and tricks for optimizing your website&rsquo;s performance and improving user experience.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="test1">test1</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="image-optimization">Image Optimization</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="test">Test</h3>
+<p>Optimize images by using modern formats like WebP and proper compression.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="code-splitting">Code Splitting</h2>
+<p>Split your JavaScript bundles to load only what&rsquo;s needed for each page.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="caching-strategies">Caching Strategies</h2>
+<p>Implement proper caching to reduce server load and improve load times.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="monitoring">Monitoring</h2>
+<p>Use tools like Lighthouse to monitor and improve your site&rsquo;s performance.</p>
+
+            
+        </main>
+    
+
+    
+
+
+
+    
+    
+
+
+
+</article>
+
+                
+
+
+
+
+<footer id="site-footer">
+    
+    
+    
+</footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"Tips and tricks for optimizing your website’s performance and improving user experience.\ntest1 Image Optimization Test Optimize images by using modern formats like WebP and proper compression.\nCode Splitting Split your JavaScript bundles to load only what’s needed for each page.\nCaching Strategies Implement proper caching to reduce server load and improve load times.\nMonitoring Use tools like Lighthouse to monitor and improve your site’s performance.","articleSection":"Posts","dateCreated":"2025-02-05T00:00:00Z","dateModified":"2025-02-05T00:00:00Z","headline":"Performance Optimization Tips","inLanguage":"en-us","keywords":"Advanced, Javascript, Optimization, Performance","name":"Performance Optimization Tips","timeRequired":"PT1M","url":"http://localhost:1313/posts/test-post-6/","wordCount":66}</script>
+    
+
+
+    <noscript>JavaScript is required</noscript>
+
+    
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+
+
+</body>
+</html>

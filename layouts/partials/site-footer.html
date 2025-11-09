@@ -1,0 +1,23 @@
+{{ $page := . }}
+{{ $copyright := site.Copyright | markdownify | and ($page.Param "params.disable_copyright" | not) }}
+{{ $license := $page.Param "params.license" | markdownify | and ($page.Param "params.disable_license" | not) }}
+{{ $microdata := $page.Params.microdata }}
+{{ $showSocial := $page.IsHome }}
+<footer id="site-footer">
+    {{ if $showSocial }}
+        <div class="site-footer-social">
+            <a class="social-icon-link" href="https://www.linkedin.com/in/marko-nakic/" aria-label="LinkedIn" target="_blank" rel="noopener">
+                <i class="bi bi-linkedin" aria-hidden="true"></i>
+            </a>
+            <a class="social-icon-link" href="https://github.com/markoonakic" aria-label="GitHub" target="_blank" rel="noopener">
+                <i class="bi bi-github" aria-hidden="true"></i>
+            </a>
+        </div>
+    {{ end }}
+    {{ with $copyright }}
+        <p class="row-short text-center text-secondary" id="site-copyright" {{ if $microdata }} itemprop="copyrightNotice" {{ end }}>{{ . }}</p>
+    {{ end }}
+    {{ with $license }}
+        <p class="row-short text-center text-secondary" id="site-license">{{ . }}</p>
+    {{ end }}
+</footer>

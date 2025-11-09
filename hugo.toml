@@ -1,7 +1,36 @@
-baseURL = 'markonakic.xyz'
+baseURL = 'https://markonakic.xyz'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Marko Nakić'
 
-[module]
-[[module.imports]]
-path = "github.com/willfaught/paige"
+[markup.goldmark.renderer]
+unsafe = true
+
+[outputs]
+home = ["HTML", "RSS"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
+
+[menus]
+[[menus.main]]
+name = "About"
+pageRef = "/about"
+weight = 10
+[[menus.main]]
+name = "Index"
+pageRef = "/index"
+weight = 20
+[[menus.main]]
+name = "Tags"
+pageRef = "/tags"
+weight = 30
+[[menus.main]]
+name = '<i class="bi bi-search"></i>'
+pageRef = "/search"
+weight = 40
+
+[params]
+color_scheme = "dark"
+menu_style = "tabs"
+keyword_style = "pills"
+external_link_new_tab = true

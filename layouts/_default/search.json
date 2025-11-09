@@ -1,0 +1,12 @@
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+{{- $posts = sort $posts "Date" "desc" -}}
+[
+{{- range $i, $post := $posts -}}
+  {{- if $i }},{{- end }}
+  {
+    "title": {{ $post.Title | jsonify }},
+    "url": {{ $post.RelPermalink | jsonify }}
+  }
+{{- end -}}
+]
+

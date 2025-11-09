@@ -1,0 +1,22 @@
+{{ $context := . }}
+{{ $pages := slice }}
+{{ range $context.RegularPages }}
+    {{ if not .Draft }}
+        {{ $pages = $pages | append . }}
+    {{ end }}
+{{ end }}
+{{ if eq (len $pages) 0 }}
+    {{ range $context.Pages }}
+        {{ if not .Draft }}
+            {{ $pages = $pages | append . }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ if eq (len $pages) 0 }}
+    {{ range where site.RegularPages "Section" "posts" }}
+        {{ if not .Draft }}
+            {{ $pages = $pages | append . }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ return (sort $pages "Date" "desc") }}

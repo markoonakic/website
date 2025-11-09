@@ -1,0 +1,98 @@
+{{ $params := . }}
+{{ $item := $params.item }}
+{{ $list := $params.list }}
+
+{{ $date := $item.PublishDate | and ($list.Param "params.subpages.disable_date" | not) }}
+{{ $format := $list.Param "params.date_format" | default ":date_long" }}
+{{ $link := $item.RelPermalink }}
+{{ $tags := $item.GetTerms "tags" }}
+{{ $title := $item.LinkTitle | markdownify | plainify | htmlUnescape }}
+{{ $words := $item.WordCount | and ($list.Param "params.subpages.disable_word_count" | not) }}
+{{ $time := $item.ReadingTime | and ($list.Param "params.subpages.disable_reading_time" | not) }}
+
+{{ $scratch := newScratch }}
+{{ $scratch.Set "summary" "" }}
+
+{{ $candidates := slice
+    ($item.Param "preview_summary")
+    ($item.Params.summary)
+    ($item.Params.list_preview)
+    ($item.Params.preview)
+    ($item.Params.preview_text)
+    ($item.Param "list_preview")
+    ($item.Param "preview")
+    ($item.Param "preview_text")
+}}
+
+{{ range $candidates }}
+    {{ if and (not ($scratch.Get "summary")) . }}
+        {{ $clean := . | markdownify | plainify | htmlUnescape | strings.TrimSpace }}
+        {{ if $clean }}
+            {{ $scratch.Set "summary" $clean }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ if not ($scratch.Get "summary") }}
+    {{ with $item.Summary }}
+        {{ $clean := . | markdownify | plainify | htmlUnescape | strings.TrimSpace }}
+        {{ if $clean }}
+            {{ $scratch.Set "summary" $clean }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ if not ($scratch.Get "summary") }}
+    {{ $content := $item.Content | plainify }}
+    {{ range split $content "\n" }}
+        {{ $line := . | strings.TrimSpace }}
+        {{ if and $line (not ($scratch.Get "summary")) }}
+            {{ $scratch.Set "summary" $line }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ if not ($scratch.Get "summary") }}
+    {{ $fallback := ($item.Content | plainify | truncate 160) | strings.TrimSpace }}
+    {{ $scratch.Set "summary" $fallback }}
+{{ end }}
+
+{{ $summary := $scratch.Get "summary" }}
+
+<div class="blog-preview mb-4 pb-4 text-center">
+    <h3 class="h5 mb-2 text-center">
+        <a href="{{ $link }}" class="text-decoration-none">{{ $title }}</a>
+    </h3>
+    {{ if $summary }}
+        <p class="text-secondary mb-2 text-center blog-summary">{{ $summary }}</p>
+    {{ end }}
+
+    {{ if $tags }}
+        <div class="blog-tags mb-1 text-center">
+            {{ range $i, $tag := $tags }}
+                {{ if gt $i 0 }}<span class="blog-separator">·</span>{{ end }}
+                <a href="{{ $tag.RelPermalink }}" class="tag-link text-decoration-none">{{ $tag.LinkTitle }}</a>
+            {{ end }}
+        </div>
+    {{ else }}
+        <div class="blog-tags mb-1" aria-hidden="true"></div>
+    {{ end }}
+
+    <div class="blog-meta text-secondary text-center">
+        {{ if $date }}
+            <span>
+                <time datetime="{{ $date.Format `2006-01-02` }}">{{ time.Format $format $date }}</time>
+            </span>
+            <span class="blog-separator">·</span>
+        {{ end }}
+        <span>Marko Nakić</span>
+        {{ if $time }}
+            <span class="blog-separator">·</span>
+            <span>{{ $time }} minute{{ if ne $time 1 }}s{{ end }}</span>
+        {{ end }}
+        {{ if $words }}
+            <span class="blog-separator">·</span>
+            <span>{{ $words }} words</span>
+        {{ end }}
+    </div>
+</div>

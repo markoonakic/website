@@ -1,0 +1,66 @@
+{{ $page := . }}
+
+{{ $class := slice }}
+{{ $content := $page.Content }}
+{{ $draft := $page.Draft }}
+{{ $expired := and $page.ExpiryDate (lt $page.ExpiryDate now) }}
+{{ $future := and $page.PublishDate (gt $page.PublishDate now) }}
+{{ $microdata := $page.Params.microdata }}
+{{ $min := $page.Param `params.full_width` | not }}
+{{ $modified := and $page.PublishDate $page.Lastmod (lt $page.PublishDate $page.Lastmod) }}
+
+{{ if $draft }}
+    {{ $class = $class | append "status-draft" "status-unpublished" }}
+{{ end }}
+
+{{ if $expired }}
+    {{ $class = $class | append "status-expired" "status-unpublished" }}
+{{ end }}
+
+{{ if $future }}
+    {{ $class = $class | append "status-future" "status-unpublished" }}
+{{ end }}
+
+{{ if $modified }}
+    {{ $class = $class | append "status-modified" }}
+{{ end }}
+
+{{ if not (or $draft $expired $future) }}
+    {{ $class = $class | append "status-published" }}
+{{ end }}
+
+{{ with $page.Kind }}
+    {{ if eq . "home" }}
+        {{ $class = $class | append "kind-home" }}
+    {{ else if eq . "section" }}
+        {{ $class = $class | append "kind-section" }}
+    {{ else if eq . "page" }}
+        {{ $class = $class | append "kind-page" }}
+    {{ else if eq . "taxonomy" }}
+        {{ $class = $class | append "kind-taxonomy" }}
+    {{ else if eq . "term" }}
+        {{ $class = $class | append "kind-term" }}
+    {{ end }}
+{{ end }}
+
+{{ $class = delimit ($class | uniq | sort) " " }}
+
+{{ $isBlogLayout := eq $page.Layout "blog" }}
+{{ $isTaxonomy := eq $page.Kind "taxonomy" }}
+{{ $isTerm := eq $page.Kind "term" }}
+{{ $hasContent := and $content (ne (trim $content "") "") }}
+{{ $skipMain := or (and $isBlogLayout (not $hasContent)) (and $isTaxonomy (not $hasContent)) (and $isTerm (not $hasContent)) }}
+
+<article class="{{ if $min }} align-items-center d-flex flex-column {{ end }} {{ $class }}" id="page">
+    {{ partial "page-header.html" $page }}
+
+    {{ if not $skipMain }}
+        <main class="mw-100" id="page-content" {{ if $microdata }} itemprop="articleBody" {{ end }}>
+            {{ with $content }}
+                {{ . | safeHTML }}
+            {{ end }}
+        </main>
+    {{ end }}
+
+    {{ partial "page-footer.html" $page }}
+</article>

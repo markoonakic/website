@@ -1,0 +1,48 @@
+{{ define "main" }}
+{{ partial "page.html" . }}
+
+{{ $terms := .Data.Terms }}
+{{ if not $terms }}
+    {{ $terms = site.Taxonomies.tags }}
+{{ end }}
+
+{{ $allPublishedPosts := where (where site.RegularPages "Section" "posts") "Draft" false }}
+
+{{ $tagCounts := dict }}
+{{ range $allPublishedPosts }}
+    {{ if .Params.tags }}
+        {{ range .Params.tags }}
+            {{ $tagKey := lower (trim . " ") }}
+            {{ $currentCount := 0 }}
+            {{ if isset $tagCounts $tagKey }}
+                {{ $currentCount = index $tagCounts $tagKey }}
+            {{ end }}
+            {{ $tagCounts = merge $tagCounts (dict $tagKey (add $currentCount 1)) }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ $tagList := slice }}
+{{ range $termKey, $term := $terms }}
+    {{ $termKeyLower := lower $termKey }}
+    {{ $count := 0 }}
+    {{ if isset $tagCounts $termKeyLower }}
+        {{ $count = index $tagCounts $termKeyLower }}
+    {{ end }}
+    {{ if gt $count 0 }}
+        {{ $tagList = $tagList | append (dict "term" $term.Page "count" $count "title" $term.Page.LinkTitle) }}
+    {{ end }}
+{{ end }}
+
+{{ $tagList = sort $tagList "title" "asc" }}
+
+<div id="tags-list" class="text-center">
+    {{ range $tagList }}
+        <span class="tag-item">
+            <a href="{{ .term.RelPermalink }}" class="tag-link text-decoration-none">
+                {{ .term.LinkTitle }}
+            </a><span class="text-secondary">({{ .count }})</span>
+        </span>
+    {{ end }}
+</div>
+{{ end }}

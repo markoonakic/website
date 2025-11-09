@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xml:lang="en-us" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+            <language>en-us</language>
+            <lastBuildDate>Wed, 05 Feb 2025 00:00:00 UTC</lastBuildDate>
+            <link>http://localhost:1313/tags/optimization/</link><image>
+                <url>http://localhost:1313//favicon.svg</url>
+                <title>Marko Nakić</title>
+                <link>http://localhost:1313/tags/optimization/</link>
+            </image>
+            <atom:link href="http://localhost:1313/tags/optimization/index.xml" hreflang="en-us" rel="self" type="application/rss+xml"/><atom:link href="http://localhost:1313/tags/optimization/" hreflang="en-us" rel="alternate" type="text/html"/><atom:link href="http://localhost:1313/tags/optimization/index.xml" hreflang="en-us" rel="alternate" type="application/rss&#43;xml"/>
+            <title>Optimization · Tags · Marko Nakić</title>
+                <item>
+                        <description><![CDATA[<p>Tips and tricks for optimizing your website&rsquo;s performance and improving user experience.</p><h1 id=test1>test1</h1><h2 id=image-optimization>Image Optimization</h2><h3 id=test>Test</h3><p>Optimize images by using modern formats like WebP and proper compression.</p><h2 id=code-splitting>Code Splitting</h2><p>Split your JavaScript bundles to load only what&rsquo;s needed for each page.</p><h2 id=caching-strategies>Caching Strategies</h2><p>Implement proper caching to reduce server load and improve load times.</p><h2 id=monitoring>Monitoring</h2><p>Use tools like Lighthouse to monitor and improve your site&rsquo;s performance.</p>]]></description>
+                        <guid isPermaLink="false">tag:localhost:1313,2025-02-05:/posts/test-post-6/</guid>
+                        <link>http://localhost:1313/posts/test-post-6/</link><atom:link href="http://localhost:1313/posts/test-post-6/" hreflang="en-us" rel="alternate" type="text/html"/>
+                        <pubDate>Wed, 05 Feb 2025 00:00:00 UTC</pubDate>
+                        <title>Performance Optimization Tips</title>
+                </item>
+    </channel>
+</rss>
+

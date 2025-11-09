@@ -1,0 +1,27 @@
+{{ $page := . }}
+{{ $edit := $page.Param "params.edit_url" | and ($page.Param "params.disable_edit" | not) }}
+{{ $history := $page.Param "params.history_url" | and ($page.Param "params.disable_history" | not) }}
+{{ if $page.File }}
+    {{ if $edit }}
+        {{ $edit = printf $edit $page.File.Path }}
+    {{ end }}
+    {{ if $history }}
+        {{ $history = printf $history $page.File.Path }}
+    {{ end }}
+{{ end }}
+{{ if or $edit $history }}
+    <footer class="mw-100" id="page-footer">
+        <div id="page-file">
+            {{ with $edit }}
+                <div class="row-short text-center text-secondary" id="page-edit">
+                    <a class="link-secondary" href="{{ . }}">{{ i18n "edit" }}</a>
+                </div>
+            {{ end }}
+            {{ with $history }}
+                <div class="row-short text-center text-secondary" id="page-history">
+                    <a class="link-secondary" href="{{ . }}">{{ i18n "history" }}</a>
+                </div>
+            {{ end }}
+        </div>
+    </footer>
+{{ end }}
