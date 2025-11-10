@@ -1,0 +1,997 @@
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html    lang="en-us" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta content="Marko Nakić" name="apple-mobile-web-app-title">
+
+    
+
+    
+
+    
+        <meta content="Encryption, Linux, Remote Access" name="keywords">
+    
+
+    <meta content="#df4655" name="theme-color">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    
+        <title>Remote decryption using Dropbear SSH · Posts · Marko Nakić</title>
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/dropbear-shh/">
+  <meta property="og:site_name" content="Marko Nakić">
+  <meta property="og:title" content="Remote decryption using Dropbear SSH">
+  <meta property="og:description" content="My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-10T00:00:00+00:00">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Encryption">
+    <meta property="article:tag" content="Remote Access">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Remote decryption using Dropbear SSH">
+  <meta name="twitter:description" content="My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.">
+
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    
+
+    <link rel="stylesheet" href="/css/syntax.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3" id="site" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+    <header id="site-header">
+        
+            <div class="display-1 fw-bold  text-center" id="site-title">
+                <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+            </div>
+        
+
+        
+
+        
+            
+                <nav aria-label="" class="row-tall" id="site-menu">
+                    <ul class="align-items-center justify-content-center nav ">
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/about/"    >About</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/index/"    >Index</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/tags/"    >Tags</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/search/"    ><i class="bi bi-search"></i></a>
+
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            
+        
+    </header>
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+<article class=" align-items-center d-flex flex-column  kind-page status-published" id="page">
+    
+
+
+
+
+
+
+    
+        
+        
+        
+        
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <header class="mw-100 text-center" id="page-header">
+
+        
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
+                
+                    <h1 class="fw-bold mb-0" id="page-title" >Remote decryption using Dropbear SSH</h1>
+                
+                
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+                    <p class=" row-short   text-secondary " id="page-keywords">
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/encryption/" >Encryption</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/linux/" >Linux</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/remote-access/" >Remote Access</a>
+                                
+                            
+                        
+                    </p>
+                
+
+                
+
+                
+
+                
+                    <p class="row-short text-secondary" id="page-date">
+                        <time datetime="2025-11-10" >November 10, 2025</time>
+                        <span class="meta-separator">·</span>
+                        <span>Marko Nakić</span>
+                    </p>
+                
+            </div>
+        
+
+        
+
+        
+            <div class="align-items-center d-flex flex-column row-tall text-center" id="page-toc">
+                <details class="toc-collapsible">
+                    <summary class="toc-summary">Table of Contents</summary>
+                    <div class="toc-anim-wrapper">
+                        <div class="toc-content">
+                            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#my-first-encounter-with-encryption">My first encounter with encryption</a></li>
+    <li><a href="#what-is-dropbear-shh-and-how-does-it-apply-to-this-use-case">What is Dropbear SHH and how does it apply to this use case</a></li>
+    <li><a href="#implementation">Implementation</a>
+      <ul>
+        <li><a href="#update-and-upgrade-your-machine">Update and upgrade your machine</a></li>
+        <li><a href="#install-dropbear">Install Dropbear</a></li>
+        <li><a href="#configure-dropbearconf">Configure dropbear.conf</a></li>
+        <li><a href="#set-early-boot-networking">Set early-boot networking</a></li>
+      </ul>
+    </li>
+    <li><a href="#update-the-initramfs">Update the initramfs</a></li>
+    <li><a href="#create-the-keys">Create the keys</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#making-an-alias-optional">Making an alias (optional)</a>
+      <ul>
+        <li><a href="#edit-the-bashrc-on-the-client">Edit the bashrc on the client</a></li>
+        <li><a href="#add-the-alias">Add the alias</a></li>
+        <li><a href="#source-the-bashrc">Source the bashrc:</a></li>
+        <li><a href="#reboot">Reboot:</a></li>
+        <li><a href="#try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</a></li>
+      </ul>
+    </li>
+    <li><a href="#manual-unlock-with-no-alias">Manual unlock with no alias:</a></li>
+  </ul>
+</nav>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        
+
+    </header>
+
+
+
+    
+        <main class="mw-100" id="page-content" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="my-first-encounter-with-encryption">My first encounter with encryption</h2>
+<p>The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.</p>
+<p>Since i don&rsquo;t keep the homelab machine at my own place, I had to setup remote access to it right away. And in the process i realized - i cannot remotely decrypt my drives if the machine ever powers off. After that i scoured the web for solutions to my problem and in the end i landed on Dropbear SSH.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="what-is-dropbear-shh-and-how-does-it-apply-to-this-use-case">What is Dropbear SHH and how does it apply to this use case</h2>
+<p>Dropbear SSH is a lightweigh SSH server and client that is primarily used on embedded systems with low memory and processor resources.</p>
+<p>Most systems have some sort of pre-boot environment. This userspace is loaded into the RAM so that the kernel can load drivers and logic that&rsquo;s needed to mount the real root filesystem. The Linux kernel is shipped with the initramfs filesystem (or equivalent) by default.</p>
+<p>Dropbear SHH can be leveraged to gain access to this pre-boot filesystem before the drives are mounted. This allows us to remotely decrypt the drives of our machine.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="implementation">Implementation</h2>
+<p><strong>NOTE</strong> - This implementation walkthrough will be for Debian and Debian based systems, but the same principles still apply to others.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="update-and-upgrade-your-machine">Update and upgrade your machine</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt upgrade
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="install-dropbear">Install Dropbear</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install dropbear-initramfs
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> sudo -i
+</span></span><span class="line"><span class="cl"> cd /etc/dropbear/initramfs/
+</span></span></code></pre></div><p>Because these files affect the boot image, they live under /etc. Using <code>sudo -i</code> we can get a clean root environment that behaves as if we physically logged in as root.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="configure-dropbearconf">Configure dropbear.conf</h3>
+<p>Options:</p>
+<ul>
+<li>-I : Disconnect the session if no traffic is transmitted or received in x seconds</li>
+</ul>
+<p>Auto-disconnecting inactive sessions reduces exposure in the early boot process.</p>
+<ul>
+<li>
+<p>-j: Disable ssh local port forwarding.</p>
+</li>
+<li>
+<p>-k : Disable remote port forwarding.</p>
+</li>
+</ul>
+<p>Disabling port forwarding minimizes attack surface.</p>
+<ul>
+<li>-p : Dropbear listen on this specified TCP port.</li>
+</ul>
+<p>I always use a non default port to avoid generic scaning noise.</p>
+<ul>
+<li>-s : Disable password logins.</li>
+</ul>
+<p>Always disable password logins and use key pairs for authentication.</p>
+<p>Example:</p>
+<pre><code>DROPBEAR_OPTIONS=&quot;-I 239 -j -k -p 5768 -s&quot;
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="set-early-boot-networking">Set early-boot networking</h3>
+<p>Early boot networking needs to be set in order for Dropbear to accept SSH before userspace networking is up. This is done by injecting a static IPv4 configuration in the initramfs config file =&gt; /etc/initramfs-tools/initramfs.conf.</p>
+<p>Format:</p>
+<pre><code>IP=SERVER_IP::ROUTER_IP:NETMASK:SERVER_HOSTNAME
+</code></pre>
+<p>Example:</p>
+<pre><code>IP=192.168.1.36::192.168.1.1:255.255.255.0:node2
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="update-the-initramfs">Update the initramfs</h2>
+<pre><code>sudo update-initramfs -u -v
+</code></pre>
+<p>This rebuilds the initramfs with the changes for the current kernel. This command must be run after every change to the initramfs config so that it takes affect at boot.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="create-the-keys">Create the keys</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="generate-a-new-client-key">Generate a new client key</h4>
+<pre><code>ssh-keygen -t rsa -f ~/.ssh/dropbear
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="copy-the-key-to-the-server">Copy the key to the server:</h4>
+<pre><code>scp ~/.ssh/dropbear.pub marko@192.168.0.200:~/dropbear.pub
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="add-the-key-to-the-initramfs-authorized-keys">Add the key to the initramfs authorized keys:</h4>
+<pre><code>cat /home/marko/dropbear.pub &gt;&gt; /etc/dropbear/initramfs/authorized_keys
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="stop-being-root">Stop being root</h4>
+<pre><code>exit
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="update-initramfs-again">Update initramfs again</h4>
+<pre><code>sudo update-initramfs -u
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="making-an-alias-optional">Making an alias (optional)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="edit-the-bashrc-on-the-client">Edit the bashrc on the client</h3>
+<pre><code>nano ~/.bashrc
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="add-the-alias">Add the alias</h3>
+<p>Format:</p>
+<pre><code>alias &lt;Aliasname&gt;=&quot;ssh -i ~/.ssh/dropbear -p &lt;port&gt; -o 'HostKeyAlgorithms ssh-rsa' root@&lt;SERVER_IP&gt; 'echo -n &lt;DRIVE_ENCRYPTION_PASSWORD&gt; | cryptroot-unlock'&quot;
+</code></pre>
+<p>Exemple:</p>
+<pre><code>alias node2unlock=&quot;ssh -i ~/.ssh/dropbear -p 5768 -o 'HostKeyAlgorithms ssh-rsa' root@192.168.0.200 'echo -n test | cryptroot-unlock'&quot;
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="source-the-bashrc">Source the bashrc:</h3>
+<pre><code>source .bashrc
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="reboot">Reboot:</h3>
+<pre><code>sudo reboot now
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</h3>
+<pre><code>node2unlock
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="manual-unlock-with-no-alias">Manual unlock with no alias:</h2>
+<pre><code>ssh -i ~/.ssh/dropbear -p &lt;port&gt; -o &quot;HostKeyAlgorithms ssh-rsa&quot; root@&lt;SERVER_IP&gt;
+cryptroot-unlock
+</code></pre>
+
+            
+        </main>
+    
+
+    
+
+
+
+    
+    
+
+
+
+</article>
+
+                
+
+
+
+
+<footer id="site-footer">
+    
+    
+    
+</footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.","articleSection":"Posts","dateCreated":"2025-11-10T00:00:00Z","dateModified":"2025-11-10T00:00:00Z","headline":"Remote decryption using Dropbear SSH","inLanguage":"en-us","keywords":"Encryption, Linux, Remote Access","name":"Remote decryption using Dropbear SSH","timeRequired":"PT3M","url":"http://localhost:1313/posts/dropbear-shh/","wordCount":609}</script>
+    
+
+
+    <noscript>JavaScript is required</noscript>
+
+    
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+
+
+
+<script src="/js/copy-code.js"></script>
+
+
+</body>
+</html>

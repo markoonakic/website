@@ -85,7 +85,7 @@
             </span>
             <span class="blog-separator">·</span>
         {{ end }}
-        <span>Marko Nakić</span>
+        <span>{{ $list.Site.Params.author.name | default $list.Site.Title }}</span>
         {{ if $time }}
             <span class="blog-separator">·</span>
             <span>{{ $time }} minute{{ if ne $time 1 }}s{{ end }}</span>

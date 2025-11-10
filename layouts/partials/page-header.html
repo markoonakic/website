@@ -120,7 +120,7 @@
                     <p class="row-short text-secondary" id="page-date">
                         <time datetime="{{ .Format `2006-01-02` }}" {{ if $microdata }} itemprop="datePublished" {{ end }}>{{ time.Format $format . }}</time>
                         <span class="meta-separator">·</span>
-                        <span>Marko Nakić</span>
+                        <span>{{ site.Params.author.name | default site.Title }}</span>
                     </p>
                 {{ end }}
             </div>

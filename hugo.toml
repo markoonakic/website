@@ -5,11 +5,30 @@ title = 'Marko Nakić'
 [markup.goldmark.renderer]
 unsafe = true
 
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+strikethrough = true
+table = true
+taskList = true
+typographer = true
+
+[markup.highlight]
+style = "gruvbox"
+lineNos = false
+codeFences = true
+guessSyntax = true
+noClasses = false
+tabWidth = 4
+lineNumbersInTable = false
+
 [outputs]
 home = ["HTML", "RSS"]
 section = ["HTML", "RSS"]
-taxonomy = ["HTML", "RSS"]
-term = ["HTML", "RSS"]
+taxonomy = ["HTML"]
+term = ["HTML"]
+page = ["HTML"]
 
 [menus]
 [[menus.main]]
@@ -34,3 +53,11 @@ color_scheme = "dark"
 menu_style = "tabs"
 keyword_style = "pills"
 external_link_new_tab = true
+description = "Blog posts by Marko Nakić"
+
+[params.author]
+name = "Marko Nakić"
+email = "marko@markonakic.xyz"
+
+[services.rss]
+limit = 20

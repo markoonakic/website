@@ -1,95 +1,265 @@
-<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xml:lang="en-us" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xml:lang="en-us" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-            <language>en-us</language>
-            <lastBuildDate>Wed, 05 Feb 2025 00:00:00 UTC</lastBuildDate>
-            <link>http://localhost:1313/</link><image>
-                <url>http://localhost:1313//favicon.svg</url>
-                <title>Marko Nakić</title>
-                <link>http://localhost:1313/</link>
-            </image>
-            <atom:link href="http://localhost:1313/index.xml" hreflang="en-us" rel="self" type="application/rss+xml"/><atom:link href="http://localhost:1313/" hreflang="en-us" rel="alternate" type="text/html"/><atom:link href="http://localhost:1313/index.xml" hreflang="en-us" rel="alternate" type="application/rss&#43;xml"/>
-            <title>Marko Nakić</title>
-                <item>
-                        <description><![CDATA[<p>Tips and tricks for optimizing your website&rsquo;s performance and improving user experience.</p><h1 id=test1>test1</h1><h2 id=image-optimization>Image Optimization</h2><h3 id=test>Test</h3><p>Optimize images by using modern formats like WebP and proper compression.</p><h2 id=code-splitting>Code Splitting</h2><p>Split your JavaScript bundles to load only what&rsquo;s needed for each page.</p><h2 id=caching-strategies>Caching Strategies</h2><p>Implement proper caching to reduce server load and improve load times.</p><h2 id=monitoring>Monitoring</h2><p>Use tools like Lighthouse to monitor and improve your site&rsquo;s performance.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-02-05:/posts/test-post-6/</guid>
-                        <link>http://localhost:1313/posts/test-post-6/</link><atom:link href="http://localhost:1313/posts/test-post-6/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Wed, 05 Feb 2025 00:00:00 UTC</pubDate>
-                        <title>Performance Optimization Tips</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>Mobile-first design ensures your website works well on all devices, starting with the smallest screens.</p><h2 id=why-mobile-first>Why Mobile-First?</h2><p>Most users access websites on mobile devices, so it makes sense to prioritize mobile experience.</p><h2 id=key-principles>Key Principles</h2><ul><li>Start with mobile layout</li><li>Use responsive breakpoints</li><li>Test on real devices</li></ul><h2 id=best-practices>Best Practices</h2><p>Always test your designs on actual mobile devices to ensure they work correctly.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-02-03:/posts/test-post-mobile/</guid>
-                        <link>http://localhost:1313/posts/test-post-mobile/</link><atom:link href="http://localhost:1313/posts/test-post-mobile/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Mon, 03 Feb 2025 00:00:00 UTC</pubDate>
-                        <title>Mobile-First Design Principles</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>CSS Grid is a powerful layout system that makes it easy to create complex, responsive designs.</p><h2 id=grid-basics>Grid Basics</h2><p>Learn how to use grid containers and grid items to create layouts.</p><h2 id=advanced-techniques>Advanced Techniques</h2><ul><li>Grid areas</li><li>Auto-placement</li><li>Responsive grids</li></ul><h2 id=conclusion>Conclusion</h2><p>CSS Grid simplifies layout creation and provides more control than traditional methods.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-02-02:/posts/test-post-css/</guid>
-                        <link>http://localhost:1313/posts/test-post-css/</link><atom:link href="http://localhost:1313/posts/test-post-css/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Sun, 02 Feb 2025 00:00:00 UTC</pubDate>
-                        <title>CSS Grid Layout Mastery</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>CSS Grid is a powerful layout system that makes it easy to create complex, responsive designs.</p><h2 id=grid-basics>Grid Basics</h2><p>Learn how to use grid containers and grid items to create layouts.</p><h2 id=advanced-techniques>Advanced Techniques</h2><ul><li>Grid areas</li><li>Auto-placement</li><li>Responsive grids</li></ul><h2 id=conclusion>Conclusion</h2><p>CSS Grid simplifies layout creation and provides more control than traditional methods.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-02-02:/posts/test/</guid>
-                        <link>http://localhost:1313/posts/test/</link><atom:link href="http://localhost:1313/posts/test/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Sun, 02 Feb 2025 00:00:00 UTC</pubDate>
-                        <title>CSS Grid Layout Mastery</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>React Hooks revolutionized how we write React components. This post introduces the most commonly used hooks.</p><h2 id=usestate-hook>useState Hook</h2><p>The useState hook allows you to add state to functional components.</p><h2 id=useeffect-hook>useEffect Hook</h2><p>useEffect handles side effects in your components, similar to lifecycle methods in class components.</p><h2 id=custom-hooks>Custom Hooks</h2><p>You can create your own hooks to share logic between components.</p><h2 id=conclusion>Conclusion</h2><p>Hooks make React code more concise and easier to understand.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-02-01:/posts/test-post-5/</guid>
-                        <link>http://localhost:1313/posts/test-post-5/</link><atom:link href="http://localhost:1313/posts/test-post-5/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Sat, 01 Feb 2025 00:00:00 UTC</pubDate>
-                        <title>Introduction to React Hooks</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>Learn how to create websites that look great on all devices, from mobile phones to desktop computers.</p><h2 id=mobile-first-approach>Mobile-First Approach</h2><p>Starting with mobile designs and scaling up ensures your site works well on all screen sizes.</p><h2 id=key-techniques>Key Techniques</h2><ul><li>Media queries</li><li>Flexible units (rem, em, %)</li><li>Flexible images</li></ul><h2 id=testing>Testing</h2><p>Always test on real devices when possible, not just browser dev tools.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-28:/posts/test-post-4/</guid>
-                        <link>http://localhost:1313/posts/test-post-4/</link><atom:link href="http://localhost:1313/posts/test-post-4/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Tue, 28 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>Building Responsive Websites</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>I&rsquo;m Marko, and this is my blog.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-27:/about/</guid>
-                        <link>http://localhost:1313/about/</link><atom:link href="http://localhost:1313/about/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Mon, 27 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>About</title>
-                </item>
-                <item>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-27:/index/</guid>
-                        <link>http://localhost:1313/index/</link><atom:link href="http://localhost:1313/index/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Mon, 27 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>Blog</title>
-                </item>
-                <item>
-                        <description><![CDATA[<div id=search-container class=mt-4><input type=text id=search-input class="form-control mb-3" placeholder="Search blog posts..." autofocus><div id=search-results></div></div>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-27:/search/</guid>
-                        <link>http://localhost:1313/search/</link><atom:link href="http://localhost:1313/search/" hreflang="en-us" rel="alternate" type="text/html"/><atom:link href="http://localhost:1313/search/index.json" hreflang="en-us" rel="alternate" type="application/json"/>
-                        <pubDate>Mon, 27 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>Search</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>A comprehensive guide to choosing between CSS Grid and Flexbox for your layout needs.</p><h2 id=grid-vs-flexbox>Grid vs Flexbox</h2><p>Both CSS Grid and Flexbox are powerful layout tools, but they serve different purposes.</p><h2 id=when-to-use-grid>When to Use Grid</h2><ul><li>Two-dimensional layouts</li><li>Complex page structures</li><li>Precise control over rows and columns</li></ul><h2 id=when-to-use-flexbox>When to Use Flexbox</h2><ul><li>One-dimensional layouts</li><li>Component alignment</li><li>Responsive navigation bars</li></ul><h2 id=conclusion>Conclusion</h2><p>Understanding when to use each tool will make your CSS more efficient and maintainable.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-25:/posts/test-post-3/</guid>
-                        <link>http://localhost:1313/posts/test-post-3/</link><atom:link href="http://localhost:1313/posts/test-post-3/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Sat, 25 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>CSS Grid vs Flexbox: When to Use What</title>
-                </item>
-                <item>
-                        <description><![CDATA[<p>This post explores advanced JavaScript patterns and techniques that can help you write more efficient and maintainable code.</p><h2 id=design-patterns>Design Patterns</h2><p>JavaScript has many useful design patterns that can solve common problems in elegant ways.</p><h2 id=common-patterns>Common Patterns</h2><ul><li>Module Pattern</li><li>Observer Pattern</li><li>Factory Pattern</li></ul><h2 id=best-practices>Best Practices</h2><p>Always consider readability and maintainability when choosing patterns.</p>]]></description>
-                        <guid isPermaLink="false">tag:localhost:1313,2025-01-20:/posts/test-post-2/</guid>
-                        <link>http://localhost:1313/posts/test-post-2/</link><atom:link href="http://localhost:1313/posts/test-post-2/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Mon, 20 Jan 2025 00:00:00 UTC</pubDate>
-                        <title>Advanced JavaScript Patterns</title>
-                </item>
-                <item>
-                        <guid isPermaLink="false">tag:localhost:1313,0001-01-01:/posts/template/</guid>
-                        <link>http://localhost:1313/posts/template/</link><atom:link href="http://localhost:1313/posts/template/" hreflang="en-us" rel="alternate" type="text/html"/>
-                        <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
-                </item>
+        <title>Marko Nakić</title>
+        <link>http://localhost:1313</link>
+        <description>Blog posts by Marko Nakić</description>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 10 Nov 2025 18:56:44 &#43;0100</lastBuildDate>
+        <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+        <ttl>60</ttl>
+        <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml"/>
+        <generator>Hugo 0.152.2</generator>
+        <managingEditor>marko@markonakic.xyz (Marko Nakić)</managingEditor>
+        <webMaster>marko@markonakic.xyz (Marko Nakić)</webMaster>
+        <item>
+            <title>Markdown Features Test - Gruvbox Theme Showcase</title>
+            <link>http://localhost:1313/posts/markdown-features-test/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/markdown-features-test/</guid>
+            <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>This is a comprehensive test article to showcase all markdown features with the gruvbox color scheme. Let’s explore everything!&amp;#xA;Heading Level 2 (Blue) This is a level 2 heading. Notice the blue …</description><content:encoded><![CDATA[<p>This is a comprehensive test article to showcase all markdown features with the gruvbox color scheme. Let&rsquo;s explore everything!</p><h2 id=heading-level-2-blue>Heading Level 2 (Blue)</h2><p>This is a level 2 heading. Notice the <strong>blue color</strong> (#458588) from the gruvbox palette.</p><h3 id=heading-level-3-yellow>Heading Level 3 (Yellow)</h3><p>This is a level 3 heading with <strong>yellow color</strong> (#d79921). Here&rsquo;s some text with various formatting:</p><ul><li><strong>Bold text</strong> appears in gruvbox yellow (#fabd2f)</li><li><em>Italic text</em> appears in gruvbox blue (#83a598)</li><li><u>Underlined text</u> appears in gruvbox purple (#b16286)</li><li><del>Strikethrough text</del> appears in gruvbox gray (#928374)</li><li><code>Inline code</code> appears in gruvbox yellow with a dark background</li><li><mark>Highlighted text</mark> uses gruvbox yellow background</li><li>H<sub>2</sub>O and E=mc<sup>2</sup> show subscript and superscript in gruvbox purple</li></ul><h4 id=heading-level-4-purple>Heading Level 4 (Purple)</h4><p>This is a level 4 heading with <strong>purple color</strong> (#b16286). Let&rsquo;s test some code blocks!</p><h5 id=heading-level-5-light-blue>Heading Level 5 (Light Blue)</h5><p>This is a level 5 heading with <strong>light blue color</strong> (#83a598).</p><h6 id=heading-level-6-gray>Heading Level 6 (Gray)</h6><p>This is a level 6 heading with <strong>gray/muted color</strong> (#928374).</p><hr><h2 id=code-blocks-with-syntax-highlighting>Code Blocks with Syntax Highlighting</h2><h3 id=python-code-block>Python Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>greet</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Greet someone with a personalized message.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>message</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;Hello, </span><span class=si>{</span><span class=n>name</span><span class=si>}</span><span class=s2>! Welcome to the gruvbox theme.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>message</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Person</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>age</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>name</span> <span class=o>=</span> <span class=n>name</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>age</span> <span class=o>=</span> <span class=n>age</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>introduce</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=sa>f</span><span class=s2>&#34;I&#39;m </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2> and I&#39;m </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>age</span><span class=si>}</span><span class=s2> years old.&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Example usage</span>
+</span></span><span class=line><span class=cl><span class=n>person</span> <span class=o>=</span> <span class=n>Person</span><span class=p>(</span><span class=s2>&#34;Marko&#34;</span><span class=p>,</span> <span class=mi>25</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>person</span><span class=o>.</span><span class=n>introduce</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>greet</span><span class=p>(</span><span class=n>person</span><span class=o>.</span><span class=n>name</span><span class=p>))</span>
+</span></span></code></pre></div><h3 id=javascript-code-block>JavaScript Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// Arrow functions and modern JavaScript
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>const</span> <span class=nx>greet</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=sb>`Hello, </span><span class=si>${</span><span class=nx>name</span><span class=si>}</span><span class=sb>! Welcome to the gruvbox theme.`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Async/await example
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>async</span> <span class=kd>function</span> <span class=nx>fetchData</span><span class=p>(</span><span class=nx>url</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>response</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>fetch</span><span class=p>(</span><span class=nx>url</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>data</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>response</span><span class=p>.</span><span class=nx>json</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>error</span><span class=p>(</span><span class=s1>&#39;Error fetching data:&#39;</span><span class=p>,</span> <span class=nx>error</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=nx>error</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Array methods
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>const</span> <span class=nx>numbers</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>4</span><span class=p>,</span> <span class=mi>5</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>doubled</span> <span class=o>=</span> <span class=nx>numbers</span><span class=p>.</span><span class=nx>map</span><span class=p>(</span><span class=nx>n</span> <span class=p>=&gt;</span> <span class=nx>n</span> <span class=o>*</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>evens</span> <span class=o>=</span> <span class=nx>numbers</span><span class=p>.</span><span class=nx>filter</span><span class=p>(</span><span class=nx>n</span> <span class=p>=&gt;</span> <span class=nx>n</span> <span class=o>%</span> <span class=mi>2</span> <span class=o>===</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>sum</span> <span class=o>=</span> <span class=nx>numbers</span><span class=p>.</span><span class=nx>reduce</span><span class=p>((</span><span class=nx>acc</span><span class=p>,</span> <span class=nx>n</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=nx>acc</span> <span class=o>+</span> <span class=nx>n</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span></code></pre></div><h3 id=bashshell-code-block>Bash/Shell Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=c1># Script to demonstrate bash syntax highlighting</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Hello from bash!&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Current directory: </span><span class=k>$(</span><span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;User: </span><span class=nv>$USER</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Function definition</span>
+</span></span><span class=line><span class=cl>greet_user<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nb>local</span> <span class=nv>name</span><span class=o>=</span><span class=nv>$1</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Welcome, </span><span class=nv>$name</span><span class=s2>!&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Loop example</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> i in <span class=o>{</span>1..5<span class=o>}</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Iteration </span><span class=nv>$i</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Conditional</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> -f <span class=s2>&#34;file.txt&#34;</span> <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;File exists&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;File does not exist&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></div><h3 id=html-code-block>HTML Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;UTF-8&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>name</span><span class=o>=</span><span class=s>&#34;viewport&#34;</span> <span class=na>content</span><span class=o>=</span><span class=s>&#34;width=device-width, initial-scale=1.0&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Gruvbox Theme Test<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>link</span> <span class=na>rel</span><span class=o>=</span><span class=s>&#34;stylesheet&#34;</span> <span class=na>href</span><span class=o>=</span><span class=s>&#34;/css/syntax.css&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>header</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>h1</span><span class=p>&gt;</span>Welcome to Gruvbox<span class=p>&lt;/</span><span class=nt>h1</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>header</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>main</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>article</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>This is a <span class=p>&lt;</span><span class=nt>strong</span><span class=p>&gt;</span>test<span class=p>&lt;/</span><span class=nt>strong</span><span class=p>&gt;</span> of HTML syntax highlighting.<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>article</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>main</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
+</span></span></code></pre></div><h3 id=css-code-block>CSS Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=c>/* Gruvbox color variables */</span>
+</span></span><span class=line><span class=cl><span class=p>:</span><span class=nd>root</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nv>--color-bg</span><span class=p>:</span> <span class=mh>#282828</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>--color-text</span><span class=p>:</span> <span class=mh>#ebdbb2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>--color-purple</span><span class=p>:</span> <span class=mh>#b16286</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>--color-blue</span><span class=p>:</span> <span class=mh>#458588</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>--color-yellow</span><span class=p>:</span> <span class=mh>#d79921</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>body</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>background-color</span><span class=p>:</span> <span class=nf>var</span><span class=p>(</span><span class=o>--</span><span class=kc>color</span><span class=o>-</span><span class=n>bg</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>color</span><span class=p>:</span> <span class=nf>var</span><span class=p>(</span><span class=o>--</span><span class=kc>color</span><span class=o>-</span><span class=kc>text</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>font-family</span><span class=p>:</span> <span class=s1>&#39;Inter&#39;</span><span class=p>,</span> <span class=kc>sans-serif</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>h2</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>color</span><span class=p>:</span> <span class=nf>var</span><span class=p>(</span><span class=o>--</span><span class=kc>color</span><span class=o>-</span><span class=kc>blue</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>h3</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>color</span><span class=p>:</span> <span class=nf>var</span><span class=p>(</span><span class=o>--</span><span class=kc>color</span><span class=o>-</span><span class=kc>yellow</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=go-code-block>Go Code Block</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nx>main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s>&#34;fmt&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s>&#34;time&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>Person</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>Name</span><span class=w> </span><span class=kt>string</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>Age</span><span class=w>  </span><span class=kt>int</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=p>(</span><span class=nx>p</span><span class=w> </span><span class=nx>Person</span><span class=p>)</span><span class=w> </span><span class=nf>Greet</span><span class=p>()</span><span class=w> </span><span class=kt>string</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;Hello, I&#39;m %s and I&#39;m %d years old&#34;</span><span class=p>,</span><span class=w> </span><span class=nx>p</span><span class=p>.</span><span class=nx>Name</span><span class=p>,</span><span class=w> </span><span class=nx>p</span><span class=p>.</span><span class=nx>Age</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>person</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>Person</span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nx>Name</span><span class=p>:</span><span class=w> </span><span class=s>&#34;Marko&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nx>Age</span><span class=p>:</span><span class=w>  </span><span class=mi>25</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>person</span><span class=p>.</span><span class=nf>Greet</span><span class=p>())</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Current time:&#34;</span><span class=p>,</span><span class=w> </span><span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>())</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></div><hr><h2 id=lists>Lists</h2><h3 id=unordered-lists>Unordered Lists</h3><ul><li>First item with <strong>bold text</strong></li><li>Second item with <em>italic text</em></li><li>Third item with <code>inline code</code></li><li>Fourth item with a <a href=https://example.com>link</a></li><li>Nested list:<ul><li>Nested item one</li><li>Nested item two<ul><li>Deeply nested item</li></ul></li></ul></li></ul><h3 id=ordered-lists>Ordered Lists</h3><ol><li>First numbered item</li><li>Second numbered item</li><li>Third numbered item with <strong>formatting</strong></li><li>Fourth item with <em>emphasis</em></li><li>Fifth item with <code>code</code></li></ol><h3 id=task-lists>Task Lists</h3><ul><li><input checked disabled type=checkbox> Completed task with gruvbox styling</li><li><input checked disabled type=checkbox> Another completed task</li><li><input disabled type=checkbox> Incomplete task</li><li><input disabled type=checkbox> Another incomplete task</li><li><input checked disabled type=checkbox> Final completed task</li></ul><hr><h2 id=tables>Tables</h2><table><thead><tr><th>Feature</th><th>Color</th><th>Hex Code</th><th>Usage</th></tr></thead><tbody><tr><td>H2 Heading</td><td>Blue</td><td>#458588</td><td>Section headers</td></tr><tr><td>H3 Heading</td><td>Yellow</td><td>#d79921</td><td>Subsections</td></tr><tr><td>H4 Heading</td><td>Purple</td><td>#b16286</td><td>Sub-subsections</td></tr><tr><td>Bold Text</td><td>Yellow</td><td>#fabd2f</td><td>Emphasis</td></tr><tr><td>Italic Text</td><td>Blue</td><td>#83a598</td><td>Emphasis</td></tr><tr><td>Inline Code</td><td>Yellow</td><td>#fabd2f</td><td>Code snippets</td></tr><tr><td>Links</td><td>Purple</td><td>#b16286</td><td>Navigation</td></tr></tbody></table><hr><h2 id=blockquotes>Blockquotes</h2><blockquote><p>This is a blockquote with gruvbox blue accent border. It demonstrates how quoted text appears with the gruvbox theme.</p><p>Blockquotes can span multiple paragraphs and include <strong>formatting</strong> like <em>italic</em> text and <code>code</code>.</p></blockquote><blockquote><p>Another blockquote example:</p><p>&ldquo;The best way to predict the future is to create it.&rdquo; - Peter Drucker</p></blockquote><hr><h2 id=links-and-references>Links and References</h2><p>Here are some examples of links:</p><ul><li><a href=http://localhost:1313/about>Internal link to about page</a></li><li><a href=https://example.com>External link</a> that opens in a new tab</li><li><a href=https://example.com title="Example Website">Link with title</a></li><li><a href=https://github.com>Link to GitHub</a> repository</li></ul><hr><h2 id=horizontal-rules>Horizontal Rules</h2><p>Above this text is a horizontal rule. Below is another one:</p><hr><h2 id=definition-lists>Definition Lists</h2><dl><dt>Term 1</dt><dd>Definition for term 1 with <strong>bold</strong> and <em>italic</em> text.</dd><dt>Term 2</dt><dd>Definition for term 2 that can span multiple lines.</dd><dd>Multiple definitions are possible.</dd><dt>Term 3</dt><dd>Another term definition.</dd></dl><hr><h2 id=mixed-formatting-examples>Mixed Formatting Examples</h2><p>Here&rsquo;s a paragraph with <strong>bold text</strong>, <em>italic text</em>, <u>underlined text</u>, <del>strikethrough</del>, <code>inline code</code>, and a <a href=https://example.com>link</a>. You can also combine them: <em><strong>bold and italic</strong></em>, <strong>bold with <code>code</code></strong>, and <em>italic with <u>underline</u></em>.</p><hr><h2 id=footnotes>Footnotes</h2><p>Here&rsquo;s a sentence with a footnote reference<sup id=fnref:1><a href=http://localhost:1313/posts/markdown-features-test/#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>. And another one<sup id=fnref:2><a href=http://localhost:1313/posts/markdown-features-test/#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p><hr><h2 id=conclusion>Conclusion</h2><p>This test article demonstrates all the markdown features with the gruvbox color scheme:</p><ul><li>✅ All heading levels (h2-h6) with different gruvbox colors</li><li>✅ Code blocks with syntax highlighting in multiple languages</li><li>✅ Inline code with gruvbox yellow</li><li>✅ Text formatting: <strong>bold</strong> (yellow), <em>italic</em> (blue), <u>underline</u> (purple), <del>strikethrough</del> (gray)</li><li>✅ Lists: unordered, ordered, and task lists</li><li>✅ Tables with gruvbox styling</li><li>✅ Blockquotes with blue accent</li><li>✅ Links with purple color</li><li>✅ Horizontal rules</li><li>✅ Definition lists</li><li>✅ Footnotes</li><li>✅ Subscript and superscript</li><li>✅ Highlighted text</li></ul><p>Everything should be beautifully styled with the gruvbox dark theme! 🎨</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>This is the first footnote. It can contain <strong>formatting</strong> and <code>code</code>.&#160;<a href=http://localhost:1313/posts/markdown-features-test/#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>This is the second footnote with a <a href=https://example.com>link</a>.&#160;<a href=http://localhost:1313/posts/markdown-features-test/#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div>]]></content:encoded>
+            <category>test</category>
+            <category>markdown</category>
+            <category>syntax</category>
+            <category>demo</category>
+        </item>
+        <item>
+            <title>Remote decryption using Dropbear SSH</title>
+            <link>http://localhost:1313/posts/dropbear-shh/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/dropbear-shh/</guid>
+            <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of …</description><content:encoded><![CDATA[<h2 id=my-first-encounter-with-encryption>My first encounter with encryption</h2><p>The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.</p><p>Since i don&rsquo;t keep the homelab machine at my own place, I had to setup remote access to it right away. And in the process i realized - i cannot remotely decrypt my drives if the machine ever powers off. After that i scoured the web for solutions to my problem and in the end i landed on Dropbear SSH.</p><h2 id=what-is-dropbear-shh-and-how-does-it-apply-to-this-use-case>What is Dropbear SHH and how does it apply to this use case</h2><p>Dropbear SSH is a lightweigh SSH server and client that is primarily used on embedded systems with low memory and processor resources.</p><p>Most systems have some sort of pre-boot environment. This userspace is loaded into the RAM so that the kernel can load drivers and logic that&rsquo;s needed to mount the real root filesystem. The Linux kernel is shipped with the initramfs filesystem (or equivalent) by default.</p><p>Dropbear SHH can be leveraged to gain access to this pre-boot filesystem before the drives are mounted. This allows us to remotely decrypt the drives of our machine.</p><h2 id=implementation>Implementation</h2><p><strong>NOTE</strong> - This implementation walkthrough will be for Debian and Debian based systems, but the same principles still apply to others.</p><h3 id=update-and-upgrade-your-machine>Update and upgrade your machine</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo apt update
+</span></span><span class=line><span class=cl>sudo apt upgrade
+</span></span></code></pre></div><h3 id=install-dropbear>Install Dropbear</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo apt install dropbear-initramfs
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> sudo -i
+</span></span><span class=line><span class=cl> cd /etc/dropbear/initramfs/
+</span></span></code></pre></div><p>Because these files affect the boot image, they live under /etc. Using <code>sudo -i</code> we can get a clean root environment that behaves as if we physically logged in as root.</p><h3 id=configure-dropbearconf>Configure dropbear.conf</h3><p>Options:</p><ul><li>-I : Disconnect the session if no traffic is transmitted or received in x seconds</li></ul><p>Auto-disconnecting inactive sessions reduces exposure in the early boot process.</p><ul><li><p>-j: Disable ssh local port forwarding.</p></li><li><p>-k : Disable remote port forwarding.</p></li></ul><p>Disabling port forwarding minimizes attack surface.</p><ul><li>-p : Dropbear listen on this specified TCP port.</li></ul><p>I always use a non default port to avoid generic scaning noise.</p><ul><li>-s : Disable password logins.</li></ul><p>Always disable password logins and use key pairs for authentication.</p><p>Example:</p><pre><code>DROPBEAR_OPTIONS=&quot;-I 239 -j -k -p 5768 -s&quot;
+</code></pre><h3 id=set-early-boot-networking>Set early-boot networking</h3><p>Early boot networking needs to be set in order for Dropbear to accept SSH before userspace networking is up. This is done by injecting a static IPv4 configuration in the initramfs config file => /etc/initramfs-tools/initramfs.conf.</p><p>Format:</p><pre><code>IP=SERVER_IP::ROUTER_IP:NETMASK:SERVER_HOSTNAME
+</code></pre><p>Example:</p><pre><code>IP=192.168.1.36::192.168.1.1:255.255.255.0:node2
+</code></pre><h2 id=update-the-initramfs>Update the initramfs</h2><pre><code>sudo update-initramfs -u -v
+</code></pre><p>This rebuilds the initramfs with the changes for the current kernel. This command must be run after every change to the initramfs config so that it takes affect at boot.</p><h2 id=create-the-keys>Create the keys</h2><h4 id=generate-a-new-client-key>Generate a new client key</h4><pre><code>ssh-keygen -t rsa -f ~/.ssh/dropbear
+</code></pre><h4 id=copy-the-key-to-the-server>Copy the key to the server:</h4><pre><code>scp ~/.ssh/dropbear.pub marko@192.168.0.200:~/dropbear.pub
+</code></pre><h4 id=add-the-key-to-the-initramfs-authorized-keys>Add the key to the initramfs authorized keys:</h4><pre><code>cat /home/marko/dropbear.pub &gt;&gt; /etc/dropbear/initramfs/authorized_keys
+</code></pre><h4 id=stop-being-root>Stop being root</h4><pre><code>exit
+</code></pre><h4 id=update-initramfs-again>Update initramfs again</h4><pre><code>sudo update-initramfs -u
+</code></pre><h2 id=making-an-alias-optional>Making an alias (optional)</h2><h3 id=edit-the-bashrc-on-the-client>Edit the bashrc on the client</h3><pre><code>nano ~/.bashrc
+</code></pre><h3 id=add-the-alias>Add the alias</h3><p>Format:</p><pre><code>alias &lt;Aliasname&gt;=&quot;ssh -i ~/.ssh/dropbear -p &lt;port&gt; -o 'HostKeyAlgorithms ssh-rsa' root@&lt;SERVER_IP&gt; 'echo -n &lt;DRIVE_ENCRYPTION_PASSWORD&gt; | cryptroot-unlock'&quot;
+</code></pre><p>Exemple:</p><pre><code>alias node2unlock=&quot;ssh -i ~/.ssh/dropbear -p 5768 -o 'HostKeyAlgorithms ssh-rsa' root@192.168.0.200 'echo -n test | cryptroot-unlock'&quot;
+</code></pre><h3 id=source-the-bashrc>Source the bashrc:</h3><pre><code>source .bashrc
+</code></pre><h3 id=reboot>Reboot:</h3><pre><code>sudo reboot now
+</code></pre><h3 id=try-to-unlock-the-server-with-your-alias>Try to unlock the server with your alias:</h3><pre><code>node2unlock
+</code></pre><h2 id=manual-unlock-with-no-alias>Manual unlock with no alias:</h2><pre><code>ssh -i ~/.ssh/dropbear -p &lt;port&gt; -o &quot;HostKeyAlgorithms ssh-rsa&quot; root@&lt;SERVER_IP&gt;
+cryptroot-unlock
+</code></pre>]]></content:encoded>
+            <category>Linux</category>
+            <category>Encryption</category>
+            <category>Remote Access</category>
+        </item>
+        <item>
+            <title>Performance Optimization Tips</title>
+            <link>http://localhost:1313/posts/test-post-6/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-6/</guid>
+            <pubDate>Wed, 05 Feb 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Tips and tricks for optimizing your website’s performance and improving user experience.&amp;#xA;test1 Image Optimization Test Optimize images by using modern formats like WebP and proper compression. …</description><content:encoded><![CDATA[<p>Tips and tricks for optimizing your website&rsquo;s performance and improving user experience.</p><h1 id=test1>test1</h1><h2 id=image-optimization>Image Optimization</h2><h3 id=test>Test</h3><p>Optimize images by using modern formats like WebP and proper compression.</p><h2 id=code-splitting>Code Splitting</h2><p>Split your JavaScript bundles to load only what&rsquo;s needed for each page.</p><h2 id=caching-strategies>Caching Strategies</h2><p>Implement proper caching to reduce server load and improve load times.</p><h2 id=monitoring>Monitoring</h2><p>Use tools like Lighthouse to monitor and improve your site&rsquo;s performance.</p>]]></content:encoded>
+            <category>performance</category>
+            <category>javascript</category>
+            <category>advanced</category>
+            <category>optimization</category>
+        </item>
+        <item>
+            <title>Mobile-First Design Principles</title>
+            <link>http://localhost:1313/posts/test-post-mobile/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-mobile/</guid>
+            <pubDate>Mon, 03 Feb 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Mobile-first design ensures your website works well on all devices, starting with the smallest screens.&amp;#xA;Why Mobile-First? Most users access websites on mobile devices, so it makes sense to prioritize …</description><content:encoded><![CDATA[<p>Mobile-first design ensures your website works well on all devices, starting with the smallest screens.</p><h2 id=why-mobile-first>Why Mobile-First?</h2><p>Most users access websites on mobile devices, so it makes sense to prioritize mobile experience.</p><h2 id=key-principles>Key Principles</h2><ul><li>Start with mobile layout</li><li>Use responsive breakpoints</li><li>Test on real devices</li></ul><h2 id=best-practices>Best Practices</h2><p>Always test your designs on actual mobile devices to ensure they work correctly.</p>]]></content:encoded>
+            <category>mobile</category>
+            <category>css</category>
+            <category>responsive</category>
+            <category>design</category>
+        </item>
+        <item>
+            <title>CSS Grid Layout Mastery</title>
+            <link>http://localhost:1313/posts/test-post-css/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-css/</guid>
+            <pubDate>Sun, 02 Feb 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>CSS Grid is a powerful layout system that makes it easy to create complex, responsive designs.&amp;#xA;Grid Basics Learn how to use grid containers and grid items to create layouts.&amp;#xA;Advanced Techniques Grid …</description><content:encoded><![CDATA[<p>CSS Grid is a powerful layout system that makes it easy to create complex, responsive designs.</p><h2 id=grid-basics>Grid Basics</h2><p>Learn how to use grid containers and grid items to create layouts.</p><h2 id=advanced-techniques>Advanced Techniques</h2><ul><li>Grid areas</li><li>Auto-placement</li><li>Responsive grids</li></ul><h2 id=conclusion>Conclusion</h2><p>CSS Grid simplifies layout creation and provides more control than traditional methods.</p>]]></content:encoded>
+            <category>css</category>
+            <category>web-development</category>
+            <category>layout</category>
+            <category>tutorial</category>
+        </item>
+        <item>
+            <title>Introduction to React Hooks</title>
+            <link>http://localhost:1313/posts/test-post-5/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-5/</guid>
+            <pubDate>Sat, 01 Feb 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>React Hooks revolutionized how we write React components. This post introduces the most commonly used hooks.&amp;#xA;useState Hook The useState hook allows you to add state to functional components.&amp;#xA;useEffect …</description><content:encoded><![CDATA[<p>React Hooks revolutionized how we write React components. This post introduces the most commonly used hooks.</p><h2 id=usestate-hook>useState Hook</h2><p>The useState hook allows you to add state to functional components.</p><h2 id=useeffect-hook>useEffect Hook</h2><p>useEffect handles side effects in your components, similar to lifecycle methods in class components.</p><h2 id=custom-hooks>Custom Hooks</h2><p>You can create your own hooks to share logic between components.</p><h2 id=conclusion>Conclusion</h2><p>Hooks make React code more concise and easier to understand.</p>]]></content:encoded>
+            <category>react</category>
+            <category>javascript</category>
+            <category>tutorial</category>
+            <category>beginner</category>
+            <category>hooks</category>
+        </item>
+        <item>
+            <title>Building Responsive Websites</title>
+            <link>http://localhost:1313/posts/test-post-4/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-4/</guid>
+            <pubDate>Tue, 28 Jan 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Learn how to create websites that look great on all devices, from mobile phones to desktop computers.&amp;#xA;Mobile-First Approach Starting with mobile designs and scaling up ensures your site works well on …</description><content:encoded><![CDATA[<p>Learn how to create websites that look great on all devices, from mobile phones to desktop computers.</p><h2 id=mobile-first-approach>Mobile-First Approach</h2><p>Starting with mobile designs and scaling up ensures your site works well on all screen sizes.</p><h2 id=key-techniques>Key Techniques</h2><ul><li>Media queries</li><li>Flexible units (rem, em, %)</li><li>Flexible images</li></ul><h2 id=testing>Testing</h2><p>Always test on real devices when possible, not just browser dev tools.</p>]]></content:encoded>
+            <category>web-development</category>
+            <category>css</category>
+            <category>responsive</category>
+            <category>mobile</category>
+        </item>
+        <item>
+            <title>CSS Grid vs Flexbox: When to Use What</title>
+            <link>http://localhost:1313/posts/test-post-3/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-3/</guid>
+            <pubDate>Sat, 25 Jan 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>A comprehensive guide to choosing between CSS Grid and Flexbox for your layout needs.&amp;#xA;Grid vs Flexbox Both CSS Grid and Flexbox are powerful layout tools, but they serve different purposes.&amp;#xA;When to …</description><content:encoded><![CDATA[<p>A comprehensive guide to choosing between CSS Grid and Flexbox for your layout needs.</p><h2 id=grid-vs-flexbox>Grid vs Flexbox</h2><p>Both CSS Grid and Flexbox are powerful layout tools, but they serve different purposes.</p><h2 id=when-to-use-grid>When to Use Grid</h2><ul><li>Two-dimensional layouts</li><li>Complex page structures</li><li>Precise control over rows and columns</li></ul><h2 id=when-to-use-flexbox>When to Use Flexbox</h2><ul><li>One-dimensional layouts</li><li>Component alignment</li><li>Responsive navigation bars</li></ul><h2 id=conclusion>Conclusion</h2><p>Understanding when to use each tool will make your CSS more efficient and maintainable.</p>]]></content:encoded>
+            <category>css</category>
+            <category>web-development</category>
+            <category>tutorial</category>
+            <category>layout</category>
+        </item>
+        <item>
+            <title>Advanced JavaScript Patterns</title>
+            <link>http://localhost:1313/posts/test-post-2/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/test-post-2/</guid>
+            <pubDate>Mon, 20 Jan 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>This post explores advanced JavaScript patterns and techniques that can help you write more efficient and maintainable code.&amp;#xA;Design Patterns JavaScript has many useful design patterns that can solve …</description><content:encoded><![CDATA[<p>This post explores advanced JavaScript patterns and techniques that can help you write more efficient and maintainable code.</p><h2 id=design-patterns>Design Patterns</h2><p>JavaScript has many useful design patterns that can solve common problems in elegant ways.</p><h2 id=common-patterns>Common Patterns</h2><ul><li>Module Pattern</li><li>Observer Pattern</li><li>Factory Pattern</li></ul><h2 id=best-practices>Best Practices</h2><p>Always consider readability and maintainability when choosing patterns.</p>]]></content:encoded>
+            <category>javascript</category>
+            <category>programming</category>
+            <category>advanced</category>
+            <category>patterns</category>
+        </item>
     </channel>
 </rss>
-

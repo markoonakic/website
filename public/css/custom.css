@@ -1,3 +1,35 @@
+@font-face {
+  font-family: 'CommitMonoFunky';
+  src: url('/fonts/CommitMonoFunky-400-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMonoFunky';
+  src: url('/fonts/CommitMonoFunky-400-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMonoFunky';
+  src: url('/fonts/CommitMonoFunky-700-Regular.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMonoFunky';
+  src: url('/fonts/CommitMonoFunky-700-Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --color-bg: #282828;
   --color-bg-alt: #32302f;
@@ -11,8 +43,24 @@
   --color-yellow: #d79921;
   --color-yellow-light: #fabd2f;
   --color-border: #3c3836;
+  --color-bg-hard: #1d2021;
+  --color-bg-soft: #32302f;
+  --color-bg2: #504945;
+  --color-bg3: #665c54;
+  --color-bg4: #7c6f64;
+  --color-fg0: #fbf1c7;
+  --color-fg1: #ebdbb2;
+  --color-fg2: #d5c4a1;
+  --color-fg3: #bdae93;
+  --color-fg4: #a89984;
+  --color-orange: #fe8019;
+  --color-aqua: #8ec07c;
+  --color-green: #98971a;
+  --color-green-light: #b8bb26;
+  --color-gray: #928374;
   --transition-fast: 0.2s ease;
   --separator-spacing: 0.175rem;
+  --code-font: 'CommitMonoFunky', 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
 }
 
 html {
@@ -20,13 +68,25 @@ html {
   color: var(--color-text);
   overflow-y: scroll;
   overflow-x: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
 }
 
 html::-webkit-scrollbar {
-  width: 0px;
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track {
   background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-surface);
 }
 
 body {
@@ -37,6 +97,7 @@ body {
 
 a {
   color: var(--color-purple);
+  text-decoration: none;
   transition: color var(--transition-fast);
 }
 
@@ -483,6 +544,7 @@ header {
 #search-results a:focus-visible {
   color: var(--color-purple-light);
 }
+
 .blog-rss-link,
 .social-icon-link {
   display: inline-block;
@@ -573,4 +635,425 @@ article#page ~ #page-posts {
 
 #page-title-container {
   gap: 1rem !important;
+}
+
+#page-content h2,
+article h2,
+main h2 {
+  color: var(--color-yellow);
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+#page-content h3,
+article h3,
+main h3 {
+  color: var(--color-yellow);
+  margin-top: 1.25em;
+  margin-bottom: 0.625em;
+}
+
+#page-content h4,
+article h4,
+main h4 {
+  color: var(--color-yellow);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+#page-content h5,
+article h5,
+main h5 {
+  color: var(--color-yellow);
+  margin-top: 0.875em;
+  margin-bottom: 0.5em;
+}
+
+#page-content h6,
+article h6,
+main h6 {
+  color: var(--color-yellow);
+  margin-top: 0.75em;
+  margin-bottom: 0.5em;
+}
+
+#page-content a,
+article a,
+main a {
+  color: var(--color-purple);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+#page-content a:hover,
+article a:hover,
+main a:hover,
+#page-content a:focus-visible,
+article a:focus-visible,
+main a:focus-visible {
+  color: var(--color-purple-light);
+}
+
+#page-content strong,
+article strong,
+main strong {
+  color: var(--color-yellow-light);
+  font-weight: bold;
+}
+
+#page-content em,
+article em,
+main em {
+  font-style: italic;
+  color: var(--color-orange);
+}
+
+#page-content u,
+article u,
+main u {
+  color: var(--color-yellow-light);
+  text-decoration: underline;
+  text-decoration-color: var(--color-yellow-light);
+}
+
+#page-content del,
+article del,
+main del {
+  color: var(--color-gray);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-gray);
+}
+
+#page-content mark,
+article mark,
+main mark {
+  background-color: var(--color-yellow-light);
+  color: var(--color-bg);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+#page-content code:not(pre code),
+article code:not(pre code),
+main code:not(pre code) {
+  background-color: var(--color-bg-hard);
+  color: var(--color-yellow-light);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: var(--code-font);
+}
+
+#page-content sub,
+article sub,
+main sub {
+  color: var(--color-orange);
+  font-size: 0.8em;
+  vertical-align: sub;
+}
+
+#page-content sup,
+article sup,
+main sup {
+  color: var(--color-orange);
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+#page-content table,
+article table,
+main table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  border: 1px solid var(--color-border);
+}
+
+#page-content table th,
+article table th,
+main table th {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.75em;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid var(--color-border);
+}
+
+#page-content table td,
+article table td,
+main table td {
+  padding: 0.75em;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+#page-content table tr:nth-child(even),
+article table tr:nth-child(even),
+main table tr:nth-child(even) {
+  background-color: var(--color-bg-alt);
+}
+
+#page-content table tr:hover,
+article table tr:hover,
+main table tr:hover {
+  background-color: var(--color-surface);
+}
+
+#page-content blockquote,
+article blockquote,
+main blockquote {
+  border-left: 4px solid var(--color-yellow);
+  padding: 1em;
+  margin: 1em 0;
+  color: var(--color-text);
+  font-style: italic;
+  background-color: transparent;
+  border-radius: 4px;
+}
+
+#page-content hr,
+article hr,
+main hr {
+  border: none;
+  border-top: 2px solid var(--color-border);
+  margin: 2em 0;
+}
+
+#page-content ul,
+article ul,
+main ul,
+#page-content ol,
+article ol,
+main ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+#page-content li,
+article li,
+main li {
+  margin: 0.5em 0;
+  color: var(--color-text);
+}
+
+#page-content input[type="checkbox"],
+article input[type="checkbox"],
+main input[type="checkbox"] {
+  accent-color: var(--color-gray);
+  margin-right: 0.5em;
+  cursor: pointer;
+  transition: accent-color var(--transition-fast);
+  width: 1em;
+  height: 1em;
+}
+
+#page-content input[type="checkbox"]:checked,
+article input[type="checkbox"]:checked,
+main input[type="checkbox"]:checked {
+  accent-color: var(--color-aqua);
+}
+
+#page-content input[type="checkbox"]:checked:hover,
+article input[type="checkbox"]:checked:hover,
+main input[type="checkbox"]:checked:hover {
+  accent-color: var(--color-green-light);
+}
+
+#page-content .code-block-wrapper,
+article .code-block-wrapper,
+main .code-block-wrapper {
+  position: relative !important;
+  margin: 1em 0;
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow: visible;
+  background-color: var(--color-bg-hard);
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+}
+
+#page-content .code-block-wrapper > pre,
+article .code-block-wrapper > pre,
+main .code-block-wrapper > pre,
+#page-content .code-block-wrapper > .chroma,
+article .code-block-wrapper > .chroma,
+main .code-block-wrapper > .chroma {
+  margin: 0 !important;
+  flex: 1 1 0;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  padding: 0 !important;
+  padding-top: 1.25rem !important;
+  padding-right: 0 !important;
+  padding-bottom: 1.25rem !important;
+  padding-left: 1.25rem !important;
+  min-width: 0;
+  width: 0;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+#page-content .code-block-wrapper > pre::-webkit-scrollbar,
+article .code-block-wrapper > pre::-webkit-scrollbar,
+main .code-block-wrapper > pre::-webkit-scrollbar,
+#page-content .code-block-wrapper > .chroma::-webkit-scrollbar,
+article .code-block-wrapper > .chroma::-webkit-scrollbar,
+main .code-block-wrapper > .chroma::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+#page-content .code-block-wrapper > pre::-webkit-scrollbar-track,
+article .code-block-wrapper > pre::-webkit-scrollbar-track,
+main .code-block-wrapper > pre::-webkit-scrollbar-track,
+#page-content .code-block-wrapper > .chroma::-webkit-scrollbar-track,
+article .code-block-wrapper > .chroma::-webkit-scrollbar-track,
+main .code-block-wrapper > .chroma::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#page-content .code-block-wrapper > pre::-webkit-scrollbar-thumb,
+article .code-block-wrapper > pre::-webkit-scrollbar-thumb,
+main .code-block-wrapper > pre::-webkit-scrollbar-thumb,
+#page-content .code-block-wrapper > .chroma::-webkit-scrollbar-thumb,
+article .code-block-wrapper > .chroma::-webkit-scrollbar-thumb,
+main .code-block-wrapper > .chroma::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
+
+#page-content .code-block-wrapper > pre::-webkit-scrollbar-thumb:hover,
+article .code-block-wrapper > pre::-webkit-scrollbar-thumb:hover,
+main .code-block-wrapper > pre::-webkit-scrollbar-thumb:hover,
+#page-content .code-block-wrapper > .chroma::-webkit-scrollbar-thumb:hover,
+article .code-block-wrapper > .chroma::-webkit-scrollbar-thumb:hover,
+main .code-block-wrapper > .chroma::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-surface);
+}
+
+#page-content pre,
+article pre,
+main pre {
+  background-color: var(--color-bg-hard);
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.25em;
+  overflow-x: auto;
+  margin: 0;
+  line-height: 1.6;
+  position: static;
+  font-family: var(--code-font);
+}
+
+#page-content pre code,
+article pre code,
+main pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.9em;
+  color: inherit;
+  font-family: var(--code-font);
+}
+
+#page-content .chroma,
+article .chroma,
+main .chroma {
+  background-color: var(--color-bg-hard) !important;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.25em;
+  overflow-x: auto;
+  margin: 0;
+  position: static;
+  font-family: var(--code-font);
+}
+
+#page-content pre,
+article pre,
+main pre,
+#page-content .chroma,
+article .chroma,
+main .chroma {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.code-copy-button-container {
+  display: flex;
+  align-items: flex-start;
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-top: 1.25rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.code-copy-button {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-bg-hard);
+  border: none;
+  color: var(--color-purple) !important;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: none;
+  will-change: color, background-color;
+  z-index: 11;
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: none;
+  pointer-events: auto;
+  margin: 0;
+  margin-top: calc((0.9rem * 1.6) / 2 - 1rem) !important;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+  color: var(--color-purple-light) !important;
+  background-color: var(--color-surface);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+  outline: none;
+}
+
+
+.code-copy-button i {
+  pointer-events: none;
+  transition: opacity 0.05s;
+}
+
+.code-copy-button.resetting i {
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+.code-copy-button.copied i {
+  transition: none !important;
+}
+
+.code-copy-button.copied {
+  color: var(--color-green) !important;
+  background-color: var(--color-bg-hard);
+  transition: none !important;
+}
+
+.code-copy-button.copied:hover,
+.code-copy-button.copied:focus-visible {
+  color: var(--color-green-light) !important;
+  background-color: var(--color-surface);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
 }

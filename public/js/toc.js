@@ -1,5 +1,14 @@
 (function () {
   'use strict';
+  const ANIMATION_DURATION = 0.2;
+  const ANIMATION_EASE = 'power2.out';
+  const ARROW_ROTATION_OPEN = '90deg';
+  const ARROW_ROTATION_CLOSED = '0deg';
+  const OPACITY_OPEN = '1';
+  const OPACITY_CLOSED = '0';
+  const HEIGHT_CLOSED = '0px';
+  const KEY_ENTER = 'Enter';
+  const KEY_SPACE = ' ';
 
   if (typeof gsap === 'undefined') {
     console.error('GSAP is not loaded');
@@ -17,6 +26,7 @@
     let isOpen = details.hasAttribute('open');
     let animation = null;
     let arrowAnimation = null;
+    
     const measureHeight = () => {
       const oldHeight = wrapper.style.height;
       const oldMaxHeight = wrapper.style.maxHeight;
@@ -32,13 +42,13 @@
       const height = measureHeight();
       wrapper.style.height = height + 'px';
       wrapper.style.maxHeight = height + 'px';
-      wrapper.style.opacity = '1';
-      summary.style.setProperty('--arrow-rotation', '90deg');
+      wrapper.style.opacity = OPACITY_OPEN;
+      summary.style.setProperty('--arrow-rotation', ARROW_ROTATION_OPEN);
     } else {
-      wrapper.style.height = '0px';
-      wrapper.style.maxHeight = '0px';
-      wrapper.style.opacity = '0';
-      summary.style.setProperty('--arrow-rotation', '0deg');
+      wrapper.style.height = HEIGHT_CLOSED;
+      wrapper.style.maxHeight = HEIGHT_CLOSED;
+      wrapper.style.opacity = OPACITY_CLOSED;
+      summary.style.setProperty('--arrow-rotation', ARROW_ROTATION_CLOSED);
     }
 
     summary.addEventListener('click', (e) => {
@@ -51,25 +61,25 @@
       if (isOpen) {
         details.setAttribute('open', '');
         const targetHeight = measureHeight();
-        wrapper.style.height = '0px';
-        wrapper.style.maxHeight = '0px';
-        wrapper.style.opacity = '0';
-        summary.style.setProperty('--arrow-rotation', '0deg');
+        wrapper.style.height = HEIGHT_CLOSED;
+        wrapper.style.maxHeight = HEIGHT_CLOSED;
+        wrapper.style.opacity = OPACITY_CLOSED;
+        summary.style.setProperty('--arrow-rotation', ARROW_ROTATION_CLOSED);
         void wrapper.offsetHeight;
         animation = gsap.to(wrapper, {
           height: targetHeight + 'px',
           maxHeight: targetHeight + 'px',
           opacity: 1,
-          duration: 0.2,
-          ease: 'power2.out',
+          duration: ANIMATION_DURATION,
+          ease: ANIMATION_EASE,
           onComplete: () => {
             animation = null;
           }
         });
         arrowAnimation = gsap.to(summary, {
-          '--arrow-rotation': '90deg',
-          duration: 0.2,
-          ease: 'power2.out',
+          '--arrow-rotation': ARROW_ROTATION_OPEN,
+          duration: ANIMATION_DURATION,
+          ease: ANIMATION_EASE,
           onComplete: () => {
             arrowAnimation = null;
           }
@@ -78,24 +88,24 @@
         const currentHeight = measureHeight();
         wrapper.style.height = currentHeight + 'px';
         wrapper.style.maxHeight = currentHeight + 'px';
-        wrapper.style.opacity = '1';
-        summary.style.setProperty('--arrow-rotation', '90deg');
+        wrapper.style.opacity = OPACITY_OPEN;
+        summary.style.setProperty('--arrow-rotation', ARROW_ROTATION_OPEN);
         void wrapper.offsetHeight;
         animation = gsap.to(wrapper, {
-          height: '0px',
-          maxHeight: '0px',
+          height: HEIGHT_CLOSED,
+          maxHeight: HEIGHT_CLOSED,
           opacity: 0,
-          duration: 0.2,
-          ease: 'power2.out',
+          duration: ANIMATION_DURATION,
+          ease: ANIMATION_EASE,
           onComplete: () => {
             details.removeAttribute('open');
             animation = null;
           }
         });
         arrowAnimation = gsap.to(summary, {
-          '--arrow-rotation': '0deg',
-          duration: 0.2,
-          ease: 'power2.out',
+          '--arrow-rotation': ARROW_ROTATION_CLOSED,
+          duration: ANIMATION_DURATION,
+          ease: ANIMATION_EASE,
           onComplete: () => {
             arrowAnimation = null;
           }
@@ -104,7 +114,7 @@
     });
 
     summary.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === KEY_ENTER || e.key === KEY_SPACE) {
         e.preventDefault();
         summary.click();
       }

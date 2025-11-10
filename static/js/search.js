@@ -1,12 +1,18 @@
 (function() {
   'use strict';
+  const SEARCH_INDEX_URL = '/search/index.json';
+  const DEFAULT_TITLE = 'Untitled';
+  const DEFAULT_URL = '#';
+  
   const input = document.getElementById('search-input');
   const results = document.getElementById('search-results');
   if (!input || !results) return;
+  
   let posts = [];
+  
   async function loadPosts() {
     try {
-      const response = await fetch('/search/index.json');
+      const response = await fetch(SEARCH_INDEX_URL);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       posts = await response.json();
     } catch (e) {
@@ -14,6 +20,7 @@
       results.innerHTML = '<p class="text-secondary mt-3">Failed to load search index.</p>';
     }
   }
+  
   function search(query) {
     if (!query.trim()) {
       results.innerHTML = '';
@@ -29,11 +36,12 @@
       return;
     }
     results.innerHTML = '<div class="mt-3">' + matches.map(post => {
-      const title = post.title || 'Untitled';
-      const url = post.url || '#';
+      const title = post.title || DEFAULT_TITLE;
+      const url = post.url || DEFAULT_URL;
       return `<div class="mb-2"><a href="${url}" class="text-decoration-none">${title}</a></div>`;
     }).join('') + '</div>';
   }
+  
   loadPosts();
   input.addEventListener('input', e => search(e.target.value));
 })();

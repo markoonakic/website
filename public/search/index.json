@@ -1,5 +1,13 @@
 [
   {
+    "title": "Markdown Features Test - Gruvbox Theme Showcase",
+    "url": "/posts/markdown-features-test/"
+  },
+  {
+    "title": "Remote decryption using Dropbear SSH",
+    "url": "/posts/dropbear-shh/"
+  },
+  {
     "title": "Performance Optimization Tips",
     "url": "/posts/test-post-6/"
   },
@@ -10,10 +18,6 @@
   {
     "title": "CSS Grid Layout Mastery",
     "url": "/posts/test-post-css/"
-  },
-  {
-    "title": "CSS Grid Layout Mastery",
-    "url": "/posts/test/"
   },
   {
     "title": "Introduction to React Hooks",
@@ -30,9 +34,5 @@
   {
     "title": "Advanced JavaScript Patterns",
     "url": "/posts/test-post-2/"
-  },
-  {
-    "title": "",
-    "url": "/posts/template/"
   }]
 

@@ -56,7 +56,39 @@
 
     {{ if not $skipMain }}
         <main class="mw-100" id="page-content" {{ if $microdata }} itemprop="articleBody" {{ end }}>
-            {{ with $content }}
+            {{- $processedContent := $content -}}
+            {{- if and (eq $page.Kind "home") $content -}}
+                    {{- $original := resources.Get "images/beograd.png" -}}
+                    {{- if not $original -}}
+                        {{- $original = resources.Get "static/images/beograd.png" -}}
+                    {{- end -}}
+                {{- if $original -}}
+                    {{- $widths := slice 800 1200 1600 -}}
+                    {{- $webpImages := slice -}}
+                    {{- $pngImages := slice -}}
+                    {{- range $widths -}}
+                        {{- $webp := $original.Resize (printf "%dx webp q95" .) -}}
+                        {{- $png := $original.Resize (printf "%dx png q100" .) -}}
+                        {{- $webpImages = $webpImages | append $webp -}}
+                        {{- $pngImages = $pngImages | append $png -}}
+                    {{- end -}}
+                    {{- $webpSrcset := slice -}}
+                    {{- range $idx, $img := $webpImages -}}
+                        {{- $webpSrcset = $webpSrcset | append (printf "%s %dw" $img.RelPermalink (index $widths $idx)) -}}
+                    {{- end -}}
+                    {{- $pngSrcset := slice -}}
+                    {{- range $idx, $img := $pngImages -}}
+                        {{- $pngSrcset = $pngSrcset | append (printf "%s %dw" $img.RelPermalink (index $widths $idx)) -}}
+                    {{- end -}}
+                    {{- $defaultPng := index $pngImages 1 -}}
+                    {{- $optimizedImage := printf `<picture>
+    <source type="image/webp" srcset="%s" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 125vw, 1500px">
+    <img src="%s" srcset="%s" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 125vw, 1500px" alt="Belgrade" class="belgrade-image" loading="lazy" width="%d" height="%d">
+</picture>` (delimit $webpSrcset ", ") $defaultPng.RelPermalink (delimit $pngSrcset ", ") $defaultPng.Width $defaultPng.Height -}}
+                    {{- $processedContent = $processedContent | replaceRE `<img src="/images/beograd.png" alt="Belgrade" class="belgrade-image">` $optimizedImage -}}
+                {{- end -}}
+            {{- end -}}
+            {{ with $processedContent }}
                 {{ . | safeHTML }}
             {{ end }}
         </main>

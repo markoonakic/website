@@ -1,169 +1,94 @@
 {{- $page := . -}}
-{{- $copyright := site.Copyright | markdownify | plainify -}}
-{{- $date := "Mon, 02 Jan 2006 15:04:05 MST" -}}
-{{- $description := cond $page.IsHome ($page.Param "params.description") $page.Description | markdownify | plainify -}}
-{{- $editor := $page.Param "params.feeds.rss.managing_editor" -}}
-{{- $language := $page.Language.LanguageCode -}}
-{{- $limit := site.Config.Services.RSS.Limit -}}
-{{- $link := ($page.AlternativeOutputFormats.Get "html").Permalink -}}
-{{- $master := $page.Param "params.feeds.rss.web_master" -}}
-{{- $subpages := $page.RegularPagesRecursive -}}
-{{- $lastmod := site.Lastmod.Format $date -}}
+{{- $isHomePage := or $page.IsHome (eq $page.Kind "home") -}}
+{{- if ne $page.Section "posts" -}}
+    {{- if $isHomePage -}}
+        {{- $page = site.GetPage "section" "posts" -}}
+    {{- else -}}
+        {{- return "" -}}
+    {{- end -}}
+{{- end -}}
 
+{{- $dateFormat := "Mon, 02 Jan 2006 15:04:05 -0700" -}}
+{{- $siteTitle := site.Title | markdownify | plainify | htmlUnescape -}}
+{{- $siteDescription := site.Params.description | default (printf "Blog posts from %s" $siteTitle) | markdownify | plainify | htmlUnescape -}}
+{{- $language := site.LanguageCode | default "en-us" -}}
+{{- $limit := default 20 site.Config.Services.RSS.Limit -}}
+{{- $siteURL := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $rssURL := cond $isHomePage (printf "%s/index.xml" $siteURL) (printf "%s/posts/index.xml" $siteURL) -}}
+
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+{{- $posts = where $posts "Draft" false -}}
+{{- $posts = sort $posts "Date" "desc" -}}
 {{- if gt $limit 0 -}}
-    {{- $subpages = $subpages | first $limit -}}
+    {{- $posts = $posts | first $limit -}}
 {{- end -}}
 
-{{- $titles := slice -}}
+{{- $lastmod := now.Format $dateFormat -}}
+{{- $pubDate := cond (gt (len $posts) 0) ((index $posts 0).PublishDate.Format $dateFormat) $lastmod -}}
+{{- $authorName := site.Params.author.name | default $siteTitle -}}
+{{- $authorEmail := site.Params.author.email | default "" -}}
 
-{{- if $page.IsHome -}}
-    {{- $titles = slice (site.Title | default $page.Title | markdownify | plainify) -}}
-{{- else -}}
-    {{- with $page.Title -}}
-        {{- $titles = slice (. | markdownify | plainify) -}}
-    {{- end -}}
-
-    {{- range .Ancestors -}}
-        {{- $title := cond .IsHome (site.Title | default .Title) .Title -}}
-        {{- with $title -}}
-            {{- $titles = $titles | append (. | markdownify | plainify) -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
-
-{{- $title := delimit $titles " · " -}}
 {{- safeHTML "<?xml version=\"1.0\" encoding=\"utf-8\"?>" -}}
-<rss version="2.0"{{ with $language }} xml:lang="{{ . }}"{{ end }} xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xml:lang="{{ $language }}" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        {{- with $copyright }}
-            <copyright>{{ . }}</copyright>
+        <title>{{ $siteTitle }}</title>
+        <link>{{ $siteURL }}</link>
+        <description>{{ $siteDescription }}</description>
+        <language>{{ $language }}</language>
+        <lastBuildDate>{{ $lastmod }}</lastBuildDate>
+        <pubDate>{{ $pubDate }}</pubDate>
+        <ttl>60</ttl>
+        <atom:link href="{{ $rssURL }}" rel="self" type="application/rss+xml"/>
+        <generator>Hugo {{ hugo.Version }}</generator>
+        {{- if site.Copyright }}
+        <copyright>{{ site.Copyright | markdownify | plainify | htmlUnescape }}</copyright>
         {{- end }}
-
-        {{- with $description }}
-            <description>{{ . }}</description>
+        {{- if $authorEmail }}
+        <managingEditor>{{ $authorEmail }} ({{ $authorName }})</managingEditor>
+        <webMaster>{{ $authorEmail }} ({{ $authorName }})</webMaster>
         {{- end }}
-
-        {{- with $language }}
-            <language>{{ . }}</language>
-        {{- end }}
-
-        {{- with $lastmod }}
-            <lastBuildDate>{{ . }}</lastBuildDate>
-        {{- end }}
-
-        {{- with $link }}
-            <link>{{ . }}</link>
-        {{- end }}
-
-        {{- $favicon := "/favicon.svg" -}}
-        {{- if $favicon -}}
-            <image>
-                <url>{{ site.BaseURL }}{{ $favicon }}</url>
-                <title>{{ site.Title | default $page.Title }}</title>
-                <link>{{ $link }}</link>
-            </image>
-        {{- end }}
-
-        {{- with $page.OutputFormats.Get "rss" }}
-            <atom:link href="{{ .Permalink }}" hreflang="{{ $page.Language.LanguageCode }}" rel="self" type="application/rss+xml"/>
-        {{- end }}
-
-        {{- range $page.OutputFormats }}
-            {{- $rel := cond (eq .Rel "canonical") "alternate" .Rel -}}
-            <atom:link href="{{ .Permalink }}" hreflang="{{ $page.Language.LanguageCode }}" rel="{{ $rel }}" type="{{ .MediaType }}"/>
-        {{- end }}
-
-        {{- range $t := $page.Translations }}
-            {{- range .OutputFormats }}
-                <atom:link href="{{ .Permalink }}" hreflang="{{ $t.Language.LanguageCode }}" rel="{{ .Rel }}" type="{{ .MediaType }}"/>
+        {{- range $post := $posts }}
+        <item>
+            <title>{{ $post.Title | markdownify | plainify | htmlUnescape | transform.XMLEscape }}</title>
+            <link>{{ $post.Permalink }}</link>
+            <guid isPermaLink="true">{{ $post.Permalink }}</guid>
+            <pubDate>{{ $post.PublishDate.Format $dateFormat }}</pubDate>
+            {{- $postAuthor := "" -}}
+            {{- $authors := partial "func-authors.html" $post -}}
+            {{- if $authors }}
+                {{- $primary := index $authors 0 -}}
+                {{- if and $primary.Params.author.email $primary.Params.author.name }}
+                    {{- $postAuthor = printf "%s (%s)" $primary.Params.author.email ($primary.Params.author.name | default ($primary.Title | markdownify | plainify)) -}}
+                {{- else if $primary.Params.author.email }}
+                    {{- $postAuthor = $primary.Params.author.email -}}
+                {{- else if $primary.Params.author.name }}
+                    {{- $postAuthor = printf "noreply@%s (%s)" (urls.Parse $siteURL).Host ($primary.Params.author.name | default ($primary.Title | markdownify | plainify)) -}}
+                {{- end }}
             {{- end }}
-        {{- end }}
-
-        {{- with $editor }}
-            <managingEditor>{{ . }}</managingEditor>
-        {{- end }}
-
-        {{- with $title }}
-            <title>{{ . }}</title>
-        {{- end }}
-
-        {{- with $master }}
-            <webMaster>{{ . }}</webMaster>
-        {{- end }}
-
-        {{- range $subpage := $subpages }}
-            {{- if not ($subpage.Param "params.exclude_feeds") }}
-                <item>
-                    {{- $author := "" -}}
-                    {{- $authors := partial "func-authors.html" $subpage -}}
-                    {{- $content := $subpage.Content -}}
-                    {{- $external := and $subpage.Params.link (not ($subpage.Param "params.feeds.disable_link")) | not | not -}}
-                    {{- $id := printf "tag:%s,%s:%s" (urls.Parse site.BaseURL).Host ($subpage.PublishDate.Format "2006-01-02") (cond ($subpage.Params.id | not) $subpage.RelPermalink $subpage.Params.id) -}}
-                    {{- $published := $subpage.PublishDate.Format $date -}}
-                    {{- $title := $subpage.Title | markdownify | plainify | htmlUnescape | transform.XMLEscape -}}
-                    {{- $link := cond $external (htmlEscape $subpage.Params.link) $subpage.Permalink -}}
-
-                    {{- with $authors }}
-                        {{- $primary := index . 0 -}}
-                        {{- if and $primary.Params.author.email $primary.Params.author.name -}}
-                            {{- $author = printf "%s (%s)" $primary.Params.author.email ($primary.Params.author.name | default ($primary.Title | markdownify | plainify)) -}}
-                        {{- else if $primary.Params.email -}}
-                            {{- $author = $primary.Params.email -}}
-                        {{- end -}}
-                    {{- end }}
-
-                    {{- if and $content $external -}}
-                        {{- $text := or ($subpage.Param "params.feeds.page_link" | markdownify) "⏎" -}}
-                        {{- $footer := printf `<p><a href="%s">%s</a></p>` $subpage.Permalink $text -}}
-                        {{- $content = print $content $footer -}}
-                    {{- end }}
-
-                    {{- if not $content -}}
-                        {{- $content = markdownify $subpage.Description -}}
-                    {{- end }}
-
-                    {{- $content = replaceRE `<a href="#fn:(\d+)" class="footnote-ref" role="doc-noteref">` (printf `<a href="%s#fn:$1" class="footnote-ref" role="doc-noteref">` $subpage.Permalink) $content -}}
-                    {{- $content = replaceRE `<a href="#fnref:(\d+)" class="footnote-backref" role="doc-backlink">` (printf `<a href="%s#fnref:$1" class="footnote-backref" role="doc-backlink">` $subpage.Permalink) $content -}}
-                    {{- $content = partial "func-minify.html" (dict "content" $content) -}}
-
-                    {{- with $author }}
-                        <author>{{ . }}</author>
-                    {{- end }}
-
-                    {{- with $content }}
-                        <description>{{ printf "<![CDATA[%s]]>" . | safeHTML }}</description>
-                    {{- end }}
-
-                    {{- with $id }}
-                        <guid isPermaLink="false">{{ . }}</guid>
-                    {{- end }}
-
-                    {{- with $link }}
-                        <link>{{ . }}</link>
-                    {{- end }}
-
-                    {{- range $subpage.OutputFormats }}
-                        {{- $rel := cond (eq .Rel "canonical") "alternate" .Rel -}}
-                        {{- $href := cond (and (eq $rel "alternate") (eq .MediaType.Type "text/html")) $link .Permalink -}}
-                        <atom:link href="{{ $href }}" hreflang="{{ $subpage.Language.LanguageCode }}" rel="{{ $rel }}" type="{{ .MediaType }}"/>
-                    {{- end }}
-
-                    {{- range $t := $subpage.Translations }}
-                        {{- range .OutputFormats }}
-                            <atom:link href="{{ .Permalink }}" hreflang="{{ $t.Language.LanguageCode }}" rel="{{ .Rel }}" type="{{ .MediaType }}"/>
-                        {{- end }}
-                    {{- end }}
-
-                    {{- with $published }}
-                        <pubDate>{{ . }}</pubDate>
-                    {{- end }}
-
-                    {{- with $title }}
-                        <title>{{ . }}</title>
-                    {{- end }}
-                </item>
+            {{- if not $postAuthor }}
+                {{- if $authorEmail }}
+                    {{- $postAuthor = printf "%s (%s)" $authorEmail $authorName -}}
+                {{- end }}
             {{- end }}
+            {{- if $postAuthor }}
+            <author>{{ $postAuthor }}</author>
+            {{- end }}
+            {{- $description := $post.Description | default ($post.Summary | plainify | truncate 200) | markdownify | plainify | htmlUnescape -}}
+            <description>{{ $description | transform.XMLEscape }}</description>
+            {{- $content := $post.Content -}}
+            {{- if $content }}
+                {{- $content = replaceRE `<a href="#fn:(\d+)" class="footnote-ref" role="doc-noteref">` (printf `<a href="%s#fn:$1" class="footnote-ref" role="doc-noteref">` $post.Permalink) $content -}}
+                {{- $content = replaceRE `<a href="#fnref:(\d+)" class="footnote-backref" role="doc-backlink">` (printf `<a href="%s#fnref:$1" class="footnote-backref" role="doc-backlink">` $post.Permalink) $content -}}
+                {{- $content = replaceRE `(src|href)="(/(?:[^"]+)?)"` (printf `$1="%s$2"` $siteURL) $content -}}
+                {{- $content = partial "func-minify.html" (dict "content" $content) -}}
+            <content:encoded>{{ printf "<![CDATA[%s]]>" $content | safeHTML }}</content:encoded>
+            {{- end }}
+            {{- if $post.Params.tags }}
+                {{- range $tag := $post.Params.tags }}
+            <category>{{ $tag | transform.XMLEscape }}</category>
+                {{- end }}
+            {{- end }}
+        </item>
         {{- end }}
     </channel>
 </rss>
-
