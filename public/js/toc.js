@@ -30,11 +30,22 @@
     const measureHeight = () => {
       const oldHeight = wrapper.style.height;
       const oldMaxHeight = wrapper.style.maxHeight;
+      const oldOpacity = wrapper.style.opacity;
+      
       wrapper.style.height = 'auto';
       wrapper.style.maxHeight = 'none';
+      wrapper.style.opacity = '1';
+      wrapper.style.visibility = 'hidden';
+      
+      void wrapper.offsetHeight;
+      
       const height = wrapper.scrollHeight;
-      wrapper.style.height = oldHeight;
-      wrapper.style.maxHeight = oldMaxHeight;
+      
+      wrapper.style.height = oldHeight || '';
+      wrapper.style.maxHeight = oldMaxHeight || '';
+      wrapper.style.opacity = oldOpacity || '';
+      wrapper.style.visibility = '';
+      
       return height;
     };
 

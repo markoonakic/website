@@ -32,17 +32,115 @@
 
 {{ if or $description $menu $title }}
     <header id="site-header">
-        {{ with $title }}
-            <div class="display-1 fw-bold {{ if not (or $description $menu) }} row-tall {{ end }} text-center" id="site-title">
-                <a class="text-body text-decoration-none" href="{{ relLangURL `` }}">{{ . }}</a>
+        {{ if and $title $menu }}
+            <div class="header-flex-container">
+                {{ with $title }}
+                    <div class="display-1 fw-bold text-center text-md-start" id="site-title">
+                        <a class="text-body text-decoration-none" href="{{ relLangURL `` }}">{{ . }}</a>
+                    </div>
+                {{ end }}
+
+                {{ if site.Menus.main }}
+                    <nav aria-label="{{ i18n `menu` }}" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav {{ if $pills }} nav-pills {{ else if $tabs }} nav-tabs {{ else if $underline }} nav-underline {{ end }}">
+                        {{ range site.Menus.main }}
+                            {{ $menuPath := strings.TrimPrefix $basePath .URL }}
+
+                            {{ $home := and (eq $menuPath "/") (eq $page.Section "") }}
+                            {{ $menu := and (ne $menuPath "/") (hasPrefix $pagePath $menuPath) }}
+                            {{ $section := and (ne $menuPath "/") (hasPrefix $menuPath (printf "/%s/" $page.Section)) }}
+
+                            {{ $active := or $home $menu $section }}
+
+                            <li class="nav-item {{ if .Children }} dropdown {{ end }}">
+                                <a {{ if $active }} aria-current="page" {{ end }} {{ if .Children }} aria-expanded="false" {{ end }} class="{{ if $active }} active {{ if $links }} fw-bold text-body {{ end }} {{ end }} {{ if .Params.disabled }} disabled {{ end }} nav-link {{ if .Children }} dropdown-toggle {{ end }} {{ if and $active $links }} text-decoration-underline {{ end }}" {{ if .Children }} data-bs-toggle="dropdown" {{ end }} href="{{ if not .Children -}} {{- .URL -}} {{- end }}" {{ if .Children }} role="button" {{ end }} {{ if not .Children }} {{ with partial "func-target.html" (dict "page" $page "url" .URL) }} target="{{ . }}" {{ end }} {{ end }}>{{ .Name | markdownify }}</a>
+
+                                {{ with .Children }}
+                                    <ul class="dropdown-menu">
+                                        {{ range . }}
+                                            {{ if .Params.divider_above }}
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                            {{ end }}
+
+                                            {{ with .Params.header_above }}
+                                                <li>
+                                                    <h6 class="dropdown-header">{{ . }}</h6>
+                                                </li>
+                                            {{ end }}
+
+                                            <li>
+                                                <a class="{{ if .Params.disabled }} disabled {{ end }} dropdown-item" href="{{ .URL }}" {{ with partial "func-target.html" (dict "page" $page "url" .URL) }} target="{{ . }}" {{ end }}>{{ .Name | markdownify }}</a>
+                                            </li>
+
+                                            {{ if .Params.divider_below }}
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                            {{ end }}
+
+                                            {{ with .Params.header_below }}
+                                                <li>
+                                                    <h6 class="dropdown-header">{{ . }}</h6>
+                                                </li>
+                                            {{ end }}
+                                        {{ end }}
+                                    </ul>
+                                {{ end }}
+                            </li>
+                        {{ end }}
+                        </ul>
+                    </nav>
+                {{ else }}
+                    {{ $pages := site.Sections }}
+
+                    {{ range $name, $taxonomy := site.Taxonomies }}
+                        {{ if and $taxonomy.Page $taxonomy.Page.RelPermalink }}
+                            {{ $pages = $pages | append $taxonomy.Page }}
+                        {{ end }}
+                    {{ end }}
+
+                    {{ $pages = sort $pages "LinkTitle" }}
+
+                    <nav aria-label="{{ i18n `menu` }}" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav {{ if $pills }} nav-pills {{ else if $tabs }} nav-tabs {{ else if $underline }} nav-underline {{ end }}">
+                            {{ $active := eq $page.Section "" }}
+
+                            <li class="nav-item">
+                                <a {{ if $active }} aria-current="page" {{ end }} class="{{ if $active }} active {{ if $links }} fw-bold text-body {{ end }} {{ end }} nav-link {{ if and $active $links }} text-decoration-underline {{ end }}" href="{{ relLangURL `` }}">{{ i18n "home" }}</a>
+                            </li>
+
+                            {{ range $pages }}
+                                {{ $menuPath := strings.TrimPrefix $basePath .RelPermalink }}
+
+                                {{ $home := and (eq $menuPath "/") (eq $page.Section "") }}
+                                {{ $menu := and (ne $menuPath "/") (hasPrefix $pagePath $menuPath) }}
+                                {{ $section := and (ne $menuPath "/") (hasPrefix $menuPath (printf "/%s/" $page.Section)) }}
+
+                                {{ $active := or $home $menu $section }}
+
+                                <li class="nav-item">
+                                    <a {{ if $active }} aria-current="page" {{ end }} class="{{ if $active }} active {{ if $links }} fw-bold text-body {{ end }} {{ end }} nav-link {{ if and $active $links }} text-decoration-underline {{ end }}" href="{{ .RelPermalink }}" {{ with partial "func-target.html" (dict "page" $page "url" .RelPermalink) }} target="{{ . }}" {{ end }}>{{ .LinkTitle }}</a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </nav>
+                {{ end }}
             </div>
+        {{ else }}
+            {{ with $title }}
+                <div class="display-1 fw-bold {{ if not (or $description $menu) }} row-tall {{ end }} text-center" id="site-title">
+                    <a class="text-body text-decoration-none" href="{{ relLangURL `` }}">{{ . }}</a>
+                </div>
+            {{ end }}
         {{ end }}
 
         {{ with $description }}
             <div class="lead row-tall text-center" id="site-description">{{ . }}</div>
         {{ end }}
 
-        {{ if $menu }}
+        {{ if and $menu (not (and $title $menu)) }}
             {{ with site.Menus.main }}
                 <nav aria-label="{{ i18n `menu` }}" class="row-tall" id="site-menu">
                     <ul class="align-items-center justify-content-center nav {{ if $pills }} nav-pills {{ else if $tabs }} nav-tabs {{ else if $underline }} nav-underline {{ end }}">

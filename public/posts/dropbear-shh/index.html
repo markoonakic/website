@@ -137,17 +137,16 @@
 
     <header id="site-header">
         
-            <div class="display-1 fw-bold  text-center" id="site-title">
-                <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
-            </div>
-        
+            <div class="header-flex-container">
+                
+                    <div class="display-1 fw-bold text-center text-md-start" id="site-title">
+                        <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+                    </div>
+                
 
-        
-
-        
-            
-                <nav aria-label="" class="row-tall" id="site-menu">
-                    <ul class="align-items-center justify-content-center nav ">
+                
+                    <nav aria-label="" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav ">
                         
                             
 
@@ -205,9 +204,14 @@
                                 
                             </li>
                         
-                    </ul>
-                </nav>
-            
+                        </ul>
+                    </nav>
+                
+            </div>
+        
+
+        
+
         
     </header>
 
@@ -382,23 +386,13 @@
         <li><a href="#install-dropbear">Install Dropbear</a></li>
         <li><a href="#configure-dropbearconf">Configure dropbear.conf</a></li>
         <li><a href="#set-early-boot-networking">Set early-boot networking</a></li>
-      </ul>
-    </li>
-    <li><a href="#update-the-initramfs">Update the initramfs</a></li>
-    <li><a href="#create-the-keys">Create the keys</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#making-an-alias-optional">Making an alias (optional)</a>
-      <ul>
-        <li><a href="#edit-the-bashrc-on-the-client">Edit the bashrc on the client</a></li>
-        <li><a href="#add-the-alias">Add the alias</a></li>
-        <li><a href="#source-the-bashrc">Source the bashrc:</a></li>
+        <li><a href="#update-the-initramfs">Update the initramfs</a></li>
+        <li><a href="#create-the-keys">Create the keys</a></li>
+        <li><a href="#making-an-alias-optional">Making an alias (optional)</a></li>
         <li><a href="#reboot">Reboot:</a></li>
-        <li><a href="#try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</a></li>
       </ul>
     </li>
+    <li><a href="#try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</a></li>
     <li><a href="#manual-unlock-with-no-alias">Manual unlock with no alias:</a></li>
   </ul>
 </nav>
@@ -530,24 +524,24 @@
 <h3 id="configure-dropbearconf">Configure dropbear.conf</h3>
 <p>Options:</p>
 <ul>
-<li>-I : Disconnect the session if no traffic is transmitted or received in x seconds</li>
+<li><code>-I</code> : Disconnect the session if no traffic is transmitted or received in x seconds</li>
 </ul>
 <p>Auto-disconnecting inactive sessions reduces exposure in the early boot process.</p>
 <ul>
 <li>
-<p>-j: Disable ssh local port forwarding.</p>
+<p><code>-j</code>: Disable ssh local port forwarding.</p>
 </li>
 <li>
-<p>-k : Disable remote port forwarding.</p>
+<p><code>-k</code> : Disable remote port forwarding.</p>
 </li>
 </ul>
 <p>Disabling port forwarding minimizes attack surface.</p>
 <ul>
-<li>-p : Dropbear listen on this specified TCP port.</li>
+<li><code>-p</code> : Dropbear listen on this specified TCP port.</li>
 </ul>
 <p>I always use a non default port to avoid generic scaning noise.</p>
 <ul>
-<li>-s : Disable password logins.</li>
+<li><code>-s</code> : Disable password logins.</li>
 </ul>
 <p>Always disable password logins and use key pairs for authentication.</p>
 <p>Example:</p>
@@ -593,7 +587,7 @@
 
 
 
-<h2 id="update-the-initramfs">Update the initramfs</h2>
+<h3 id="update-the-initramfs">Update the initramfs</h3>
 <pre><code>sudo update-initramfs -u -v
 </code></pre>
 <p>This rebuilds the initramfs with the changes for the current kernel. This command must be run after every change to the initramfs config so that it takes affect at boot.</p>
@@ -613,7 +607,7 @@
 
 
 
-<h2 id="create-the-keys">Create the keys</h2>
+<h3 id="create-the-keys">Create the keys</h3>
 
 
 
@@ -633,6 +627,7 @@
 <h4 id="generate-a-new-client-key">Generate a new client key</h4>
 <pre><code>ssh-keygen -t rsa -f ~/.ssh/dropbear
 </code></pre>
+<p>The <code>-t</code> flag specifies what type of key to generate, while the <code>-f</code> flag specifies the file name and path.</p>
 
 
 
@@ -652,6 +647,7 @@
 <h4 id="copy-the-key-to-the-server">Copy the key to the server:</h4>
 <pre><code>scp ~/.ssh/dropbear.pub marko@192.168.0.200:~/dropbear.pub
 </code></pre>
+<p>Using scp we can copy the public key to the remote system of SSH.</p>
 
 
 
@@ -671,6 +667,7 @@
 <h4 id="add-the-key-to-the-initramfs-authorized-keys">Add the key to the initramfs authorized keys:</h4>
 <pre><code>cat /home/marko/dropbear.pub &gt;&gt; /etc/dropbear/initramfs/authorized_keys
 </code></pre>
+<p>The key needs to be present in the initramfs so the authentication can succeed during the pre-boot process.</p>
 
 
 
@@ -725,7 +722,7 @@
 
 
 
-<h2 id="making-an-alias-optional">Making an alias (optional)</h2>
+<h3 id="making-an-alias-optional">Making an alias (optional)</h3>
 
 
 
@@ -742,9 +739,10 @@
 
 
 
-<h3 id="edit-the-bashrc-on-the-client">Edit the bashrc on the client</h3>
-<pre><code>nano ~/.bashrc
+<h4 id="edit-the-bashrc-on-the-client">Edit the bashrc on the client</h4>
+<pre><code>vim ~/.bashrc
 </code></pre>
+<p>I suggest making an alias for ease of use.</p>
 
 
 
@@ -761,12 +759,19 @@
 
 
 
-<h3 id="add-the-alias">Add the alias</h3>
+<h4 id="add-the-alias">Add the alias</h4>
 <p>Format:</p>
 <pre><code>alias &lt;Aliasname&gt;=&quot;ssh -i ~/.ssh/dropbear -p &lt;port&gt; -o 'HostKeyAlgorithms ssh-rsa' root@&lt;SERVER_IP&gt; 'echo -n &lt;DRIVE_ENCRYPTION_PASSWORD&gt; | cryptroot-unlock'&quot;
 </code></pre>
+<ul>
+<li><code>-i</code> flag selects the private key we created</li>
+<li><code>-p</code> flag specifies the dropbear port</li>
+<li><code>-o</code> flag forces the use of the RSA algorithm with witch we crated the key pair</li>
+<li><code>root@</code> ensures we connect as a root user to the server</li>
+<li>The <code>echo</code> command is for ease of use and is optional, if not included you will have to provide the password manually to unlock</li>
+</ul>
 <p>Exemple:</p>
-<pre><code>alias node2unlock=&quot;ssh -i ~/.ssh/dropbear -p 5768 -o 'HostKeyAlgorithms ssh-rsa' root@192.168.0.200 'echo -n test | cryptroot-unlock'&quot;
+<pre><code>alias unlock=&quot;ssh -i ~/.ssh/dropbear -p 5768 -o 'HostKeyAlgorithms ssh-rsa' root@192.168.0.200 'echo -n test | cryptroot-unlock'&quot;
 </code></pre>
 
 
@@ -784,9 +789,10 @@
 
 
 
-<h3 id="source-the-bashrc">Source the bashrc:</h3>
+<h4 id="source-the-bashrc">Source the bashrc:</h4>
 <pre><code>source .bashrc
 </code></pre>
+<p>This reloads the shell configuration so the alias is available immediately.</p>
 
 
 
@@ -806,6 +812,7 @@
 <h3 id="reboot">Reboot:</h3>
 <pre><code>sudo reboot now
 </code></pre>
+<p>Time to reboot the machine and test it out!</p>
 
 
 
@@ -822,8 +829,8 @@
 
 
 
-<h3 id="try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</h3>
-<pre><code>node2unlock
+<h2 id="try-to-unlock-the-server-with-your-alias">Try to unlock the server with your alias:</h2>
+<pre><code>unlock
 </code></pre>
 
 
@@ -972,7 +979,7 @@ cryptroot-unlock
     
 
     
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.","articleSection":"Posts","dateCreated":"2025-11-10T00:00:00Z","dateModified":"2025-11-10T00:00:00Z","headline":"Remote decryption using Dropbear SSH","inLanguage":"en-us","keywords":"Encryption, Linux, Remote Access","name":"Remote decryption using Dropbear SSH","timeRequired":"PT3M","url":"http://localhost:1313/posts/dropbear-shh/","wordCount":609}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.","articleSection":"Posts","dateCreated":"2025-11-10T00:00:00Z","dateModified":"2025-11-10T00:00:00Z","headline":"Remote decryption using Dropbear SSH","inLanguage":"en-us","keywords":"Encryption, Linux, Remote Access","name":"Remote decryption using Dropbear SSH","timeRequired":"PT4M","url":"http://localhost:1313/posts/dropbear-shh/","wordCount":755}</script>
     
 
 
