@@ -100,7 +100,7 @@ The `-t` flag specifies what type of key to generate, while the `-f` flag specif
 
     scp ~/.ssh/dropbear.pub marko@192.168.0.200:~/dropbear.pub
 
-Using scp we can copy the public key to the remote system of SSH.
+Using `scp` we can copy the public key over to the server.
 
 #### Add the key to the initramfs authorized keys:
 
