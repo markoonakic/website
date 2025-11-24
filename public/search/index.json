@@ -1,5 +1,9 @@
 [
   {
+    "title": "Talos Linux Installation Guide",
+    "url": "/posts/talos-install/"
+  },
+  {
     "title": "Remote decryption using Dropbear SSH",
     "url": "/posts/dropbear-shh/"
   }]

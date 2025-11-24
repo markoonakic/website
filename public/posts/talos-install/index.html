@@ -1,0 +1,797 @@
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html    lang="en-us" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta content="Marko Nakić" name="apple-mobile-web-app-title">
+
+    
+
+    
+
+    
+        <meta content="Homelab, Kubernetes, Talos" name="keywords">
+    
+
+    <meta content="#df4655" name="theme-color">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    
+        <title>Installing Talos Linux · Posts · Marko Nakić</title>
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/talos-install/">
+  <meta property="og:site_name" content="Marko Nakić">
+  <meta property="og:title" content="Installing Talos Linux">
+  <meta property="og:description" content="What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control. It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks. The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-24T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-24T00:00:00+00:00">
+    <meta property="article:tag" content="Talos">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Homelab">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Installing Talos Linux">
+  <meta name="twitter:description" content="What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control. It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks. The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.">
+
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    
+
+    <link rel="stylesheet" href="/css/syntax.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3" id="site" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+    <header id="site-header">
+        
+            <div class="header-flex-container">
+                
+                    <div class="display-1 fw-bold text-center text-md-start" id="site-title">
+                        <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+                    </div>
+                
+
+                
+                    <nav aria-label="" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav ">
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/about/"    >About</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/index/"    >Index</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/tags/"    >Tags</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/search/"    ><i class="bi bi-search"></i></a>
+
+                                
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                
+            </div>
+        
+
+        
+
+        
+    </header>
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+<article class=" align-items-center d-flex flex-column  kind-page status-published" id="page">
+    
+
+
+
+
+
+
+    
+        
+        
+        
+        
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <header class="mw-100 text-center" id="page-header">
+
+        
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
+                
+                    <h1 class="fw-bold mb-0" id="page-title" >Installing Talos Linux</h1>
+                
+                
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+                    <p class=" row-short   text-secondary " id="page-keywords">
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/homelab/" >Homelab</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/kubernetes/" >Kubernetes</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/talos/" >Talos</a>
+                                
+                            
+                        
+                    </p>
+                
+
+                
+
+                
+
+                
+                    <p class="row-short text-secondary" id="page-date">
+                        <time datetime="2025-11-24" >November 24, 2025</time>
+                        <span class="meta-separator">·</span>
+                        <span>Marko Nakić</span>
+                    </p>
+                
+            </div>
+        
+
+        
+
+        
+            <div class="align-items-center d-flex flex-column row-tall text-center" id="page-toc">
+                <details class="toc-collapsible">
+                    <summary class="toc-summary">Table of Contents</summary>
+                    <div class="toc-anim-wrapper">
+                        <div class="toc-content">
+                            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#flashing-the-iso">Flashing the ISO</a></li>
+    <li><a href="#inspecting-the-disks">Inspecting the disks</a></li>
+    <li><a href="#generate-config-with-the-right-install-disk">Generate config with the right install disk</a></li>
+    <li><a href="#enable-workloads-on-the-control-plane">Enable workloads on the control plane</a></li>
+    <li><a href="#apply-the-config">Apply the config</a></li>
+    <li><a href="#point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></a></li>
+    <li><a href="#bootstrap-kubernetes">Bootstrap Kubernetes</a></li>
+    <li><a href="#fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</a></li>
+  </ul>
+</nav>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        
+
+    </header>
+
+
+
+    
+        <main class="mw-100" id="page-content" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="what-is-talos">What is Talos?</h1>
+<p>Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
+The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control.
+It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks.
+The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="installation">Installation</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="flashing-the-iso">Flashing the ISO</h2>
+<p>The first step is grabbing the right ISO for your machine from <a href="https://github.com/siderolabs/talos/releases">here</a>. Then flash the ISO and boot into the installation medium.</p>
+<p>At this point after the OS has booted Talos will be in <strong>maintenance mode</strong>.</p>
+<p>While Talos is in maintenance mode it is important to run all <code>talosctl</code> commands with the <code>--insecure</code> flag.
+Once we apply the configuration and the OS is installed properly Talos will stop accepting the <code>--insecure</code> flag and we will authenticate using the <code>talosconfig</code> file.</p>
+<p>Now write down or remember the IP address of the Talos machine, which is displayed in the dashboard.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="inspecting-the-disks">Inspecting the disks</h2>
+<p>Ensure <code>talosctl</code> is installed on your laptop (and ideally matches the ISO version).</p>
+<p>In a terminal on your laptop (or any other computer on the same network as the Talos machine) we need to run a command that will show us the drives available to the Talos machine.</p>
+<p>We can do this using a helper variable for convenience:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NODE_IP=192.168.221.143   # Your talos machine IP here
+</span></span></code></pre></div><p>List disks:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl get disks -n &#34;$NODE_IP&#34; --insecure
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="generate-config-with-the-right-install-disk">Generate config with the right install disk</h2>
+<p>Now once you have listed your disks you will need to select the one you want Talos to be installed to.</p>
+<p>Helper variable for convenience:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">INSTALL_DISK=/dev/sda   # Replace with disk you decided on
+</span></span></code></pre></div><p>Generate config:</p>
+<p>Keep in mind this command will generate <code>controlplane.yaml</code>, <code>worker.yaml</code> and <code>talosconfig</code> in your current working directory.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl gen config CLUSTER_NAME https://$NODE_IP:6443 \
+</span></span><span class="line"><span class="cl">  --install-disk &#34;$INSTALL_DISK&#34;
+</span></span></code></pre></div><p>The <code>--install-disk</code> flag baked the disk you selected into the generated <code>controlplane.yaml</code> and <code>worker.yaml</code>.</p>
+<p>You can replace <code>CLUSTER_NAME</code> with any cluster name you like.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="enable-workloads-on-the-control-plane">Enable workloads on the control plane</h2>
+<p><strong>NOTE</strong> - This step is optional, intended for clusters with a low number of nodes.</p>
+<p>Open <code>controlplane.yaml</code> and in the <code>cluster:</code> section add:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cluster:
+</span></span><span class="line"><span class="cl">  allowSchedulingOnControlPlanes: true
+</span></span></code></pre></div><p>This will allow pods to run on the control-plane node.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="apply-the-config">Apply the config</h2>
+<p>From the directory where <code>controlplane.yaml</code> and <code>talosconfig</code> were generated, run:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl apply-config --insecure \
+</span></span><span class="line"><span class="cl">  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class="line"><span class="cl">  --file controlplane.yaml
+</span></span></code></pre></div><p>The <code>apply-config</code> command sends your config to the ISO-booted node and instructs it to install Talos to the configured disk.</p>
+<p><strong>What you should see on the node</strong>:</p>
+<p>Logs of the image being written to the disk you defined in <code>controlplane.yaml</code>.</p>
+<p>At some point the screen will turn black, and the system will reboot.
+Wait until Talos finishes booting and displays the dashboard again.</p>
+<p>Note down the IP to be used as <code>NODE_IP</code> (it may be the same as before, but confirm to be safe).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></h2>
+<p>Now that the node is running from the disk with the keys we generated, stop using <code>--insecure</code> and instead use the <code>talosconfig</code> file that was created using <code>gen config</code>.</p>
+<p>From the same directory, run:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl --talosconfig=./talosconfig config endpoint &#34;$NODE_IP&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl --talosconfig=./talosconfig config node &#34;$NODE_IP&#34;
+</span></span></code></pre></div><p>This writes our nodes IP to the <code>endpoint</code> and <code>node</code> values, so that future <code>talosctl</code> calls know where to connect.</p>
+<p>You can check the connectivity by running:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl --talosconfig=./talosconfig version
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl --talosconfig=./talosconfig service kubelet
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="bootstrap-kubernetes">Bootstrap Kubernetes</h2>
+<p>Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).</p>
+<p>To bootstrap, run:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl bootstrap \
+</span></span><span class="line"><span class="cl">  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class="line"><span class="cl">  --endpoints &#34;$NODE_IP&#34; \
+</span></span><span class="line"><span class="cl">  --talosconfig=./talosconfig
+</span></span></code></pre></div><p>This command is run <strong>once for the whole cluster</strong>, against <strong>one control-plane node</strong>.
+Running it multiple times can break etcd.</p>
+<p>It may take a while. If you get some transient TLS or connection error, just wait 30s and retry as the API finishes starting.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</h2>
+<p>Once the bootstrap succeeds, grab <code>kubeconfig</code> so you can use <code>kubectl</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl kubeconfig \
+</span></span><span class="line"><span class="cl">  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class="line"><span class="cl">  --endpoints &#34;$NODE_IP&#34; \
+</span></span><span class="line"><span class="cl">  --talosconfig=./talosconfig \
+</span></span><span class="line"><span class="cl">  kubeconfig
+</span></span></code></pre></div><p>This will write a file called <code>kubeconfig</code> in the current working directory.</p>
+<p>After that:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">export</span> <span class="n">KUBECONFIG</span><span class="o">=$</span><span class="n">PWD</span><span class="o">/</span><span class="n">kubeconfig</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get nodes
+</span></span></code></pre></div><p>After running this you should see your single node in the <code>Ready</code> state, typically with a name derived from your config.</p>
+<p>If you set <code>allowSchedulingOnControlPlanes:true</code>, it will be scheduled for workloads.</p>
+<p><strong>Congratulations!!!</strong></p>
+<p>At this point you should have your Talos cluster up and running!</p>
+<p>If you are currently setting up your homelab, i now recommend you going with a <strong>GitOps</strong> deployment strategy.</p>
+<p>The two main tools for this are <strong>Flux CD</strong> and <strong>Argo CD</strong>.</p>
+<p>For a simple enough homelab I recommend going with <strong>Flux CD</strong>.
+It is lightweight and similar to vanilla Kubernetes.</p>
+
+            
+        </main>
+    
+
+    
+
+
+
+    
+    
+
+
+
+</article>
+
+                
+
+
+
+
+<footer id="site-footer">
+    
+    
+    
+</footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control. It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks. The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.","articleSection":"Posts","dateCreated":"2025-11-24T00:00:00Z","dateModified":"2025-11-24T00:00:00Z","headline":"Installing Talos Linux","inLanguage":"en-us","keywords":"Homelab, Kubernetes, Talos","name":"Installing Talos Linux","timeRequired":"PT4M","url":"http://localhost:1313/posts/talos-install/","wordCount":789}</script>
+    
+
+
+    <noscript>JavaScript is required</noscript>
+
+    
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+
+
+
+<script src="/js/copy-code.js"></script>
+
+
+</body>
+</html>

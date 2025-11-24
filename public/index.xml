@@ -4,13 +4,55 @@
         <link>http://localhost:1313</link>
         <description>Blog posts by Marko Nakić</description>
         <language>en-us</language>
-        <lastBuildDate>Thu, 13 Nov 2025 22:35:18 &#43;0100</lastBuildDate>
-        <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+        <lastBuildDate>Mon, 24 Nov 2025 08:40:26 &#43;0100</lastBuildDate>
+        <pubDate>Mon, 24 Nov 2025 00:00:00 &#43;0000</pubDate>
         <ttl>60</ttl>
         <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml"/>
         <generator>Hugo 0.152.2</generator>
         <managingEditor>marko@markonakic.xyz (Marko Nakić)</managingEditor>
         <webMaster>marko@markonakic.xyz (Marko Nakić)</webMaster>
+        <item>
+            <title>Installing Talos Linux</title>
+            <link>http://localhost:1313/posts/talos-install/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/talos-install/</guid>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and …</description><content:encoded><![CDATA[<h1 id=what-is-talos>What is Talos?</h1><p>Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
+The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control.
+It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks.
+The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.</p><h1 id=installation>Installation</h1><h2 id=flashing-the-iso>Flashing the ISO</h2><p>The first step is grabbing the right ISO for your machine from <a href=https://github.com/siderolabs/talos/releases>here</a>. Then flash the ISO and boot into the installation medium.</p><p>At this point after the OS has booted Talos will be in <strong>maintenance mode</strong>.</p><p>While Talos is in maintenance mode it is important to run all <code>talosctl</code> commands with the <code>--insecure</code> flag.
+Once we apply the configuration and the OS is installed properly Talos will stop accepting the <code>--insecure</code> flag and we will authenticate using the <code>talosconfig</code> file.</p><p>Now write down or remember the IP address of the Talos machine, which is displayed in the dashboard.</p><h2 id=inspecting-the-disks>Inspecting the disks</h2><p>Ensure <code>talosctl</code> is installed on your laptop (and ideally matches the ISO version).</p><p>In a terminal on your laptop (or any other computer on the same network as the Talos machine) we need to run a command that will show us the drives available to the Talos machine.</p><p>We can do this using a helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>NODE_IP=192.168.221.143   # Your talos machine IP here
+</span></span></code></pre></div><p>List disks:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl get disks -n &#34;$NODE_IP&#34; --insecure
+</span></span></code></pre></div><h2 id=generate-config-with-the-right-install-disk>Generate config with the right install disk</h2><p>Now once you have listed your disks you will need to select the one you want Talos to be installed to.</p><p>Helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>INSTALL_DISK=/dev/sda   # Replace with disk you decided on
+</span></span></code></pre></div><p>Generate config:</p><p>Keep in mind this command will generate <code>controlplane.yaml</code>, <code>worker.yaml</code> and <code>talosconfig</code> in your current working directory.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl gen config CLUSTER_NAME https://$NODE_IP:6443 \
+</span></span><span class=line><span class=cl>  --install-disk &#34;$INSTALL_DISK&#34;
+</span></span></code></pre></div><p>The <code>--install-disk</code> flag baked the disk you selected into the generated <code>controlplane.yaml</code> and <code>worker.yaml</code>.</p><p>You can replace <code>CLUSTER_NAME</code> with any cluster name you like.</p><h2 id=enable-workloads-on-the-control-plane>Enable workloads on the control plane</h2><p><strong>NOTE</strong> - This step is optional, intended for clusters with a low number of nodes.</p><p>Open <code>controlplane.yaml</code> and in the <code>cluster:</code> section add:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cluster:
+</span></span><span class=line><span class=cl>  allowSchedulingOnControlPlanes: true
+</span></span></code></pre></div><p>This will allow pods to run on the control-plane node.</p><h2 id=apply-the-config>Apply the config</h2><p>From the directory where <code>controlplane.yaml</code> and <code>talosconfig</code> were generated, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl apply-config --insecure \
+</span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class=line><span class=cl>  --file controlplane.yaml
+</span></span></code></pre></div><p>The <code>apply-config</code> command sends your config to the ISO-booted node and instructs it to install Talos to the configured disk.</p><p><strong>What you should see on the node</strong>:</p><p>Logs of the image being written to the disk you defined in <code>controlplane.yaml</code>.</p><p>At some point the screen will turn black, and the system will reboot.
+Wait until Talos finishes booting and displays the dashboard again.</p><p>Note down the IP to be used as <code>NODE_IP</code> (it may be the same as before, but confirm to be safe).</p><h2 id=point-talosctl-at-this-node-using-talosconfig>Point <code>talosctl</code> at this node using <code>talosconfig</code></h2><p>Now that the node is running from the disk with the keys we generated, stop using <code>--insecure</code> and instead use the <code>talosconfig</code> file that was created using <code>gen config</code>.</p><p>From the same directory, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig config endpoint &#34;$NODE_IP&#34;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig config node &#34;$NODE_IP&#34;
+</span></span></code></pre></div><p>This writes our nodes IP to the <code>endpoint</code> and <code>node</code> values, so that future <code>talosctl</code> calls know where to connect.</p><p>You can check the connectivity by running:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig version
+</span></span></code></pre></div><p>and</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig service kubelet
+</span></span></code></pre></div><h2 id=bootstrap-kubernetes>Bootstrap Kubernetes</h2><p>Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).</p><p>To bootstrap, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl bootstrap \
+</span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class=line><span class=cl>  --endpoints &#34;$NODE_IP&#34; \
+</span></span><span class=line><span class=cl>  --talosconfig=./talosconfig
+</span></span></code></pre></div><p>This command is run <strong>once for the whole cluster</strong>, against <strong>one control-plane node</strong>.
+Running it multiple times can break etcd.</p><p>It may take a while. If you get some transient TLS or connection error, just wait 30s and retry as the API finishes starting.</p><h2 id=fetch-kubeconfig-and-verify-the-cluster>Fetch <code>kubeconfig</code> and verify the cluster</h2><p>Once the bootstrap succeeds, grab <code>kubeconfig</code> so you can use <code>kubectl</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl kubeconfig \
+</span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
+</span></span><span class=line><span class=cl>  --endpoints &#34;$NODE_IP&#34; \
+</span></span><span class=line><span class=cl>  --talosconfig=./talosconfig \
+</span></span><span class=line><span class=cl>  kubeconfig
+</span></span></code></pre></div><p>This will write a file called <code>kubeconfig</code> in the current working directory.</p><p>After that:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>export</span> <span class=n>KUBECONFIG</span><span class=o>=$</span><span class=n>PWD</span><span class=o>/</span><span class=n>kubeconfig</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>kubectl get nodes
+</span></span></code></pre></div><p>After running this you should see your single node in the <code>Ready</code> state, typically with a name derived from your config.</p><p>If you set <code>allowSchedulingOnControlPlanes:true</code>, it will be scheduled for workloads.</p><p><strong>Congratulations!!!</strong></p><p>At this point you should have your Talos cluster up and running!</p><p>If you are currently setting up your homelab, i now recommend you going with a <strong>GitOps</strong> deployment strategy.</p><p>The two main tools for this are <strong>Flux CD</strong> and <strong>Argo CD</strong>.</p><p>For a simple enough homelab I recommend going with <strong>Flux CD</strong>.
+It is lightweight and similar to vanilla Kubernetes.</p>]]></content:encoded>
+            <category>Talos</category>
+            <category>Kubernetes</category>
+            <category>Homelab</category>
+        </item>
         <item>
             <title>Remote decryption using Dropbear SSH</title>
             <link>http://localhost:1313/posts/dropbear-shh/</link>
