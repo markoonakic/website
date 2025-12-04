@@ -18,6 +18,6 @@ disable_title = true
     <a href="https://24timezones.com/world_directory/time_in_belgrade.php" target="_blank">TIME IN BELGRADE</a> - <span id="belgrade-time"></span> <a href="https://24timezones.com/world_directory/time_in_belgrade.php" target="_blank" id="belgrade-tz"></a>
   </div>
 
-  <p class="welcome-text">Hello web-surfer! I am Marko and this is my webpage!</p> 
+  <p class="welcome-text">Hello web-surfer! I am Marko and this is my web page!</p> 
   <p class="welcome-text">Here you'll find notes on my learnings, hobbies, and life in general.</p>
 </div>
