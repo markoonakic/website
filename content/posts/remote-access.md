@@ -1,7 +1,7 @@
 +++
 date = '2025-12-07'
 draft = false
-title = 'Remote Access Architecture of My Kubernetes Cluster'
+title = 'Remote Access Architecture for My Kubernetes Cluster'
 tags = ['Remote Access', 'Kubernetes', 'Homelab']
 preview_summary = "Detailed explanation of how I remotely access my Kubernetes Cluster"
 +++
