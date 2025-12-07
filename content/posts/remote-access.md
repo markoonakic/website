@@ -52,7 +52,7 @@ An open source, self-hosted implementation of the Tailscale control server.
 This would allow me to self-host my own server side for the implementation of the Tailscale protocol.
 That's when I decided that was the solution I would go with.
 
-## Mappping out the way I would implement Headscale
+## Mapping out how Headscale should be implemented
 
 At first, I was oblivious to the amount of layers and complications the Talos + Kubernetes setup would bring.
 
