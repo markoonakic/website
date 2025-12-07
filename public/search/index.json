@@ -1,6 +1,18 @@
 [
   {
-    "title": "Talos Linux Installation Guide",
+    "title": "Homelab Remote Access Architecture",
+    "url": "/posts/homelab-remote-access-architecture/"
+  },
+  {
+    "title": "Remote Access Architecture for my Kubernetes Cluster",
+    "url": "/posts/remote-access/"
+  },
+  {
+    "title": "Test: Mermaid + Code Highlighting",
+    "url": "/posts/test-mermaid-and-code/"
+  },
+  {
+    "title": "Installing Talos Linux",
     "url": "/posts/talos-install/"
   },
   {

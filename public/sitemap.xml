@@ -2,48 +2,68 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/homelab/</loc>
+    <loc>https://markonakic.xyz/tags/architecture/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/homelab/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/posts/homelab-remote-access-architecture/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/kubernetes/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/posts/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/remote-access/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/posts/remote-access/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/test/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/posts/test-mermaid-and-code/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/tags/traefik/</loc>
+    <lastmod>2025-12-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://markonakic.xyz/posts/talos-install/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/kubernetes/</loc>
+    <loc>https://markonakic.xyz/tags/talos/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-11-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-11-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/talos/</loc>
-    <lastmod>2025-11-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/talos-install/</loc>
-    <lastmod>2025-11-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://markonakic.xyz/about/</loc>
     <lastmod>2025-11-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/encryption/</loc>
+    <loc>https://markonakic.xyz/tags/encryption/</loc>
     <lastmod>2025-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/linux/</loc>
+    <loc>https://markonakic.xyz/tags/linux/</loc>
     <lastmod>2025-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/remote-access/</loc>
+    <loc>https://markonakic.xyz/posts/dropbear-shh/</loc>
     <lastmod>2025-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/dropbear-shh/</loc>
-    <lastmod>2025-11-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/index/</loc>
+    <loc>https://markonakic.xyz/index/</loc>
     <lastmod>2025-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://markonakic.xyz/</loc>
     <lastmod>2025-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://markonakic.xyz/search/</loc>
     <lastmod>2025-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://markonakic.xyz/certificates/</loc>
+  </url><url>
+    <loc>https://markonakic.xyz/categories/</loc>
   </url>
 </urlset>

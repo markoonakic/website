@@ -16,3 +16,7 @@
 {{ if $page.IsPage }}
 <script src="/js/copy-code.js"></script>
 {{ end }}
+
+{{ if .Params.mermaid }}
+{{ partial "mermaid.html" . }}
+{{ end }}

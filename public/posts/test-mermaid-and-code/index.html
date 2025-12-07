@@ -1,0 +1,709 @@
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html    lang="en-us" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta content="Marko Nakić" name="apple-mobile-web-app-title">
+
+    
+
+    
+
+    
+        <meta content="Test" name="keywords">
+    
+
+    <meta content="#df4655" name="theme-color">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    
+        <title>Test: Mermaid &#43; Code Highlighting · Posts · Marko Nakić</title>
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/test-mermaid-and-code/">
+  <meta property="og:site_name" content="Marko Nakić">
+  <meta property="og:title" content="Test: Mermaid &#43; Code Highlighting">
+  <meta property="og:description" content="Testing Both Features 1. Code Highlighting (should work normally) Here’s some Python code:
+def fibonacci(n): if n &lt;= 1: return n return fibonacci(n-1) &#43; fibonacci(n-2) # Test print(fibonacci(10)) Here’s some bash:
+#!/bin/bash echo &#34;Hello, world!&#34; for i in {1..5}; do echo &#34;Number: $i&#34; done 2. Mermaid Diagram (should render as diagram) %%{init: { &#39;theme&#39;:&#39;base&#39;, &#39;themeVariables&#39;: { &#39;primaryColor&#39;:&#39;#3c3836&#39;, &#39;primaryTextColor&#39;:&#39;#ebdbb2&#39;, &#39;primaryBorderColor&#39;:&#39;#d65d0e&#39;, &#39;lineColor&#39;:&#39;#fe8019&#39;, &#39;background&#39;:&#39;#282828&#39;, &#39;mainBkg&#39;:&#39;#282828&#39;, &#39;secondBkg&#39;:&#39;#282828&#39;, &#39;textColor&#39;:&#39;#ebdbb2&#39;, &#39;clusterBkg&#39;:&#39;#282828&#39; } }}%% graph LR A[Code Blocks] --&gt; B{Still Work?} B --&gt;|Yes| C[Syntax Highlighting] B --&gt;|Yes| D[Mermaid Diagrams] C --&gt; E[Both Work Together!] D --&gt; E classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828 class E successStyle 3. More Code (to verify it continues working) // JavaScript example const greet = (name) =&gt; { console.log(`Hello, ${name}!`); }; greet(&#34;Mermaid User&#34;); If you see:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-05T00:00:00+00:00">
+    <meta property="article:tag" content="Test">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Test: Mermaid &#43; Code Highlighting">
+  <meta name="twitter:description" content="Testing Both Features 1. Code Highlighting (should work normally) Here’s some Python code:
+def fibonacci(n): if n &lt;= 1: return n return fibonacci(n-1) &#43; fibonacci(n-2) # Test print(fibonacci(10)) Here’s some bash:
+#!/bin/bash echo &#34;Hello, world!&#34; for i in {1..5}; do echo &#34;Number: $i&#34; done 2. Mermaid Diagram (should render as diagram) %%{init: { &#39;theme&#39;:&#39;base&#39;, &#39;themeVariables&#39;: { &#39;primaryColor&#39;:&#39;#3c3836&#39;, &#39;primaryTextColor&#39;:&#39;#ebdbb2&#39;, &#39;primaryBorderColor&#39;:&#39;#d65d0e&#39;, &#39;lineColor&#39;:&#39;#fe8019&#39;, &#39;background&#39;:&#39;#282828&#39;, &#39;mainBkg&#39;:&#39;#282828&#39;, &#39;secondBkg&#39;:&#39;#282828&#39;, &#39;textColor&#39;:&#39;#ebdbb2&#39;, &#39;clusterBkg&#39;:&#39;#282828&#39; } }}%% graph LR A[Code Blocks] --&gt; B{Still Work?} B --&gt;|Yes| C[Syntax Highlighting] B --&gt;|Yes| D[Mermaid Diagrams] C --&gt; E[Both Work Together!] D --&gt; E classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828 class E successStyle 3. More Code (to verify it continues working) // JavaScript example const greet = (name) =&gt; { console.log(`Hello, ${name}!`); }; greet(&#34;Mermaid User&#34;); If you see:">
+
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    
+
+    <link rel="stylesheet" href="/css/syntax.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/mermaid.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3" id="site" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+    <header id="site-header">
+        
+            <div class="header-flex-container">
+                
+                    <div class="display-1 fw-bold text-center text-md-start" id="site-title">
+                        <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+                    </div>
+                
+
+                
+                    <nav aria-label="" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav ">
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/about/"    >About</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/index/"    >Index</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/tags/"    >Tags</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/search/"    ><i class="bi bi-search"></i></a>
+
+                                
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                
+            </div>
+        
+
+        
+
+        
+    </header>
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+<article class=" align-items-center d-flex flex-column  kind-page status-published" id="page">
+    
+
+
+
+
+
+
+    
+        
+        
+        
+        
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <header class="mw-100 text-center" id="page-header">
+
+        
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
+                
+                    <h1 class="fw-bold mb-0" id="page-title" >Test: Mermaid + Code Highlighting</h1>
+                
+                
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+                    <p class=" row-short   text-secondary " id="page-keywords">
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/test/" >Test</a>
+                                
+                            
+                        
+                    </p>
+                
+
+                
+
+                
+
+                
+                    <p class="row-short text-secondary" id="page-date">
+                        <time datetime="2025-12-05" >December 5, 2025</time>
+                        <span class="meta-separator">·</span>
+                        <span>Marko Nakić</span>
+                    </p>
+                
+            </div>
+        
+
+        
+
+        
+            <div class="align-items-center d-flex flex-column row-tall text-center" id="page-toc">
+                <details class="toc-collapsible">
+                    <summary class="toc-summary">Table of Contents</summary>
+                    <div class="toc-anim-wrapper">
+                        <div class="toc-content">
+                            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#testing-both-features">Testing Both Features</a>
+      <ul>
+        <li><a href="#1-code-highlighting-should-work-normally">1. Code Highlighting (should work normally)</a></li>
+        <li><a href="#2-mermaid-diagram-should-render-as-diagram">2. Mermaid Diagram (should render as diagram)</a></li>
+        <li><a href="#3-more-code-to-verify-it-continues-working">3. More Code (to verify it continues working)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        
+
+    </header>
+
+
+
+    
+        <main class="mw-100" id="page-content" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="testing-both-features">Testing Both Features</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="1-code-highlighting-should-work-normally">1. Code Highlighting (should work normally)</h3>
+<p>Here&rsquo;s some Python code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Test</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">fibonacci</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</span></span></code></pre></div><p>Here&rsquo;s some bash:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">echo</span> <span class="s2">&#34;Hello, world!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="o">{</span>1..5<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Number: </span><span class="nv">$i</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="2-mermaid-diagram-should-render-as-diagram">2. Mermaid Diagram (should render as diagram)</h3>
+<div class="mermaid">%%{init: {
+  &#39;theme&#39;:&#39;base&#39;,
+  &#39;themeVariables&#39;: {
+    &#39;primaryColor&#39;:&#39;#3c3836&#39;,
+    &#39;primaryTextColor&#39;:&#39;#ebdbb2&#39;,
+    &#39;primaryBorderColor&#39;:&#39;#d65d0e&#39;,
+    &#39;lineColor&#39;:&#39;#fe8019&#39;,
+    &#39;background&#39;:&#39;#282828&#39;,
+    &#39;mainBkg&#39;:&#39;#282828&#39;,
+    &#39;secondBkg&#39;:&#39;#282828&#39;,
+    &#39;textColor&#39;:&#39;#ebdbb2&#39;,
+    &#39;clusterBkg&#39;:&#39;#282828&#39;
+  }
+}}%%
+graph LR
+    A[Code Blocks] --&gt; B{Still Work?}
+    B --&gt;|Yes| C[Syntax Highlighting]
+    B --&gt;|Yes| D[Mermaid Diagrams]
+    C --&gt; E[Both Work Together!]
+    D --&gt; E
+
+    classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828
+    class E successStyle</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="3-more-code-to-verify-it-continues-working">3. More Code (to verify it continues working)</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// JavaScript example
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">greet</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">greet</span><span class="p">(</span><span class="s2">&#34;Mermaid User&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><p>If you see:</p>
+<ul>
+<li>✅ <strong>Syntax highlighted code</strong> (with colors)</li>
+<li>✅ <strong>Rendered Mermaid diagram</strong> (not code text)</li>
+</ul>
+<p>Then everything works correctly!</p>
+
+            
+        </main>
+    
+
+    
+
+
+
+    
+    
+
+
+
+</article>
+
+                
+
+
+
+
+<footer id="site-footer">
+    
+    
+    
+</footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"Testing Both Features 1. Code Highlighting (should work normally) Here’s some Python code:\ndef fibonacci(n): if n \u003c= 1: return n return fibonacci(n-1) + fibonacci(n-2) # Test print(fibonacci(10)) Here’s some bash:\n#!/bin/bash echo \"Hello, world!\" for i in {1..5}; do echo \"Number: $i\" done 2. Mermaid Diagram (should render as diagram) %%{init: { 'theme':'base', 'themeVariables': { 'primaryColor':'#3c3836', 'primaryTextColor':'#ebdbb2', 'primaryBorderColor':'#d65d0e', 'lineColor':'#fe8019', 'background':'#282828', 'mainBkg':'#282828', 'secondBkg':'#282828', 'textColor':'#ebdbb2', 'clusterBkg':'#282828' } }}%% graph LR A[Code Blocks] --\u003e B{Still Work?} B --\u003e|Yes| C[Syntax Highlighting] B --\u003e|Yes| D[Mermaid Diagrams] C --\u003e E[Both Work Together!] D --\u003e E classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828 class E successStyle\u003c/div\u003e 3. More Code (to verify it continues working) // JavaScript example const greet = (name) =\u003e { console.log(`Hello, ${name}!`); }; greet(\"Mermaid User\"); If you see:","articleSection":"Posts","dateCreated":"2025-12-05T00:00:00Z","dateModified":"2025-12-05T00:00:00Z","headline":"Test: Mermaid + Code Highlighting","inLanguage":"en-us","keywords":"Test","name":"Test: Mermaid + Code Highlighting","timeRequired":"PT1M","url":"http://localhost:1313/posts/test-mermaid-and-code/","wordCount":138}</script>
+    
+
+
+    <noscript>JavaScript is required</noscript>
+
+    
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+
+
+
+<script src="/js/copy-code.js"></script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    securityLevel: 'loose',
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'basis'
+    }
+  });
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    setTimeout(function() {
+      const mermaidContainers = document.querySelectorAll('.mermaid');
+      mermaidContainers.forEach(container => {
+        const svg = container.querySelector('svg');
+        if (svg) {
+          
+          const nodes = svg.querySelectorAll('g[data-id] rect');
+          nodes.forEach(rect => {
+            const originalFill = rect.getAttribute('fill');
+            if (originalFill && originalFill !== 'transparent') {
+              
+              const brighterColor = brightenColor(originalFill);
+              rect.style.transition = 'fill 0.2s ease';
+              rect.addEventListener('mouseenter', function() {
+                this.setAttribute('fill', brighterColor);
+              });
+              rect.addEventListener('mouseleave', function() {
+                this.setAttribute('fill', originalFill);
+              });
+            }
+          });
+        }
+      });
+    }, 1000);
+  });
+
+  function brightenColor(color) {
+    
+    if (color.startsWith('#')) {
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+
+      
+      const newR = Math.min(255, Math.floor(r * 1.2));
+      const newG = Math.min(255, Math.floor(g * 1.2));
+      const newB = Math.min(255, Math.floor(b * 1.2));
+
+      return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+    }
+    return color;
+  }
+</script>
+
+
+
+</body>
+</html>

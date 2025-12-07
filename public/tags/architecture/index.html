@@ -62,19 +62,19 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
     
-        <title>Talos · Tags · Marko Nakić</title>
+        <title>Architecture · Tags · Marko Nakić</title>
     
 
-    <meta property="og:url" content="https://markonakic.xyz/tags/talos/">
+    <meta property="og:url" content="https://markonakic.xyz/tags/architecture/">
   <meta property="og:site_name" content="Marko Nakić">
-  <meta property="og:title" content="Talos">
+  <meta property="og:title" content="Architecture">
   <meta property="og:description" content="Blog posts by Marko Nakić">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Talos">
+  <meta name="twitter:title" content="Architecture">
   <meta name="twitter:description" content="Blog posts by Marko Nakić">
 
 
@@ -281,7 +281,7 @@
         
             <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
                 
-                    <h1 class="fw-bold mb-0" id="page-title" >Talos</h1>
+                    <h1 class="fw-bold mb-0" id="page-title" >Architecture</h1>
                 
                 
             </div>
@@ -330,27 +330,29 @@
 
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
         
         
             
         
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
 
 
 
@@ -361,23 +363,28 @@
 
 <div class="blog-preview mb-4 pb-4 text-center">
     <h3 class="h5 mb-2 text-center">
-        <a href="/posts/talos-install/" class="text-decoration-none">Installing Talos Linux</a>
+        <a href="/posts/homelab-remote-access-architecture/" class="text-decoration-none">Homelab Remote Access Architecture</a>
     </h3>
     
-        <p class="text-secondary mb-2 text-center blog-summary">Instructions for the installation of Talos Linux</p>
+        <p class="text-secondary mb-2 text-center blog-summary">This post explains how I remotely access my Kubernetes homelab cluster through a secure architecture using Traefik, MetalLB, and cert-manager.
+Architecture Overview %%{init: { &#39;theme&#39;:&#39;base&#39;, &#39;themeVariables&#39;: { &#39;primaryColor&#39;:&#39;#3c3836&#39;, &#39;primaryTextColor&#39;:&#39;#ebdbb2&#39;, &#39;primaryBorderColor&#39;:&#39;#d65d0e&#39;, &#39;lineColor&#39;:&#39;#fe8019&#39;, &#39;secondaryColor&#39;:&#39;#504945&#39;, &#39;tertiaryColor&#39;:&#39;#665c54&#39;, &#39;background&#39;:&#39;#282828&#39;, &#39;mainBkg&#39;:&#39;#282828&#39;, &#39;secondBkg&#39;:&#39;#282828&#39;, &#39;textColor&#39;:&#39;#ebdbb2&#39;, &#39;nodeBorder&#39;:&#39;#d65d0e&#39;, &#39;clusterBkg&#39;:&#39;#282828&#39;, &#39;clusterBorder&#39;:&#39;#fe8019&#39;, &#39;edgeLabelBackground&#39;:&#39;#282828&#39;, &#39;edgeLabelText&#39;:&#39;#ebdbb2&#39; }, &#39;flowchart&#39;: { &#39;nodeSpacing&#39;: 100, &#39;rankSpacing&#39;: 120, &#39;curve&#39;: &#39;basis&#39; } }}%% graph TB Internet((Internet))
+Internet --&amp;gt;|&amp;#34;HTTP/HTTPS (80/443)&amp;lt;br/&amp;gt;DERP (3478)&amp;#34;| Router[Router&amp;lt;br/&amp;gt;192.168.0.1] Router --&amp;gt;|&amp;#34;Port Forward&amp;lt;br/&amp;gt;All Traffic → 192.168.0.220&amp;#34;| MetalLB MetalLB[MetalLB&amp;lt;br/&amp;gt;Load Balancer&amp;lt;br/&amp;gt;192.168.0.220] subgraph K8sCluster[&amp;#34;Kubernetes Cluster&amp;#34;] direction TB MetalLB --&amp;gt;|&amp;#34;Routes Traffic&amp;#34;| TraefikSvc subgraph Ingress[&amp;#34;Ingress Layer&amp;#34;] direction TB TraefikSvc[Traefik Service] TraefikSvc --&amp;gt; Traefik[Traefik&amp;lt;br/&amp;gt;Ingress Controller] end subgraph CertManagement[&amp;#34;Certificate Management&amp;#34;] direction TB CertManager[&amp;#34;cert-manager&amp;lt;br/&amp;gt;(DNS-01)&amp;#34;] Reflector[&amp;#34;Reflector&amp;lt;br/&amp;gt;(Sync Secrets)&amp;#34;] CertManager --&amp;gt;|&amp;#34;Creates&amp;lt;br/&amp;gt;*.sarma.love&amp;#34;| Reflector end Reflector -.-&amp;gt;|&amp;#34;Syncs TLS&amp;#34;| IngressResources subgraph IngressResources[&amp;#34;Ingress Resources&amp;#34;] direction TB GrafanaIng[&amp;#34;grafana.sarma.love&amp;lt;br/&amp;gt;(Ingress)&amp;#34;] HeadscaleIng[&amp;#34;headscale.sarma.love&amp;lt;br/&amp;gt;(Ingress)&amp;#34;] GlanceIng[&amp;#34;glance.sarma.love&amp;lt;br/&amp;gt;(Ingress)&amp;#34;] end subgraph Applications[&amp;#34;Application Services&amp;#34;] direction TB subgraph MonNS[&amp;#34;monitoring namespace&amp;#34;] Grafana[Grafana] end subgraph HeadNS[&amp;#34;headscale namespace&amp;#34;] Headscale[Headscale&amp;lt;br/&amp;gt;Control Server] Headplane[Headplane UI] end subgraph DashNS[&amp;#34;dashboard namespace&amp;#34;] Glance[Glance&amp;lt;br/&amp;gt;Dashboard] end end GrafanaIng --&amp;gt; Grafana HeadscaleIng --&amp;gt; Headscale HeadscaleIng --&amp;gt; Headplane GlanceIng --&amp;gt; Glance Traefik --&amp;gt;|&amp;#34;Routes by&amp;lt;br/&amp;gt;Hostname&amp;#34;| IngressResources subgraph Storage[&amp;#34;Storage Layer&amp;#34;] Longhorn[(Longhorn&amp;lt;br/&amp;gt;Distributed Storage)] end Grafana -.-&amp;gt;|&amp;#34;Persistent&amp;lt;br/&amp;gt;Storage&amp;#34;| Longhorn Headscale -.-&amp;gt;|&amp;#34;Persistent&amp;lt;br/&amp;gt;Storage&amp;#34;| Longhorn Glance -.-&amp;gt;|&amp;#34;Persistent&amp;lt;br/&amp;gt;Storage&amp;#34;| Longhorn end classDef internetStyle fill:#076678,stroke:#458588,stroke-width:3px,color:#ebdbb2 classDef routerStyle fill:#af3a03,stroke:#d65d0e,stroke-width:3px,color:#ebdbb2 classDef lbStyle fill:#9d0006,stroke:#cc241d,stroke-width:3px,color:#ebdbb2 classDef traefikStyle fill:#8f3f71,stroke:#b16286,stroke-width:2px,color:#ebdbb2 classDef certStyle fill:#427b58,stroke:#689d6a,stroke-width:2px,color:#ebdbb2 classDef storageStyle fill:#b57614,stroke:#d79921,stroke-width:2px,color:#ebdbb2 classDef appStyle fill:#076678,stroke:#458588,stroke-width:2px,color:#ebdbb2 classDef ingressStyle fill:#79740e,stroke:#98971a,stroke-width:2px,color:#ebdbb2 class Internet internetStyle class Router routerStyle class MetalLB lbStyle class Traefik,TraefikSvc traefikStyle class CertManager,Reflector certStyle class Longhorn storageStyle class Grafana,Headscale,Headplane,Glance appStyle class GrafanaIng,HeadscaleIng,GlanceIng ingressStyle&lt;/div&gt; Traffic Flow All external traffic follows the same path through the ingress layer:</p>
     
 
     
         <div class="blog-tags mb-1 text-center">
             
                 
-                <a href="/tags/talos/" class="tag-link text-decoration-none">Talos</a>
+                <a href="/tags/homelab/" class="tag-link text-decoration-none">Homelab</a>
             
                 <span class="blog-separator">·</span>
                 <a href="/tags/kubernetes/" class="tag-link text-decoration-none">Kubernetes</a>
             
                 <span class="blog-separator">·</span>
-                <a href="/tags/homelab/" class="tag-link text-decoration-none">Homelab</a>
+                <a href="/tags/traefik/" class="tag-link text-decoration-none">Traefik</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/architecture/" class="tag-link text-decoration-none">Architecture</a>
             
         </div>
     
@@ -385,18 +392,18 @@
     <div class="blog-meta text-secondary text-center">
         
             <span>
-                <time datetime="2025-11-24">November 24, 2025</time>
+                <time datetime="2025-12-05">December 5, 2025</time>
             </span>
             <span class="blog-separator">·</span>
         
         <span>Marko Nakić</span>
         
             <span class="blog-separator">·</span>
-            <span>4 minutes</span>
+            <span>3 minutes</span>
         
         
             <span class="blog-separator">·</span>
-            <span>789 words</span>
+            <span>449 words</span>
         
     </div>
 </div>
@@ -509,7 +516,7 @@
     
 
     
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","articleSection":"Talos","dateCreated":"2025-11-24T00:00:00Z","dateModified":"2025-11-24T00:00:00Z","headline":"Talos","inLanguage":"en-us","name":"Talos","timeRequired":"PT0M","url":"https://markonakic.xyz/tags/talos/"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","articleSection":"Architecture","dateCreated":"2025-12-05T00:00:00Z","dateModified":"2025-12-05T00:00:00Z","headline":"Architecture","inLanguage":"en-us","name":"Architecture","timeRequired":"PT0M","url":"https://markonakic.xyz/tags/architecture/"}</script>
     
 
 

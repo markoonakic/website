@@ -1,0 +1,156 @@
+/* ============================================
+   Mermaid Diagram Styling - Gruvbox Theme
+   ============================================ */
+
+/* Container Styling - Seamless blending and centering */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.5rem auto;
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Ensure SVG is properly contained */
+.mermaid svg {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+/* SVG Responsiveness */
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  min-height: 400px;
+}
+
+/* Improve Text Readability */
+.mermaid text {
+  font-family: "Manrope", "Fira Code", "Consolas", monospace !important;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+/* Node Label Text */
+.mermaid .nodeLabel {
+  color: #ebdbb2 !important;
+}
+
+/* Edge Labels */
+.mermaid .edgeLabel {
+  fill: #ebdbb2 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+/* Style edge label backgrounds */
+.mermaid g.label rect {
+  fill: #282828 !important;
+  stroke: #d65d0e !important;
+  stroke-width: 2 !important;
+  rx: 6 !important;
+}
+
+/* Cluster/Subgraph Labels */
+.mermaid .cluster-label {
+  fill: #ebdbb2 !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+}
+
+/* Cluster/Subgraph Containers */
+.mermaid .cluster {
+  padding: 10px !important;
+}
+
+/* Improve spacing for nodes */
+.mermaid .node {
+  margin: 5px !important;
+}
+
+/* SVG-specific styling for better rendering */
+
+/* Hide any stray borders or elements */
+.mermaid .edgeLabel:empty,
+.mermaid .node:empty {
+  display: none !important;
+}
+
+/* Flowchart Specific Styles */
+.mermaid .flowchart-link {
+  stroke: #fe8019 !important;
+  stroke-width: 2px !important;
+}
+
+/* Arrow Markers */
+.mermaid marker {
+  fill: #fe8019 !important;
+}
+
+/* Hover Effects - Darker by default, brighter on hover */
+.mermaid .node {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+.mermaid .node:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* Hover effects handled by JavaScript */
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .mermaid {
+    margin: 1.5rem -1rem;
+    padding: 0.5rem;
+    border-radius: 0;
+  }
+
+  .mermaid svg {
+    min-height: 300px;
+  }
+
+  .mermaid text {
+    font-size: 12px !important;
+  }
+}
+
+/* Dark Mode Compatibility */
+@media (prefers-color-scheme: dark) {
+  .mermaid {
+    background-color: #282828;
+  }
+}
+
+/* Light Mode Override (if needed) */
+@media (prefers-color-scheme: light) {
+  .mermaid {
+    background-color: #fbf1c7;
+  }
+
+  .mermaid text,
+  .mermaid .nodeLabel,
+  .mermaid .edgeLabel,
+  .mermaid .cluster-label {
+    color: #3c3836 !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .mermaid {
+    background-color: white;
+    border: 1px solid #ccc;
+  }
+}

@@ -6,16 +6,16 @@ tags = ['Talos', 'Kubernetes', 'Homelab']
 preview_summary = "Instructions for the installation of Talos Linux"
 +++
 
-# What is Talos?
+## What is Talos?
 
 Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
 The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control.
 It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks.
 The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.
 
-# Installation
+## Installation
 
-## Flashing the ISO
+### Flashing the ISO
 
 The first step is grabbing the right ISO for your machine from [here](https://github.com/siderolabs/talos/releases). Then flash the ISO and boot into the installation medium.
 
@@ -26,7 +26,7 @@ Once we apply the configuration and the OS is installed properly Talos will stop
 
 Now write down or remember the IP address of the Talos machine, which is displayed in the dashboard.
 
-## Inspecting the disks
+### Inspecting the disks
 
 Ensure `talosctl` is installed on your laptop (and ideally matches the ISO version).
 
@@ -44,7 +44,7 @@ List disks:
 talosctl get disks -n "$NODE_IP" --insecure
 ```
 
-## Generate config with the right install disk
+### Generate config with the right install disk
 
 Now once you have listed your disks you will need to select the one you want Talos to be installed to.
 
@@ -67,7 +67,7 @@ The `--install-disk` flag baked the disk you selected into the generated `contro
 
 You can replace `CLUSTER_NAME` with any cluster name you like.
 
-## Enable workloads on the control plane
+### Enable workloads on the control plane
 
 **NOTE** - This step is optional, intended for clusters with a low number of nodes.
 
@@ -80,7 +80,7 @@ cluster:
 
 This will allow pods to run on the control-plane node.
 
-## Apply the config
+### Apply the config
 
 From the directory where `controlplane.yaml` and `talosconfig` were generated, run:
 
@@ -101,7 +101,7 @@ Wait until Talos finishes booting and displays the dashboard again.
 
 Note down the IP to be used as `NODE_IP` (it may be the same as before, but confirm to be safe).
 
-## Point `talosctl` at this node using `talosconfig`
+### Point `talosctl` at this node using `talosconfig`
 
 Now that the node is running from the disk with the keys we generated, stop using `--insecure` and instead use the `talosconfig` file that was created using `gen config`.
 
@@ -129,7 +129,7 @@ and
 talosctl --talosconfig=./talosconfig service kubelet
 ```
 
-## Bootstrap Kubernetes
+### Bootstrap Kubernetes
 
 Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).
 
@@ -147,9 +147,9 @@ Running it multiple times can break etcd.
 
 It may take a while. If you get some transient TLS or connection error, just wait 30s and retry as the API finishes starting.
 
-## Fetch `kubeconfig` and verify the cluster
+### Fetch `kubeconfig` and verify the cluster
 
-Once the bootstrap succeeds, grab `kubeconfig` so you can use `kubectl`:
+Once the bootstrap succeeds, grab `kubeconfig`, so you can use `kubectl`:
 
 ```
 talosctl kubeconfig \
@@ -179,7 +179,7 @@ If you set `allowSchedulingOnControlPlanes:true`, it will be scheduled for workl
 
 At this point you should have your Talos cluster up and running!
 
-If you are currently setting up your homelab, i now recommend you going with a **GitOps** deployment strategy.
+If you are currently setting up your homelab, I now recommend you going with a **GitOps** deployment strategy.
 
 The two main tools for this are **Flux CD** and **Argo CD**.
 

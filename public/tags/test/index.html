@@ -48,7 +48,7 @@
 
 <!doctype html>
 <html    lang="en-us" >
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta content="Marko Nakić" name="apple-mobile-web-app-title">
 
@@ -65,7 +65,7 @@
         <title>Test · Tags · Marko Nakić</title>
     
 
-    <meta property="og:url" content="http://localhost:1313/tags/test/">
+    <meta property="og:url" content="https://markonakic.xyz/tags/test/">
   <meta property="og:site_name" content="Marko Nakić">
   <meta property="og:title" content="Test">
   <meta property="og:description" content="Blog posts by Marko Nakić">
@@ -98,6 +98,7 @@
 
     <link rel="stylesheet" href="/css/syntax.css">
 <link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/mermaid.css">
 
 </head>
 <body>
@@ -329,27 +330,29 @@
 
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
         
         
             
         
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
 
 
 
@@ -360,10 +363,12 @@
 
 <div class="blog-preview mb-4 pb-4 text-center">
     <h3 class="h5 mb-2 text-center">
-        <a href="/posts/markdown-features-test/" class="text-decoration-none">Markdown Features Test - Gruvbox Theme Showcase</a>
+        <a href="/posts/test-mermaid-and-code/" class="text-decoration-none">Test: Mermaid &#43; Code Highlighting</a>
     </h3>
     
-        <p class="text-secondary mb-2 text-center blog-summary">A comprehensive test of all markdown features with gruvbox color scheme including code blocks, headings, tables, and more.</p>
+        <p class="text-secondary mb-2 text-center blog-summary">Testing Both Features 1. Code Highlighting (should work normally) Here’s some Python code:
+def fibonacci(n): if n &lt;= 1: return n return fibonacci(n-1) &#43; fibonacci(n-2) # Test print(fibonacci(10)) Here’s some bash:
+#!/bin/bash echo &#34;Hello, world!&#34; for i in {1..5}; do echo &#34;Number: $i&#34; done 2. Mermaid Diagram (should render as diagram) %%{init: { &#39;theme&#39;:&#39;base&#39;, &#39;themeVariables&#39;: { &#39;primaryColor&#39;:&#39;#3c3836&#39;, &#39;primaryTextColor&#39;:&#39;#ebdbb2&#39;, &#39;primaryBorderColor&#39;:&#39;#d65d0e&#39;, &#39;lineColor&#39;:&#39;#fe8019&#39;, &#39;background&#39;:&#39;#282828&#39;, &#39;mainBkg&#39;:&#39;#282828&#39;, &#39;secondBkg&#39;:&#39;#282828&#39;, &#39;textColor&#39;:&#39;#ebdbb2&#39;, &#39;clusterBkg&#39;:&#39;#282828&#39; } }}%% graph LR A[Code Blocks] --&gt; B{Still Work?} B --&gt;|Yes| C[Syntax Highlighting] B --&gt;|Yes| D[Mermaid Diagrams] C --&gt; E[Both Work Together!] D --&gt; E classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828 class E successStyle&lt;/div&gt; 3. More Code (to verify it continues working) // JavaScript example const greet = (name) =&gt; { console.log(`Hello, ${name}!`); }; greet(&#34;Mermaid User&#34;); If you see:</p>
     
 
     
@@ -372,33 +377,24 @@
                 
                 <a href="/tags/test/" class="tag-link text-decoration-none">Test</a>
             
-                <span class="blog-separator">·</span>
-                <a href="/tags/markdown/" class="tag-link text-decoration-none">Markdown</a>
-            
-                <span class="blog-separator">·</span>
-                <a href="/tags/syntax/" class="tag-link text-decoration-none">Syntax</a>
-            
-                <span class="blog-separator">·</span>
-                <a href="/tags/demo/" class="tag-link text-decoration-none">Demo</a>
-            
         </div>
     
 
     <div class="blog-meta text-secondary text-center">
         
             <span>
-                <time datetime="2025-11-10">November 10, 2025</time>
+                <time datetime="2025-12-05">December 5, 2025</time>
             </span>
             <span class="blog-separator">·</span>
         
         <span>Marko Nakić</span>
         
             <span class="blog-separator">·</span>
-            <span>5 minutes</span>
+            <span>1 minute</span>
         
         
             <span class="blog-separator">·</span>
-            <span>921 words</span>
+            <span>138 words</span>
         
     </div>
 </div>
@@ -511,13 +507,15 @@
     
 
     
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","articleSection":"Test","dateCreated":"2025-11-10T00:00:00Z","dateModified":"2025-11-10T00:00:00Z","headline":"Test","inLanguage":"en-us","name":"Test","timeRequired":"PT0M","url":"http://localhost:1313/tags/test/"}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","articleSection":"Test","dateCreated":"2025-12-05T00:00:00Z","dateModified":"2025-12-05T00:00:00Z","headline":"Test","inLanguage":"en-us","name":"Test","timeRequired":"PT0M","url":"https://markonakic.xyz/tags/test/"}</script>
     
 
 
     <noscript>JavaScript is required</noscript>
 
     
+
+
 
 
 

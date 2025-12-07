@@ -94,6 +94,7 @@
 
     <link rel="stylesheet" href="/css/syntax.css">
 <link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/mermaid.css">
 
 </head>
 <body>
@@ -374,6 +375,197 @@
 
 <div class="blog-preview mb-4 pb-4 text-center">
     <h3 class="h5 mb-2 text-center">
+        <a href="/posts/remote-access/" class="text-decoration-none">Remote Access Architecture for my Kubernetes Cluster</a>
+    </h3>
+    
+        <p class="text-secondary mb-2 text-center blog-summary">Detailed explanation of how I remotely access my Kubernetes Cluster</p>
+    
+
+    
+        <div class="blog-tags mb-1 text-center">
+            
+                
+                <a href="/tags/remote-access/" class="tag-link text-decoration-none">Remote Access</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/kubernetes/" class="tag-link text-decoration-none">Kubernetes</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/homelab/" class="tag-link text-decoration-none">Homelab</a>
+            
+        </div>
+    
+
+    <div class="blog-meta text-secondary text-center">
+        
+            <span>
+                <time datetime="2025-12-07">December 7, 2025</time>
+            </span>
+            <span class="blog-separator">·</span>
+        
+        <span>Marko Nakić</span>
+        
+            <span class="blog-separator">·</span>
+            <span>9 minutes</span>
+        
+        
+            <span class="blog-separator">·</span>
+            <span>1727 words</span>
+        
+    </div>
+</div>
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+<div class="blog-preview mb-4 pb-4 text-center">
+    <h3 class="h5 mb-2 text-center">
+        <a href="/posts/homelab-remote-access-architecture/" class="text-decoration-none">Homelab Remote Access Architecture</a>
+    </h3>
+    
+        <p class="text-secondary mb-2 text-center blog-summary">This post explains how I remotely access my Kubernetes homelab cluster through a secure architecture using Traefik, MetalLB, and cert-manager.
+Architecture Overview Traffic Flow All external traffic follows the same path through the ingress layer:
+Internet → Router: All requests (HTTP/HTTPS on 80/443 and Headscale DERP on 3478) arrive at the home router
+Router → MetalLB: Port forwarding sends all traffic to the MetalLB virtual IP (192.168.0.220)
+MetalLB → Traefik: MetalLB load balancer distributes traffic to Traefik service across both cluster nodes</p>
+    
+
+    
+        <div class="blog-tags mb-1 text-center">
+            
+                
+                <a href="/tags/homelab/" class="tag-link text-decoration-none">Homelab</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/kubernetes/" class="tag-link text-decoration-none">Kubernetes</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/traefik/" class="tag-link text-decoration-none">Traefik</a>
+            
+                <span class="blog-separator">·</span>
+                <a href="/tags/architecture/" class="tag-link text-decoration-none">Architecture</a>
+            
+        </div>
+    
+
+    <div class="blog-meta text-secondary text-center">
+        
+            <span>
+                <time datetime="2025-12-05">December 5, 2025</time>
+            </span>
+            <span class="blog-separator">·</span>
+        
+        <span>Marko Nakić</span>
+        
+            <span class="blog-separator">·</span>
+            <span>2 minutes</span>
+        
+        
+            <span class="blog-separator">·</span>
+            <span>251 words</span>
+        
+    </div>
+</div>
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+            
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+<div class="blog-preview mb-4 pb-4 text-center">
+    <h3 class="h5 mb-2 text-center">
         <a href="/posts/talos-install/" class="text-decoration-none">Installing Talos Linux</a>
     </h3>
     
@@ -500,7 +692,7 @@
         
         
             <span class="blog-separator">·</span>
-            <span>755 words</span>
+            <span>753 words</span>
         
     </div>
 </div>
@@ -629,6 +821,8 @@
 
 
 <script src="/js/copy-code.js"></script>
+
+
 
 
 </body>
