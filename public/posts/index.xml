@@ -1,243 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?><rss version="2.0" xml:lang="en-us" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Marko Nakić</title>
-        <link>https://markonakic.xyz</link>
+        <link>http://localhost:1313</link>
         <description>Blog posts by Marko Nakić</description>
         <language>en-us</language>
-        <lastBuildDate>Fri, 05 Dec 2025 15:28:51 &#43;0100</lastBuildDate>
-        <pubDate>Fri, 05 Dec 2025 00:00:00 &#43;0000</pubDate>
+        <lastBuildDate>Sun, 14 Dec 2025 18:49:17 &#43;0100</lastBuildDate>
+        <pubDate>Sun, 14 Dec 2025 00:00:00 &#43;0000</pubDate>
         <ttl>60</ttl>
-        <atom:link href="https://markonakic.xyz/posts/index.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml"/>
         <generator>Hugo 0.152.2</generator>
         <managingEditor>marko@markonakic.xyz (Marko Nakić)</managingEditor>
         <webMaster>marko@markonakic.xyz (Marko Nakić)</webMaster>
         <item>
-            <title>Homelab Remote Access Architecture</title>
-            <link>https://markonakic.xyz/posts/homelab-remote-access-architecture/</link>
-            <guid isPermaLink="true">https://markonakic.xyz/posts/homelab-remote-access-architecture/</guid>
-            <pubDate>Fri, 05 Dec 2025 00:00:00 &#43;0000</pubDate>
-            <author>marko@markonakic.xyz (Marko Nakić)</author><description>This post explains how I remotely access my Kubernetes homelab cluster through a secure architecture using Traefik, MetalLB, and cert-manager.&amp;#xA;Architecture Overview %%{init: { …</description><content:encoded><![CDATA[<p>This post explains how I remotely access my Kubernetes homelab cluster through a secure architecture using Traefik, MetalLB, and cert-manager.</p><h2 id=architecture-overview>Architecture Overview</h2><div class=mermaid>%%{init: {
-'theme':'base',
-'themeVariables': {
-'primaryColor':'#3c3836',
-'primaryTextColor':'#ebdbb2',
-'primaryBorderColor':'#d65d0e',
-'lineColor':'#fe8019',
-'secondaryColor':'#504945',
-'tertiaryColor':'#665c54',
-'background':'#282828',
-'mainBkg':'#282828',
-'secondBkg':'#282828',
-'textColor':'#ebdbb2',
-'nodeBorder':'#d65d0e',
-'clusterBkg':'#282828',
-'clusterBorder':'#fe8019',
-'edgeLabelBackground':'#282828',
-'edgeLabelText':'#ebdbb2'
-},
-'flowchart': {
-'nodeSpacing': 100,
-'rankSpacing': 120,
-'curve': 'basis'
-}
-}}%%
-graph TB
-Internet((Internet))
-Internet -->|"HTTP/HTTPS (80/443)&lt;br/>DERP (3478)"| Router[Router&lt;br/>192.168.0.1]
-Router -->|"Port Forward&lt;br/>All Traffic → 192.168.0.220"| MetalLB
-MetalLB[MetalLB&lt;br/>Load Balancer&lt;br/>192.168.0.220]
-subgraph K8sCluster["Kubernetes Cluster"]
-direction TB
-MetalLB -->|"Routes Traffic"| TraefikSvc
-subgraph Ingress["Ingress Layer"]
-direction TB
-TraefikSvc[Traefik Service]
-TraefikSvc --> Traefik[Traefik&lt;br/>Ingress Controller]
-end
-subgraph CertManagement["Certificate Management"]
-direction TB
-CertManager["cert-manager&lt;br/>(DNS-01)"]
-Reflector["Reflector&lt;br/>(Sync Secrets)"]
-CertManager -->|"Creates&lt;br/>*.sarma.love"| Reflector
-end
-Reflector -.->|"Syncs TLS"| IngressResources
-subgraph IngressResources["Ingress Resources"]
-direction TB
-GrafanaIng["grafana.sarma.love&lt;br/>(Ingress)"]
-HeadscaleIng["headscale.sarma.love&lt;br/>(Ingress)"]
-GlanceIng["glance.sarma.love&lt;br/>(Ingress)"]
-end
-subgraph Applications["Application Services"]
-direction TB
-subgraph MonNS["monitoring namespace"]
-Grafana[Grafana]
-end
-subgraph HeadNS["headscale namespace"]
-Headscale[Headscale&lt;br/>Control Server]
-Headplane[Headplane UI]
-end
-subgraph DashNS["dashboard namespace"]
-Glance[Glance&lt;br/>Dashboard]
-end
-end
-GrafanaIng --> Grafana
-HeadscaleIng --> Headscale
-HeadscaleIng --> Headplane
-GlanceIng --> Glance
-Traefik -->|"Routes by&lt;br/>Hostname"| IngressResources
-subgraph Storage["Storage Layer"]
-Longhorn[(Longhorn&lt;br/>Distributed Storage)]
-end
-Grafana -.->|"Persistent&lt;br/>Storage"| Longhorn
-Headscale -.->|"Persistent&lt;br/>Storage"| Longhorn
-Glance -.->|"Persistent&lt;br/>Storage"| Longhorn
-end
-classDef internetStyle fill:#076678,stroke:#458588,stroke-width:3px,color:#ebdbb2
-classDef routerStyle fill:#af3a03,stroke:#d65d0e,stroke-width:3px,color:#ebdbb2
-classDef lbStyle fill:#9d0006,stroke:#cc241d,stroke-width:3px,color:#ebdbb2
-classDef traefikStyle fill:#8f3f71,stroke:#b16286,stroke-width:2px,color:#ebdbb2
-classDef certStyle fill:#427b58,stroke:#689d6a,stroke-width:2px,color:#ebdbb2
-classDef storageStyle fill:#b57614,stroke:#d79921,stroke-width:2px,color:#ebdbb2
-classDef appStyle fill:#076678,stroke:#458588,stroke-width:2px,color:#ebdbb2
-classDef ingressStyle fill:#79740e,stroke:#98971a,stroke-width:2px,color:#ebdbb2
-class Internet internetStyle
-class Router routerStyle
-class MetalLB lbStyle
-class Traefik,TraefikSvc traefikStyle
-class CertManager,Reflector certStyle
-class Longhorn storageStyle
-class Grafana,Headscale,Headplane,Glance appStyle
-class GrafanaIng,HeadscaleIng,GlanceIng ingressStyle</div><h2 id=traffic-flow>Traffic Flow</h2><p>All external traffic follows the same path through the ingress layer:</p><ol><li><p><strong>Internet → Router</strong>: All requests (HTTP/HTTPS on 80/443 and Headscale DERP on 3478) arrive at the home router</p></li><li><p><strong>Router → MetalLB</strong>: Port forwarding sends all traffic to the MetalLB virtual IP (192.168.0.220)</p></li><li><p><strong>MetalLB → Traefik</strong>: MetalLB load balancer distributes traffic to Traefik service across both cluster nodes</p></li><li><p><strong>Traefik → Ingress Resources</strong>: Traefik reads Kubernetes Ingress resources and routes based on hostname:</p><ul><li><code>grafana.sarma.love</code> → Grafana service in monitoring namespace</li><li><code>headscale.sarma.love</code> → Headscale/Headplane services in headscale namespace</li><li><code>glance.sarma.love</code> → Glance dashboard in dashboard namespace</li></ul></li></ol><h2 id=certificate-management>Certificate Management</h2><p>TLS certificates are automatically managed through a DNS-01 challenge workflow:</p><ol><li><p><strong>cert-manager</strong> obtains a wildcard certificate (<code>*.sarma.love</code>) from Let&rsquo;s Encrypt using DNS-01 validation</p></li><li><p><strong>Reflector</strong> automatically syncs the <code>sarma-wildcard-tls</code> secret to all namespaces that need it (monitoring, headscale, dashboard)</p></li><li><p><strong>Traefik</strong> terminates TLS connections using these synced certificates from each namespace&rsquo;s Ingress resource</p></li></ol><h2 id=headscale-integration>Headscale Integration</h2><p>Headscale runs inside the cluster as a self-hosted Tailscale control server. Unlike typical setups, it doesn&rsquo;t receive direct port forwarding—instead, all traffic (including DERP relay on port 3478) flows through the same Traefik ingress path, ensuring consistent routing and TLS termination.</p><h2 id=infrastructure>Infrastructure</h2><p>The cluster runs on two nodes:</p><ul><li><strong>Node 1</strong> (192.168.0.200): Control plane + worker node</li><li><strong>Node 2</strong> (192.168.0.201): Worker node</li></ul><p>Storage is provided by <strong>Longhorn</strong>, which provides distributed persistent volumes across both nodes for applications that require data persistence.</p>]]></content:encoded>
-            <category>homelab</category>
-            <category>kubernetes</category>
-            <category>traefik</category>
-            <category>architecture</category>
+            <title>List Available Azure Regions and VM Sizes for Your Subscription</title>
+            <link>http://localhost:1313/posts/azure-servers/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/azure-servers/</guid>
+            <pubDate>Sun, 14 Dec 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Why I wrote this I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 RequestDisallowedByAzure) and then a VM size availability …</description><content:encoded><![CDATA[<h2 id=why-i-wrote-this>Why I wrote this</h2><p>I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 <code>RequestDisallowedByAzure</code>) and then a VM size availability error (409 <code>SkuNotAvailable</code>).
+After a bunch of trial and error, I ended up with a simple “preflight” workflow: first ask Azure which regions my subscription is allowed to deploy into, then list the VM sizes that are actually deployable in a region I pick.</p><h2 id=the-mental-model-the-3-region-lists>The mental model (the 3 “region lists”)</h2><p>When people say “what regions are available,” it’s usually one of these (and confusing them is how you lose time):</p><ul><li><p>Regions Azure has (global Azure footprint).</p></li><li><p>Regions your subscription can <em>see</em> (e.g., <code>az account list-locations</code>).</p></li><li><p>Regions your subscription is <em>allowed to deploy into</em> (Azure Policy allow-list).</p></li></ul><p>In my case, the “allowed to deploy into” list was the only one that mattered, because a subscription-level policy was denying deployments outside an allow-list.
+To fetch that allow-list reliably, I query the policy assignment by its resource ID via the Azure Policy REST “Get By Id” endpoint using <code>az rest</code>.</p><h2 id=the-2-failure-modes-what-broke>The 2 failure modes (what broke)</h2><ul><li><strong>403 <code>RequestDisallowedByAzure</code></strong>: you picked a region that your subscription policy blocks, so Azure denies resource creation there.</li><li><strong>409 <code>SkuNotAvailable</code></strong>: even in an allowed region, the VM size you selected might not be available for your subscription/region right now, and the practical fix is to pick a different VM size or a different region.</li></ul><p>This post is about preventing both by discovering “allowed regions” and “deployable VM sizes” <em>before</em> you run <em>terraform apply</em>.</p><h2 id=what-sku-means-in-plain-terms>What “SKU” means (in plain terms)</h2><p>A VM “SKU” is basically the VM size name you pick when creating a VM, like <code>Standard_B2s_v2</code>.
+That string corresponds to a machine shape (vCPUs + memory, plus other capabilities), and Azure can restrict it per region and per subscription, which is why it existing doesn’t always mean you can deploy it.</p><h2 id=prereqs>Prereqs</h2><ul><li>You need the Azure CLI installed and authenticated (<code>az login</code>).</li><li>These commands are Bash-focused and write outputs into files, so you can read them however you like.</li></ul><h2 id=step-1-set-the-subscription-once>Step 1: Set the subscription (once)</h2><p>Format:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SUB</span><span class=o>=</span><span class=s2>&#34;&lt;SUBSCRIPTION_ID&gt;&#34;</span>
+</span></span><span class=line><span class=cl>az account <span class=nb>set</span> --subscription <span class=s2>&#34;</span><span class=nv>$SUB</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>az account show --query <span class=s2>&#34;{name:name,id:id,tenantId:tenantId}&#34;</span> -o jsonc
+</span></span></code></pre></div><p>What each line does:</p><ul><li><code>set -euo pipefail</code><ul><li><code>-e</code>: stop the script on the first command that fails.</li><li><code>-u</code>: error if you use an unset variable (this prevents the classic “SUB is empty” bug).</li><li><code>-o pipefail</code>: propagate failures through pipelines.</li></ul></li><li><code>SUB="&lt;SUBSCRIPTION_ID>"</code><ul><li>Stores your subscription ID once, so you don’t keep retyping it (and accidentally query the wrong subscription).</li></ul></li><li><code>az account set --subscription "$SUB"</code><ul><li>Forces Azure CLI to operate on that subscription from here on.</li></ul></li><li><code>az account show ... -o jsonc</code><ul><li>Prints a sanity-check blob showing which subscription/tenant you’re actually targeting.</li><li><code>--query</code> uses Azure CLI’s built-in JMESPath querying and <code>-o jsonc</code> prints readable JSON.</li></ul></li></ul><p><strong>NOTE -</strong> If you ever see an error like “InvalidSubscriptionId … ‘providers’”, it usually means your scope string got mangled because <code>SUB</code> was empty at the time you ran the command. (The <code>-u</code> flag is what prevents this.)</p><h2 id=step-2-get-the-allowed-regions-authoritative>Step 2: Get the allowed regions (authoritative)</h2><p>This is the key idea: don’t guess regions, don’t rely on visible regions, just read the policy allow-list.</p><p>Format:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>ASSIGN_ID</span><span class=o>=</span><span class=k>$(</span>
+</span></span><span class=line><span class=cl>  az policy assignment list <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --scope <span class=s2>&#34;/subscriptions/</span><span class=nv>$SUB</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --query <span class=s2>&#34;[?name==&#39;sys.regionrestriction&#39;].id | [0]&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -o tsv
+</span></span><span class=line><span class=cl><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$ASSIGN_ID</span><span class=s2>&#34;</span>
+</span></span></code></pre></div><p>What each part does:</p><ul><li><code>az policy assignment list --scope "/subscriptions/$SUB"</code><ul><li>Lists all policy assignments attached to your subscription scope.</li></ul></li><li><code>--query "[?name=='sys.regionrestriction'].id | [0]"</code><ul><li>Filters for the <code>sys.regionrestriction</code> assignment and extracts its resource ID (if it exists).</li></ul></li><li><code>-o tsv</code><ul><li>Outputs a plain string so Bash can store it cleanly.</li></ul></li></ul><p>Now fetch the actual allow-list via REST:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>az rest --method get <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --url <span class=s2>&#34;https://management.azure.com</span><span class=si>${</span><span class=nv>ASSIGN_ID</span><span class=si>}</span><span class=s2>?api-version=2023-04-01&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --query <span class=s2>&#34;properties.parameters.listOfAllowedLocations.value&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -o jsonc &gt; allowed-regions.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat allowed-regions.json
+</span></span></code></pre></div><p>What’s happening here:</p><ul><li><code>az rest ...</code><ul><li>Calls the Azure Policy REST API endpoint that fetches a policy assignment by ID.</li></ul></li><li><code>--query "properties.parameters.listOfAllowedLocations.value"</code><ul><li>Extracts the actual “allowed regions” list from the assignment parameters (this is the authoritative list you must follow).</li></ul></li><li><code>> allowed-regions.json</code><ul><li>Saves it as JSON so it’s self-describing and easy to open in Vim.</li></ul></li></ul><p>Example output from my Azure for Students subscription:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>[</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;spaincentral&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;norwayeast&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;francecentral&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;italynorth&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;switzerlandnorth&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span></code></pre></div><p><strong>NOTE -</strong> Some tenants use a different parameter name than <code>listOfAllowedLocations</code>; if your query returns nothing, dump <code>properties.parameters</code> and look for the actual key.</p><h2 id=step-3-pick-one-region-and-list-deployable-vm-sizes>Step 3: Pick one region and list deployable VM sizes</h2><p>Once you pick a region from <code>allowed-regions.json</code>, you can generate a Vim-friendly TSV file listing VM sizes plus vCPU/RAM.</p><p>Format:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>REGION</span><span class=o>=</span><span class=s2>&#34;francecentral&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SIZE_PREFIX</span><span class=o>=</span><span class=s2>&#34;Standard_B&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s2>&#34;SKU\tvCPUs\tMemoryGB\n&#34;</span>
+</span></span><span class=line><span class=cl>  az vm list-skus <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --location <span class=s2>&#34;</span><span class=nv>$REGION</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --resource-type virtualMachines <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --size <span class=s2>&#34;</span><span class=nv>$SIZE_PREFIX</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --query <span class=s2>&#34;sort_by([].{sku:name,vCPUs:capabilities[?name==&#39;vCPUs&#39;].value|[0],memoryGB:capabilities[?name==&#39;MemoryGB&#39;].value|[0]}, &amp;sku)&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    -o tsv
+</span></span><span class=line><span class=cl><span class=o>}</span> &gt; <span class=s2>&#34;vm-skus-</span><span class=si>${</span><span class=nv>REGION</span><span class=si>}</span><span class=s2>.tsv&#34;</span>
+</span></span></code></pre></div><p>Then view the start of the file:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sed -n <span class=s1>&#39;1,15p&#39;</span> <span class=s2>&#34;vm-skus-</span><span class=si>${</span><span class=nv>REGION</span><span class=si>}</span><span class=s2>.tsv&#34;</span>
+</span></span></code></pre></div><p>What each piece does:</p><ul><li><code>REGION="francecentral"</code><ul><li>This is the region you will deploy into (must be one of the allowed regions you discovered).</li></ul></li><li><code>SIZE_PREFIX="Standard_B"</code><ul><li>Optional: filter to a VM family prefix to keep runtime and output smaller.</li></ul></li><li><code>printf "SKU\tvCPUs\tMemoryGB\n"</code><ul><li>Adds a header row so the file is readable (TSV has no headers by default).</li></ul></li><li><code>az vm list-skus --location "$REGION" --resource-type virtualMachines</code><ul><li>Lists VM SKUs for a region; Microsoft explicitly recommends <code>az vm list-skus</code> as part of troubleshooting <code>SkuNotAvailable</code>.</li></ul></li><li><code>--size "$SIZE_PREFIX"</code><ul><li>Limits the list to SKUs matching that prefix (practical when <code>list-skus</code> is slow).</li></ul></li><li><code>--query ...</code><ul><li>Extracts only what we care about: SKU name, vCPU count, memory in GB, then sorts by SKU.</li></ul></li><li><code>> "vm-skus-${REGION}.tsv"</code><ul><li>Writes the output to a file you can open/search in Vim.</li></ul></li></ul><p>Example output (what you should see):</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>SKU     vCPUs   MemoryGB
+</span></span><span class=line><span class=cl>Standard_B2s_v2 2       8
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></div><p><strong>NOTE - performance:</strong> <code>az vm list-skus</code> can be slow (even when filtering), so don’t be surprised if it takes ~1–2 minutes.</p><h2 id=how-i-use-this-with-terraform-briefly>How I use this with Terraform (briefly)</h2><p>Before I touch Terraform, I pick:</p><ul><li><code>REGION</code> from <code>allowed-regions.json</code></li><li><code>VM size</code> from <code>vm-skus-${REGION}.tsv</code></li></ul><p>Then in Terraform I keep region as one variable and reuse it everywhere, so I don’t accidentally deploy a single resource into a blocked region.</p><h2 id=troubleshooting>Troubleshooting</h2><ul><li>If <code>allowed-regions.json</code> is empty:<ul><li>Dump the full parameters and search for the actual allow-list key.</li></ul></li><li>If you still hit <code>SkuNotAvailable</code> even after selecting a size from the TSV:<ul><li>Azure capacity can change; the documented mitigation is still “choose a different size or region,” and regenerate the TSV.</li></ul></li><li>If the TSV looks “broken” when pasted into chat:<ul><li>That’s tabs/wrapping; open the file directly in Vim or print it with <code>sed</code> like above.</li></ul></li></ul>]]></content:encoded>
+            <category>Azure</category>
+            <category></category>
         </item>
         <item>
-            <title>Remote Access Architecture for my Kubernetes Cluster</title>
-            <link>https://markonakic.xyz/posts/remote-access/</link>
-            <guid isPermaLink="true">https://markonakic.xyz/posts/remote-access/</guid>
-            <pubDate>Fri, 05 Dec 2025 00:00:00 &#43;0000</pubDate>
-            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Why provide oneself remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to …</description><content:encoded><![CDATA[<h1 id=why-provide-oneself-remote-homelab-access>Why provide oneself remote homelab access?</h1><p>I think the concept of remotely accessing my homelab is really cool.
+            <title>Remote Access Architecture of My Kubernetes Homelab</title>
+            <link>http://localhost:1313/posts/remote-access/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/remote-access/</guid>
+            <pubDate>Sun, 07 Dec 2025 00:00:00 &#43;0000</pubDate>
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Why configure remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to your …</description><content:encoded><![CDATA[<h2 id=why-configure-remote-homelab-access>Why configure remote homelab access?</h2><p>I think the concept of remotely accessing my homelab is really cool.
 Think about it - you can be anywhere in the world, and all you would need to connect to your homelab is an internet connection.
-So you take some machines, place them somewhere physicaly in the world, configure your choice of software on it, and then you can go anywhere knowing you&rsquo;re just a click away from accessing those same machines from a device of your choosing.</p><p>Not only is it cool, but it is incredibaly useful too.
-You can access all the services you normally self-host at home from anywhere.
-You can tinker with your server whenever you want.
-You can do some remote debugging.</p><p>In essence, you can do whatever you want with you server or other devices in your network, from anywhere!</p><h1 id=my-experience-with-remotely-accessing-my-homelab>My experience with remotely accessing my homelab</h1><p>The first homelab I had was running Debian server and I ran services within Docker containers.</p><p>I gained remote access by running a Wireguard VPN service inside my homelab, which allowed me to securely connecttrough and encrypted tunnel.
+So you take some machines, place them somewhere physically in the world, configure your choice of software on it, and then you can go anywhere knowing you&rsquo;re just a click away from accessing those same machines from a device of your choosing.</p><p>Not only is it cool, but it is incredibly useful too.</p><ul><li><p>Access all the services you normally self-host at home from anywhere.</p></li><li><p>Tinker with your server whenever you want.</p></li><li><p>Do some remote debugging.</p></li></ul><p>In essence, you can do whatever you want with you server or other devices in your network, from anywhere!</p><h2 id=my-experience-with-remotely-accessing-my-homelab>My experience with remotely accessing my homelab</h2><p>The first homelab I had was running Debian server and I ran services within Docker containers.</p><p>I gained remote access by running a Wireguard VPN service inside my homelab, which allowed me to securely connect trough and encrypted tunnel.
 This solution was simple and effective, without many layers to it.
-I just created a docker-compose file, ran the container, forwarded the ports, and then it didn&rsquo;t work because i hadn&rsquo;t set up the networking properly :).
+I just created a docker-compose file, ran the container, forwarded the ports, and then it didn&rsquo;t work because I hadn&rsquo;t set up the networking properly :).
 After learning a lot about networking and how everything works, this solution served me well for a while.</p><p>However, I realized the limitations this kind of setup brings.
-There were no fancy UIs, all the connections were key pair based, so it was a bit of a hassle to manage.
-I never really set up any kind of controller so all of my services were just exposed by IP and port to my whole local network, not quite the optimal setup, but I gained a lot of knowlegde and experience doing it.</p><p>Fast forward, the time had come for some renovation.
-My Debian setup had served me well and it was time to move on to something more advanced.</p><p>In comes Talos linux, the distribution built to run Kubernetes.
+There were no fancy UIs, all the connections were key-pair based, so it was a bit of a hassle to manage.
+I never really set up any kind of controller so all of my services were just exposed by IP and port to my whole local network, not quite the optimal setup, but I gained a lot of knowledge and experience doing it.</p><p>Fast-forward, the time had come for some renovation.
+My Debian setup had served me well, and it was time to move on to something more advanced.</p><p>In comes Talos Linux, the distribution built to run Kubernetes.
 With this transition many more layers were added, which greatly complicated the infrastructure setup.</p><p>I first needed to decide on what solution to use this time.
-I had been reading a lot about the Tailscale protocol and i really liked the concept.
-But with Tailscale i would have to go trough their servers in order to establish a connection.
-This would violate the self-imposed constraints I had adheered by since first setting up my homelab.
-I had strongly avoided routing my traffick trough any external services, the goal was to keep as much independence and privacy as possible.</p><p>But then i ran accross a project called Headscale.
+I had been reading a lot about the Tailscale protocol and I really liked the concept.
+But with Tailscale I would have to go through their servers in order to establish a connection.
+This would violate the self-imposed constraints I had adhered by since first setting up my homelab.
+I had strongly avoided routing my traffic through any external services, the goal was to keep as much independence and privacy as possible.</p><p>But then I ran across a project called Headscale.
 An open source, self-hosted implementation of the Tailscale control server.
 This would allow me to self-host my own server side for the implementation of the Tailscale protocol.
-That&rsquo;s when i decided that was the solution i would go with.</p><h1 id=mappping-out-the-way-i-would-implement-headscale>Mappping out the way i would implement Headscale</h1><p>At first, I was oblivious to the amout of layers and complicatios the Talos + Kubernes setup would bring.</p><p>I knew i would need an ingress controller, for that I had already decided i would use Traefik.</p><p>Then I realized that i can&rsquo;t just forward traffic from my router to a single machines IP address, since now i had a multi node cluster, and i couldn&rsquo;t know which node Headscale or any other service would be running on.</p><p>There was the option of hard-coding services to run on specific nodes, but i didn&rsquo;t like that idea as i wanted a flexible and scalable setup.</p><p>That&rsquo;s when I found out i needed a load balancer implementation, so that i can assign real IP addesses from the main network to the services living in the cluster.</p><p>The idea then was to route the traffic from the router to Traefik using the MetalLB load balancer.</p><p>After reading some more documentation, I found out i needed a domain and a properly signed certificate in order for Headscale to work. That was fine, since i had already planned to have specfic subdomains for all my services, that were encrypted via https.</p><p>I figured I can obtain certificates via Let&rsquo;s encrypt, using an ACME challenge like HTTP‑01 or DNS‑01.</p><p>Then I realized that the manual managing of these certificates and secrets would be quite a hassle, and that&rsquo;s when I found out about the Kubernetes Reflector.</p><p>Reflector is a controller that can automatically replicate Kubernetes secrets and ConfigMaps across namespaces.
-I decided to use it in order to sync the wildcard certificate secret with other namespaces, so that every ingress can reference the same cert by default.</p><p>There were also some atempts at setting up Pi-hole.
-I tried setting up a local DNS server in order for all my services to be accessble only trough the Tailscale network, to avoid having to expose all me services externaly.</p><p>This idea was later scrapped when I found out Headscale already has a build in DNS system called MagicDNS. This is then what I used instead of Pi-hole.</p><p>Of course, all of these decisions and conclusions did not come out of thin air, but were the result of continuous trial, error, and research.
-In the end I wound up with a setup I wouldn&rsquo;t be able to wrap me head around when I started.</p><h1 id=the-architecture-of-my-current-setup>The architecture of my current setup</h1>]]></content:encoded>
+That&rsquo;s when I decided that was the solution I would go with.</p><h2 id=mapping-out-how-headscale-should-be-implemented>Mapping out how Headscale should be implemented</h2><p>At first, I was oblivious to the amount of layers and complications the Talos + Kubernetes setup would bring.</p><p>I knew I would need an ingress controller, for that I had already decided I would use Traefik.</p><p>Then I realized that I can&rsquo;t just forward traffic from my router to a single machines IP address, since now I had a multi node cluster, and I couldn&rsquo;t know which node Headscale or any other service would be running on.</p><p>There was the option of hard-coding services to run on specific nodes, but I didn&rsquo;t like that idea as I wanted a flexible and scalable setup.</p><p>That&rsquo;s when I found out I needed a load balancer implementation, so that I can assign real IP addresses from the main network to the services living in the cluster.</p><p>The idea then was to route the traffic from the router to Traefik using the MetalLB load balancer.</p><p>After reading some more documentation, I found out I needed a domain and a properly signed certificate in order for Headscale to work. That was fine, since I had already planned to have specific subdomains for all my services, that were encrypted via HTTPS.</p><p>I figured I can obtain certificates via Let&rsquo;s encrypt, using an ACME challenge like HTTP‑01 or DNS‑01.</p><p>Then I realized that the manual managing of these certificates and secrets would be quite a hassle, and that&rsquo;s when I found out about the Kubernetes Reflector.</p><p>Reflector is a controller that can automatically replicate Kubernetes secrets and ConfigMaps across namespaces.
+I decided to use it in order to sync the wildcard certificate secret with other namespaces, so that every ingress can reference the same cert by default.</p><p>There were also some attempts at setting up Pi-hole.
+I tried setting up a local DNS server in order for all my services to be accessible only through the Tailscale network, to avoid having to expose all me services externally.</p><p>This idea was later scrapped when I found out Headscale already has a build in DNS system called MagicDNS. This is then what I used instead of Pi-hole.</p><p>Of course, all of these decisions and conclusions did not come out of thin air, but were the result of continuous trial, error, and research.
+In the end I wound up with a setup I truly felt was good enough, at least for now :).</p><h2 id=the-architecture-of-my-current-setup>The architecture of my current setup</h2><img src=http://localhost:1313/diagrams/remote-access-architecture.excalidraw.svg><p>This diagram shows how everything connects together, from the internet all the way down to the pods running in my cluster.</p><p>Let me walk you through what happens when I try to access a service like Grafana from my laptop while I&rsquo;m connected to the VPN.</p><h2 id=how-vpn-access-works>How VPN access works</h2><p>When I open <code>https://grafana.sarma.love</code> in my browser, this is what happens:</p><p>First in line is <strong>MagicDNS</strong>.
+Instead of having to remember IP addresses, I can just use domain names. MagicDNS resolves <code>grafana.sarma.love</code> to the MetalLB load balancer IP: <code>192.168.0.220</code>.</p><p>The request then travels through the VPN tunnel to my <strong>Tailscale subnet router</strong> pod running in the cluster.
+This router is what allows VPN clients to access the entire <code>192.168.0.0/24</code> home network, which means I can reach both the Kubernetes services and use <code>kubectl</code>/<code>talosctl</code> to manage the cluster directly.</p><p>The subnet router advertises this route to the <strong>Headscale control server</strong>, which then tells all connected clients they can reach my home network through this router.</p><p>Once the traffic hits <code>192.168.0.220</code>, <strong>MetalLB</strong> forwards it to the <strong>Traefik service</strong>.
+MetalLB is what makes this whole multi-node setup possible because it assigns a real IP address from my home network to Kubernetes services.
+Without it, I&rsquo;d have to either pin services to specific nodes or use NodePorts, both of which would just be quite unsustainable.</p><p>Traefik then looks at the HTTP Host header (<code>grafana.sarma.love</code>) and matches it against all the Ingress resources in the cluster.
+It finds the Grafana ingress, sees that it needs the TLS certificate, and uses the wildcard certificate that was synced to the monitoring namespace by Reflector.</p><p>Finally, Traefik routes the request to the actual <strong>Grafana pod</strong>, and I get see my dashboard.</p><p>The complete VPN access flow:</p><p><strong>VPN client → Subnet router → 192.168.0.220 (MetalLB) → Traefik → Grafana</strong></p><h2 id=the-role-of-derp>The role of DERP</h2><p>There&rsquo;s one more piece worth mentioning and that&rsquo;s the DERP relay server.</p><p>DERP stands for Designated Encrypted Relay for Packets.
+It&rsquo;s Tailscale&rsquo;s fallback mechanism when direct peer-to-peer connections aren&rsquo;t possible.
+Most of the time, Tailscale establishes direct encrypted connections between devices.
+But sometimes, due to restrictive firewalls or complex NAT situations, direct connections fail.</p><p>That&rsquo;s where DERP comes in.
+If I&rsquo;m on a restricted network that blocks direct VPN traffic, my connection can be relayed through another device in the mesh network that does have connectivity, or through my self-hosted DERP server running on port 3478. It adds a bit of latency, but it ensures I can always reach my homelab, no matter what network I&rsquo;m on.</p><h2 id=why-this-setup-beats-plain-wireguard>Why this setup beats plain Wireguard</h2><p>Compared to my old Wireguard setup, this has a few major advantages:</p><p><strong>MagicDNS</strong> means I don&rsquo;t have to remember IP addresses or maintain a local DNS server. Services can be accessed via clean domain names.</p><p><strong>Headplane UI</strong> gives me a nice web interface to manage devices, approve routes, and see who&rsquo;s connected. With Wireguard, it was all done in the CLI using config files (I know there are some Wireguard UIs, but i never got around to trying them out).</p><p><strong>ACL policies</strong> in Headscale let me control which devices can access which services. The old setup just gave full network access to everything.</p><p><strong>Automatic key management</strong> - Headscale handles the key exchange and rotation.
+No more manually distributing WireGuard keys.</p><p><strong>The Kubernetes abstraction</strong> means services can move between nodes, restart, or scale, and everything keeps working because MetalLB and Traefik handle the routing automatically.</p><h2 id=wrapping-up>Wrapping up</h2><p>Setting this up was definitely a one of the harder quests I gave myself. There were moments where I had five browser tabs of documentation open while hopping around 4 tmux panes full of logs trying to figure out why MagicDNS wasn&rsquo;t resolving, or why cert-manager kept failing the ACME challenge.</p><p>But now that I got it running, it just works.
+I can open my laptop anywhere, connect to the VPN, and access my homelab like I&rsquo;m sitting at home.
+All my services have proper HTTPS certificates, nice domain names, and everything is defined in Git thanks to Flux.</p><p>Is it overkill for a homelab? Depends on who you ask. But I learned more setting this up than I would have from any tutorial or course. And honestly, there&rsquo;s something really satisfying about knowing every layer of your own infrastructure, from the router port forwards all the way down to the pods.</p><p>If you&rsquo;re thinking about building something similar, go step by step. Get Headscale working first, add Traefik, then layer in the other pieces as you need them. Don&rsquo;t try to deploy everything at once like I did&mldr; or do - if you read the article you have much more context than I did when I went into this blindly :).</p><p><strong>Hope you found something here helpful, and I wish you good luck in whatever your pursuit!</strong></p><p>P.S. Once I got a grasp of the architecture, I went with setting things up exactly as in the diagram, from the Internet to the pods.</p>]]></content:encoded>
             <category>Remote Access</category>
             <category>Kubernetes</category>
             <category>Homelab</category>
         </item>
         <item>
-            <title>Test: Mermaid &#43; Code Highlighting</title>
-            <link>https://markonakic.xyz/posts/test-mermaid-and-code/</link>
-            <guid isPermaLink="true">https://markonakic.xyz/posts/test-mermaid-and-code/</guid>
-            <pubDate>Fri, 05 Dec 2025 00:00:00 &#43;0000</pubDate>
-            <author>marko@markonakic.xyz (Marko Nakić)</author><description>Testing Both Features 1. Code Highlighting (should work normally) Here’s some Python code:&amp;#xA;def fibonacci(n): if n &amp;lt;= 1: return n return fibonacci(n-1) &#43; fibonacci(n-2) # Test …</description><content:encoded><![CDATA[<h2 id=testing-both-features>Testing Both Features</h2><h3 id=1-code-highlighting-should-work-normally>1. Code Highlighting (should work normally)</h3><p>Here&rsquo;s some Python code:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>fibonacci</span><span class=p>(</span><span class=n>n</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>n</span> <span class=o>&lt;=</span> <span class=mi>1</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>n</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>fibonacci</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>+</span> <span class=n>fibonacci</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># Test</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>fibonacci</span><span class=p>(</span><span class=mi>10</span><span class=p>))</span>
-</span></span></code></pre></div><p>Here&rsquo;s some bash:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
-</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>echo</span> <span class=s2>&#34;Hello, world!&#34;</span>
-</span></span><span class=line><span class=cl><span class=k>for</span> i in <span class=o>{</span>1..5<span class=o>}</span><span class=p>;</span> <span class=k>do</span>
-</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Number: </span><span class=nv>$i</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><h3 id=2-mermaid-diagram-should-render-as-diagram>2. Mermaid Diagram (should render as diagram)</h3><div class=mermaid>%%{init: {
-'theme':'base',
-'themeVariables': {
-'primaryColor':'#3c3836',
-'primaryTextColor':'#ebdbb2',
-'primaryBorderColor':'#d65d0e',
-'lineColor':'#fe8019',
-'background':'#282828',
-'mainBkg':'#282828',
-'secondBkg':'#282828',
-'textColor':'#ebdbb2',
-'clusterBkg':'#282828'
-}
-}}%%
-graph LR
-A[Code Blocks] --> B{Still Work?}
-B -->|Yes| C[Syntax Highlighting]
-B -->|Yes| D[Mermaid Diagrams]
-C --> E[Both Work Together!]
-D --> E
-classDef successStyle fill:#689d6a,stroke:#8ec07c,color:#282828
-class E successStyle</div><h3 id=3-more-code-to-verify-it-continues-working>3. More Code (to verify it continues working)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// JavaScript example
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>const</span> <span class=nx>greet</span> <span class=o>=</span> <span class=p>(</span><span class=nx>name</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=sb>`Hello, </span><span class=si>${</span><span class=nx>name</span><span class=si>}</span><span class=sb>!`</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nx>greet</span><span class=p>(</span><span class=s2>&#34;Mermaid User&#34;</span><span class=p>);</span>
-</span></span></code></pre></div><p>If you see:</p><ul><li>✅ <strong>Syntax highlighted code</strong> (with colors)</li><li>✅ <strong>Rendered Mermaid diagram</strong> (not code text)</li></ul><p>Then everything works correctly!</p>]]></content:encoded>
-            <category>test</category>
-        </item>
-        <item>
             <title>Installing Talos Linux</title>
-            <link>https://markonakic.xyz/posts/talos-install/</link>
-            <guid isPermaLink="true">https://markonakic.xyz/posts/talos-install/</guid>
+            <link>http://localhost:1313/posts/talos-install/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/talos-install/</guid>
             <pubDate>Mon, 24 Nov 2025 00:00:00 &#43;0000</pubDate>
-            <author>marko@markonakic.xyz (Marko Nakić)</author><description>What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and …</description><content:encoded><![CDATA[<h1 id=what-is-talos>What is Talos?</h1><p>Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
+            <author>marko@markonakic.xyz (Marko Nakić)</author><description>What is Talos? Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes. The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and …</description><content:encoded><![CDATA[<h2 id=what-is-talos>What is Talos?</h2><p>Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
 The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control.
 It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks.
-The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.</p><h1 id=installation>Installation</h1><h2 id=flashing-the-iso>Flashing the ISO</h2><p>The first step is grabbing the right ISO for your machine from <a href=https://github.com/siderolabs/talos/releases>here</a>. Then flash the ISO and boot into the installation medium.</p><p>At this point after the OS has booted Talos will be in <strong>maintenance mode</strong>.</p><p>While Talos is in maintenance mode it is important to run all <code>talosctl</code> commands with the <code>--insecure</code> flag.
-Once we apply the configuration and the OS is installed properly Talos will stop accepting the <code>--insecure</code> flag and we will authenticate using the <code>talosconfig</code> file.</p><p>Now write down or remember the IP address of the Talos machine, which is displayed in the dashboard.</p><h2 id=inspecting-the-disks>Inspecting the disks</h2><p>Ensure <code>talosctl</code> is installed on your laptop (and ideally matches the ISO version).</p><p>In a terminal on your laptop (or any other computer on the same network as the Talos machine) we need to run a command that will show us the drives available to the Talos machine.</p><p>We can do this using a helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>NODE_IP=192.168.221.143   # Your talos machine IP here
+The whole OS is defined as infrastructure-as-code, which makes it easily reproducible and minimizes configuration drift.</p><h2 id=installation>Installation</h2><h3 id=flashing-the-iso>Flashing the ISO</h3><p>The first step is grabbing the right ISO for your machine from <a href=https://github.com/siderolabs/talos/releases>here</a>. Then flash the ISO and boot into the installation medium.</p><p>At this point after the OS has booted Talos will be in <strong>maintenance mode</strong>.</p><p>While Talos is in maintenance mode it is important to run all <code>talosctl</code> commands with the <code>--insecure</code> flag.
+Once we apply the configuration and the OS is installed properly Talos will stop accepting the <code>--insecure</code> flag and we will authenticate using the <code>talosconfig</code> file.</p><p>Now write down or remember the IP address of the Talos machine, which is displayed in the dashboard.</p><h3 id=inspecting-the-disks>Inspecting the disks</h3><p>Ensure <code>talosctl</code> is installed on your laptop (and ideally matches the ISO version).</p><p>In a terminal on your laptop (or any other computer on the same network as the Talos machine) we need to run a command that will show us the drives available to the Talos machine.</p><p>We can do this using a helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>NODE_IP=192.168.221.143   # Your talos machine IP here
 </span></span></code></pre></div><p>List disks:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl get disks -n &#34;$NODE_IP&#34; --insecure
-</span></span></code></pre></div><h2 id=generate-config-with-the-right-install-disk>Generate config with the right install disk</h2><p>Now once you have listed your disks you will need to select the one you want Talos to be installed to.</p><p>Helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>INSTALL_DISK=/dev/sda   # Replace with disk you decided on
+</span></span></code></pre></div><h3 id=generate-config-with-the-right-install-disk>Generate config with the right install disk</h3><p>Now once you have listed your disks you will need to select the one you want Talos to be installed to.</p><p>Helper variable for convenience:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>INSTALL_DISK=/dev/sda   # Replace with disk you decided on
 </span></span></code></pre></div><p>Generate config:</p><p>Keep in mind this command will generate <code>controlplane.yaml</code>, <code>worker.yaml</code> and <code>talosconfig</code> in your current working directory.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl gen config CLUSTER_NAME https://$NODE_IP:6443 \
 </span></span><span class=line><span class=cl>  --install-disk &#34;$INSTALL_DISK&#34;
-</span></span></code></pre></div><p>The <code>--install-disk</code> flag baked the disk you selected into the generated <code>controlplane.yaml</code> and <code>worker.yaml</code>.</p><p>You can replace <code>CLUSTER_NAME</code> with any cluster name you like.</p><h2 id=enable-workloads-on-the-control-plane>Enable workloads on the control plane</h2><p><strong>NOTE</strong> - This step is optional, intended for clusters with a low number of nodes.</p><p>Open <code>controlplane.yaml</code> and in the <code>cluster:</code> section add:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cluster:
+</span></span></code></pre></div><p>The <code>--install-disk</code> flag baked the disk you selected into the generated <code>controlplane.yaml</code> and <code>worker.yaml</code>.</p><p>You can replace <code>CLUSTER_NAME</code> with any cluster name you like.</p><h3 id=enable-workloads-on-the-control-plane>Enable workloads on the control plane</h3><p><strong>NOTE</strong> - This step is optional, intended for clusters with a low number of nodes.</p><p>Open <code>controlplane.yaml</code> and in the <code>cluster:</code> section add:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cluster:
 </span></span><span class=line><span class=cl>  allowSchedulingOnControlPlanes: true
-</span></span></code></pre></div><p>This will allow pods to run on the control-plane node.</p><h2 id=apply-the-config>Apply the config</h2><p>From the directory where <code>controlplane.yaml</code> and <code>talosconfig</code> were generated, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl apply-config --insecure \
+</span></span></code></pre></div><p>This will allow pods to run on the control-plane node.</p><h3 id=apply-the-config>Apply the config</h3><p>From the directory where <code>controlplane.yaml</code> and <code>talosconfig</code> were generated, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl apply-config --insecure \
 </span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
 </span></span><span class=line><span class=cl>  --file controlplane.yaml
 </span></span></code></pre></div><p>The <code>apply-config</code> command sends your config to the ISO-booted node and instructs it to install Talos to the configured disk.</p><p><strong>What you should see on the node</strong>:</p><p>Logs of the image being written to the disk you defined in <code>controlplane.yaml</code>.</p><p>At some point the screen will turn black, and the system will reboot.
-Wait until Talos finishes booting and displays the dashboard again.</p><p>Note down the IP to be used as <code>NODE_IP</code> (it may be the same as before, but confirm to be safe).</p><h2 id=point-talosctl-at-this-node-using-talosconfig>Point <code>talosctl</code> at this node using <code>talosconfig</code></h2><p>Now that the node is running from the disk with the keys we generated, stop using <code>--insecure</code> and instead use the <code>talosconfig</code> file that was created using <code>gen config</code>.</p><p>From the same directory, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig config endpoint &#34;$NODE_IP&#34;
+Wait until Talos finishes booting and displays the dashboard again.</p><p>Note down the IP to be used as <code>NODE_IP</code> (it may be the same as before, but confirm to be safe).</p><h3 id=point-talosctl-at-this-node-using-talosconfig>Point <code>talosctl</code> at this node using <code>talosconfig</code></h3><p>Now that the node is running from the disk with the keys we generated, stop using <code>--insecure</code> and instead use the <code>talosconfig</code> file that was created using <code>gen config</code>.</p><p>From the same directory, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig config endpoint &#34;$NODE_IP&#34;
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig config node &#34;$NODE_IP&#34;
 </span></span></code></pre></div><p>This writes our nodes IP to the <code>endpoint</code> and <code>node</code> values, so that future <code>talosctl</code> calls know where to connect.</p><p>You can check the connectivity by running:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig version
 </span></span></code></pre></div><p>and</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl --talosconfig=./talosconfig service kubelet
-</span></span></code></pre></div><h2 id=bootstrap-kubernetes>Bootstrap Kubernetes</h2><p>Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).</p><p>To bootstrap, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl bootstrap \
+</span></span></code></pre></div><h3 id=bootstrap-kubernetes>Bootstrap Kubernetes</h3><p>Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).</p><p>To bootstrap, run:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl bootstrap \
 </span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
 </span></span><span class=line><span class=cl>  --endpoints &#34;$NODE_IP&#34; \
 </span></span><span class=line><span class=cl>  --talosconfig=./talosconfig
 </span></span></code></pre></div><p>This command is run <strong>once for the whole cluster</strong>, against <strong>one control-plane node</strong>.
-Running it multiple times can break etcd.</p><p>It may take a while. If you get some transient TLS or connection error, just wait 30s and retry as the API finishes starting.</p><h2 id=fetch-kubeconfig-and-verify-the-cluster>Fetch <code>kubeconfig</code> and verify the cluster</h2><p>Once the bootstrap succeeds, grab <code>kubeconfig</code> so you can use <code>kubectl</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl kubeconfig \
+Running it multiple times can break etcd.</p><p>It may take a while. If you get some transient TLS or connection error, just wait 30s and retry as the API finishes starting.</p><h3 id=fetch-kubeconfig-and-verify-the-cluster>Fetch <code>kubeconfig</code> and verify the cluster</h3><p>Once the bootstrap succeeds, grab <code>kubeconfig</code>, so you can use <code>kubectl</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>talosctl kubeconfig \
 </span></span><span class=line><span class=cl>  --nodes &#34;$NODE_IP&#34; \
 </span></span><span class=line><span class=cl>  --endpoints &#34;$NODE_IP&#34; \
 </span></span><span class=line><span class=cl>  --talosconfig=./talosconfig \
 </span></span><span class=line><span class=cl>  kubeconfig
 </span></span></code></pre></div><p>This will write a file called <code>kubeconfig</code> in the current working directory.</p><p>After that:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>export</span> <span class=n>KUBECONFIG</span><span class=o>=$</span><span class=n>PWD</span><span class=o>/</span><span class=n>kubeconfig</span>
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>kubectl get nodes
-</span></span></code></pre></div><p>After running this you should see your single node in the <code>Ready</code> state, typically with a name derived from your config.</p><p>If you set <code>allowSchedulingOnControlPlanes:true</code>, it will be scheduled for workloads.</p><p><strong>Congratulations!!!</strong></p><p>At this point you should have your Talos cluster up and running!</p><p>If you are currently setting up your homelab, i now recommend you going with a <strong>GitOps</strong> deployment strategy.</p><p>The two main tools for this are <strong>Flux CD</strong> and <strong>Argo CD</strong>.</p><p>For a simple enough homelab I recommend going with <strong>Flux CD</strong>.
+</span></span></code></pre></div><p>After running this you should see your single node in the <code>Ready</code> state, typically with a name derived from your config.</p><p>If you set <code>allowSchedulingOnControlPlanes:true</code>, it will be scheduled for workloads.</p><p><strong>Congratulations!!!</strong></p><p>At this point you should have your Talos cluster up and running!</p><p>If you are currently setting up your homelab, I now recommend you going with a <strong>GitOps</strong> deployment strategy.</p><p>The two main tools for this are <strong>Flux CD</strong> and <strong>Argo CD</strong>.</p><p>For a simple enough homelab I recommend going with <strong>Flux CD</strong>.
 It is lightweight and similar to vanilla Kubernetes.</p>]]></content:encoded>
             <category>Talos</category>
             <category>Kubernetes</category>
             <category>Homelab</category>
         </item>
         <item>
-            <title>Remote decryption using Dropbear SSH</title>
-            <link>https://markonakic.xyz/posts/dropbear-shh/</link>
-            <guid isPermaLink="true">https://markonakic.xyz/posts/dropbear-shh/</guid>
+            <title>Remote Secryption Using Dropbear SSH</title>
+            <link>http://localhost:1313/posts/dropbear-shh/</link>
+            <guid isPermaLink="true">http://localhost:1313/posts/dropbear-shh/</guid>
             <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
             <author>marko@markonakic.xyz (Marko Nakić)</author><description>My first encounter with encryption The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of …</description><content:encoded><![CDATA[<h2 id=my-first-encounter-with-encryption>My first encounter with encryption</h2><p>The first time i had encountered encryption was when i was installing Debian on a machine that was meant to be my first homelab. In the disk partitiong segment of the installation process I was presented with the option to use LUKS encryption on my drives. Since i had not yet dabbled with the idea, but found it cool, i decided to go with it and encrypt my drives.</p><p>Since i don&rsquo;t keep the homelab machine at my own place, I had to setup remote access to it right away. And in the process i realized - i cannot remotely decrypt my drives if the machine ever powers off. After that i scoured the web for solutions to my problem and in the end i landed on Dropbear SSH.</p><h2 id=what-is-dropbear-shh-and-how-does-it-apply-to-this-use-case>What is Dropbear SHH and how does it apply to this use case</h2><p>Dropbear SSH is a lightweigh SSH server and client that is primarily used on embedded systems with low memory and processor resources.</p><p>Most systems have some sort of pre-boot environment. This userspace is loaded into the RAM so that the kernel can load drivers and logic that&rsquo;s needed to mount the real root filesystem. The Linux kernel is shipped with the initramfs filesystem (or equivalent) by default.</p><p>Dropbear SHH can be leveraged to gain access to this pre-boot filesystem before the drives are mounted. This allows us to remotely decrypt the drives of our machine.</p><h2 id=implementation>Implementation</h2><p><strong>NOTE</strong> - This implementation walkthrough will be for Debian and Debian based systems, but the same principles still apply to others.</p><h3 id=update-and-upgrade-your-machine>Update and upgrade your machine</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo apt update
 </span></span><span class=line><span class=cl>sudo apt upgrade

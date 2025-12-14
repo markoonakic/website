@@ -1,0 +1,930 @@
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html    lang="en-us" >
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta content="Marko Nakić" name="apple-mobile-web-app-title">
+
+    
+
+    
+
+    
+        <meta content="Azure, Azure CLI, Azure Policy" name="keywords">
+    
+
+    <meta content="#df4655" name="theme-color">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    
+        <title>List Available Azure Regions and VM Sizes for Your Subscription · Posts · Marko Nakić</title>
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/azure-servers/">
+  <meta property="og:site_name" content="Marko Nakić">
+  <meta property="og:title" content="List Available Azure Regions and VM Sizes for Your Subscription">
+  <meta property="og:description" content="Why I wrote this I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 RequestDisallowedByAzure) and a VM size availability error (409 SkuNotAvailable). After a bunch of trial and error, I ended up with a simple workflow: first ask Azure which regions my subscription is allowed to deploy into, then list the VM sizes that are actually deployable in a region I pick.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-14T00:00:00+00:00">
+    <meta property="article:tag" content="Azure">
+    <meta property="article:tag" content="Azure CLI">
+    <meta property="article:tag" content="Azure Policy">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="List Available Azure Regions and VM Sizes for Your Subscription">
+  <meta name="twitter:description" content="Why I wrote this I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 RequestDisallowedByAzure) and a VM size availability error (409 SkuNotAvailable). After a bunch of trial and error, I ended up with a simple workflow: first ask Azure which regions my subscription is allowed to deploy into, then list the VM sizes that are actually deployable in a region I pick.">
+
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    
+
+    <link rel="stylesheet" href="/css/syntax.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/mermaid.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3" id="site" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+    <header id="site-header">
+        
+            <div class="header-flex-container">
+                
+                    <div class="display-1 fw-bold text-center text-md-start" id="site-title">
+                        <a class="text-body text-decoration-none" href="/">Marko Nakić</a>
+                    </div>
+                
+
+                
+                    <nav aria-label="" id="site-menu">
+                        <ul class="align-items-center justify-content-center justify-content-md-end nav ">
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/about/"    >About</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/index/"    >Index</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/tags/"    >Tags</a>
+
+                                
+                            </li>
+                        
+                            
+
+                            
+                            
+                            
+
+                            
+
+                            <li class="nav-item ">
+                                <a   class="  nav-link  "  href="/search/"    ><i class="bi bi-search"></i></a>
+
+                                
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                
+            </div>
+        
+
+        
+
+        
+    </header>
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+<article class=" align-items-center d-flex flex-column  kind-page status-published" id="page">
+    
+
+
+
+
+
+
+    
+        
+        
+        
+        
+        
+        
+            
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <header class="mw-100 text-center" id="page-header">
+
+        
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
+                
+                    <h1 class="fw-bold mb-0" id="page-title" >List Available Azure Regions and VM Sizes for Your Subscription</h1>
+                
+                
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+                    <p class=" row-short   text-secondary " id="page-keywords">
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/azure/" >Azure</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/azure-cli/" >Azure CLI</a>
+                                
+                            
+                        
+                            
+
+                            
+                                
+                            
+
+                            
+                                <span class="meta-separator">·</span>
+                                
+                                    <a class="link-secondary page-keyword-tag" href="/tags/azure-policy/" >Azure Policy</a>
+                                
+                            
+                        
+                    </p>
+                
+
+                
+
+                
+
+                
+                    <p class="row-short text-secondary" id="page-date">
+                        <time datetime="2025-12-14" >December 14, 2025</time>
+                        <span class="meta-separator">·</span>
+                        <span>Marko Nakić</span>
+                    </p>
+                
+            </div>
+        
+
+        
+
+        
+            <div class="align-items-center d-flex flex-column row-tall text-center" id="page-toc">
+                <details class="toc-collapsible">
+                    <summary class="toc-summary">Table of Contents</summary>
+                    <div class="toc-anim-wrapper">
+                        <div class="toc-content">
+                            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-i-wrote-this">Why I wrote this</a></li>
+    <li><a href="#the-3-region-lists">The 3 &ldquo;region lists&rdquo;</a></li>
+    <li><a href="#the-2-failure-modes-what-broke">The 2 failure modes (what broke)</a></li>
+    <li><a href="#what-sku-means-in-plain-terms">What &ldquo;SKU&rdquo; means (in plain terms)</a></li>
+    <li><a href="#prereqs">Prereqs</a></li>
+    <li><a href="#step-1-set-the-subscription-once">Step 1: Set the subscription (once)</a></li>
+    <li><a href="#step-2-get-the-allowed-regions">Step 2: Get the allowed regions</a></li>
+    <li><a href="#step-3-pick-one-region-and-list-deployable-vm-sizes">Step 3: Pick one region and list deployable VM sizes</a></li>
+    <li><a href="#how-i-use-this-with-terraform">How I use this with Terraform</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        
+
+    </header>
+
+
+
+    
+        <main class="mw-100" id="page-content" >
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="why-i-wrote-this">Why I wrote this</h2>
+<p>I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 <code>RequestDisallowedByAzure</code>) and a VM size availability error (409 <code>SkuNotAvailable</code>).
+After a bunch of trial and error, I ended up with a simple workflow: first ask Azure which regions my subscription is allowed to deploy into, then list the VM sizes that are actually deployable in a region I pick.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="the-3-region-lists">The 3 &ldquo;region lists&rdquo;</h2>
+<p>When people say &ldquo;what regions are available&rdquo;, it’s usually one of these:</p>
+<ul>
+<li>Regions Azure has (global Azure footprint).</li>
+<li>Regions your subscription can <em>see</em> (e.g., <code>az account list-locations</code>).</li>
+<li>Regions your subscription is <em>allowed to deploy into</em> (Azure Policy allow-list).</li>
+</ul>
+<p>In my case, the &ldquo;allowed to deploy into&rdquo; list was the only one that mattered, because a subscription-level policy was denying deployments outside an allow-list.
+To fetch that allow-list reliably, I query the policy assignment by its resource ID via the Azure Policy REST &ldquo;Get By Id&rdquo; endpoint using <code>az rest</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="the-2-failure-modes-what-broke">The 2 failure modes (what broke)</h2>
+<ul>
+<li><strong>403 <code>RequestDisallowedByAzure</code></strong>: you picked a region that your subscription policy blocks, so Azure denies resource creation there.</li>
+<li><strong>409 <code>SkuNotAvailable</code></strong>: even in an allowed region, the VM size you selected might not be available for your subscription/region right now, and the practical fix is to pick a different VM size or a different region.</li>
+</ul>
+<p>This post is about preventing both by discovering &ldquo;allowed regions&rdquo; and &ldquo;deployable VM sizes&rdquo; <em>before</em> you run <code>terraform apply</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="what-sku-means-in-plain-terms">What &ldquo;SKU&rdquo; means (in plain terms)</h2>
+<p>A VM &ldquo;SKU&rdquo; is basically the VM size name you pick when creating a VM, like <code>Standard_B2s_v2</code>.
+That string corresponds to a machine shape (vCPUs + memory, plus other capabilities), and Azure can restrict it per region and per subscription, which is why just because it exists doesn’t always mean you can deploy it there.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="prereqs">Prereqs</h2>
+<ul>
+<li>You need the Azure CLI installed and authenticated (<code>az login</code>).</li>
+<li>These commands are Bash-focused and write outputs into files, so you can read them however you like.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="step-1-set-the-subscription-once">Step 1: Set the subscription (once)</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">SUB</span><span class="o">=</span><span class="s2">&#34;&lt;SUBSCRIPTION_ID&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  az account <span class="nb">set</span> --subscription <span class="s2">&#34;</span><span class="nv">$SUB</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  az account show --query <span class="s2">&#34;{name:name,id:id,tenantId:tenantId}&#34;</span> -o jsonc
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span></code></pre></div><p>What each line does:</p>
+<ul>
+<li><code>SUB=&quot;&lt;SUBSCRIPTION_ID&gt;&quot;</code>
+<ul>
+<li>Stores your subscription ID once, so you don’t keep retyping it (and accidentally query the wrong subscription).</li>
+</ul>
+</li>
+<li><code>( ... )</code>
+<ul>
+<li>Runs everything inside a subshell, so shell options like <code>-u</code> don’t interfere with your interactive session after the block finishes (for example, they won’t kick you out of your DevPod if a plugin touches an unset variable).</li>
+</ul>
+</li>
+<li><code>set -euo pipefail</code>
+<ul>
+<li><code>-e</code>: stop the script on the first command that fails.</li>
+<li><code>-u</code>: error if you use an unset variable (this prevents the classic &ldquo;SUB is empty&rdquo; bug).</li>
+<li><code>-o pipefail</code>: propagate failures through pipelines.</li>
+</ul>
+</li>
+<li><code>az account set --subscription &quot;$SUB&quot;</code>
+<ul>
+<li>Forces Azure CLI to operate on that subscription from here on.</li>
+</ul>
+</li>
+<li><code>az account show ... -o jsonc</code>
+<ul>
+<li>Prints a sanity-check blob showing which subscription/tenant you’re actually targeting.</li>
+<li><code>--query</code> uses Azure CLI’s built-in JMESPath querying and <code>-o jsonc</code> prints readable JSON.</li>
+</ul>
+</li>
+</ul>
+<p><strong>NOTE -</strong> If you ever see an error like &ldquo;InvalidSubscriptionId … &lsquo;providers&rsquo;&rdquo;, it usually means your scope string got mangled because <code>SUB</code> was empty at the time you ran the command. (The <code>-u</code> flag is what prevents this.)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="step-2-get-the-allowed-regions">Step 2: Get the allowed regions</h2>
+<p>This is the key idea: don’t guess regions, don’t rely on visible regions, just read the policy allow-list.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">ASSIGN_ID</span><span class="o">=</span><span class="k">$(</span>
+</span></span><span class="line"><span class="cl">  az policy assignment list <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --scope <span class="s2">&#34;/subscriptions/</span><span class="nv">$SUB</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --query <span class="s2">&#34;[?name==&#39;sys.regionrestriction&#39;].id | [0]&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -o tsv
+</span></span><span class="line"><span class="cl"><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$ASSIGN_ID</span><span class="s2">&#34;</span>
+</span></span></code></pre></div><p>What each part does:</p>
+<ul>
+<li><code>az policy assignment list --scope &quot;/subscriptions/$SUB&quot;</code>
+<ul>
+<li>Lists all policy assignments attached to your subscription scope.</li>
+</ul>
+</li>
+<li><code>--query &quot;[?name=='sys.regionrestriction'].id | [0]&quot;</code>
+<ul>
+<li>Filters for the <code>sys.regionrestriction</code> assignment and extracts its resource ID (if it exists).</li>
+</ul>
+</li>
+<li><code>-o tsv</code>
+<ul>
+<li>Outputs a plain string so Bash can store it cleanly.</li>
+</ul>
+</li>
+</ul>
+<p>Now fetch the actual allow-list via REST:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">az rest --method get <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --url <span class="s2">&#34;https://management.azure.com</span><span class="si">${</span><span class="nv">ASSIGN_ID</span><span class="si">}</span><span class="s2">?api-version=2023-04-01&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --query <span class="s2">&#34;properties.parameters.listOfAllowedLocations.value&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o jsonc &gt; allowed-regions.json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cat allowed-regions.json
+</span></span></code></pre></div><p>What’s happening here:</p>
+<ul>
+<li><code>az rest ...</code>
+<ul>
+<li>Calls the Azure Policy REST API endpoint that fetches a policy assignment by ID.</li>
+</ul>
+</li>
+<li><code>--query &quot;properties.parameters.listOfAllowedLocations.value&quot;</code>
+<ul>
+<li>Extracts the actual &ldquo;allowed regions&rdquo; list from the assignment parameters (this is the authoritative list you must follow).</li>
+</ul>
+</li>
+<li><code>&gt; allowed-regions.json</code>
+<ul>
+<li>Saves it as JSON so it’s self-describing and easy to read.</li>
+</ul>
+</li>
+</ul>
+<p>Example output from my Azure for Students subscription:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[
+</span></span><span class="line"><span class="cl">  &#34;spaincentral&#34;,
+</span></span><span class="line"><span class="cl">  &#34;norwayeast&#34;,
+</span></span><span class="line"><span class="cl">  &#34;francecentral&#34;,
+</span></span><span class="line"><span class="cl">  &#34;italynorth&#34;,
+</span></span><span class="line"><span class="cl">  &#34;switzerlandnorth&#34;
+</span></span><span class="line"><span class="cl">]
+</span></span></code></pre></div><p><strong>NOTE -</strong> Some tenants use a different parameter name than <code>listOfAllowedLocations</code>. If your query returns nothing, dump <code>properties.parameters</code> and look for the actual key.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="step-3-pick-one-region-and-list-deployable-vm-sizes">Step 3: Pick one region and list deployable VM sizes</h2>
+<p>Once you pick a region from <code>allowed-regions.json</code>, you can generate a TSV file listing VM sizes plus vCPU/RAM.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">REGION</span><span class="o">=</span><span class="s2">&#34;francecentral&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SIZE_PREFIX</span><span class="o">=</span><span class="s2">&#34;Standard_B&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">printf</span> <span class="s2">&#34;SKU\tvCPUs\tMemoryGB\n&#34;</span>
+</span></span><span class="line"><span class="cl">  az vm list-skus <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --location <span class="s2">&#34;</span><span class="nv">$REGION</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --resource-type virtualMachines <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --size <span class="s2">&#34;</span><span class="nv">$SIZE_PREFIX</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --query <span class="s2">&#34;sort_by([].{sku:name,vCPUs:capabilities[?name==&#39;vCPUs&#39;].value | [0],memoryGB:capabilities[?name==&#39;MemoryGB&#39;].value | [0]}, &amp;sku)&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -o tsv
+</span></span><span class="line"><span class="cl"><span class="o">}</span> &gt; <span class="s2">&#34;vm-skus-</span><span class="si">${</span><span class="nv">REGION</span><span class="si">}</span><span class="s2">.tsv&#34;</span>
+</span></span></code></pre></div><p>Then view the start of the file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -n <span class="s1">&#39;1,15p&#39;</span> <span class="s2">&#34;vm-skus-</span><span class="si">${</span><span class="nv">REGION</span><span class="si">}</span><span class="s2">.tsv&#34;</span>
+</span></span></code></pre></div><p>What each piece does:</p>
+<ul>
+<li><code>REGION=&quot;francecentral&quot;</code>
+<ul>
+<li>This is the region you will deploy into (must be one of the allowed regions you discovered).</li>
+</ul>
+</li>
+<li><code>SIZE_PREFIX=&quot;Standard_B&quot;</code>
+<ul>
+<li>Optional: filter to a VM family prefix to keep runtime and output smaller.</li>
+</ul>
+</li>
+<li><code>printf &quot;SKU\tvCPUs\tMemoryGB\n&quot;</code>
+<ul>
+<li>Adds a header row so the info has more context (TSV has no headers by default).</li>
+</ul>
+</li>
+<li><code>az vm list-skus --location &quot;$REGION&quot; --resource-type virtualMachines</code>
+<ul>
+<li>Lists VM SKUs for a region. Microsoft explicitly recommends <code>az vm list-skus</code> as part of troubleshooting <code>SkuNotAvailable</code>.</li>
+</ul>
+</li>
+<li><code>--size &quot;$SIZE_PREFIX&quot;</code>
+<ul>
+<li>Limits the list to SKUs matching that prefix (practical when <code>list-skus</code> is slow).</li>
+</ul>
+</li>
+<li><code>--query ...</code>
+<ul>
+<li>Extracts only what we care about: SKU name, vCPU count, memory in GB, then sorts by SKU.</li>
+</ul>
+</li>
+<li><code>&gt; &quot;vm-skus-${REGION}.tsv&quot;</code>
+<ul>
+<li>Writes the output to a file you can open/search.</li>
+</ul>
+</li>
+</ul>
+<p>Example output (what you should see):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SKU     vCPUs   MemoryGB
+</span></span><span class="line"><span class="cl">Standard_B2s_v2 2       8
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><p><strong>NOTE - performance:</strong> <code>az vm list-skus</code> can be slow (even when filtering), so don’t be surprised if it takes ~1–2 minutes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="how-i-use-this-with-terraform">How I use this with Terraform</h2>
+<p>Before I touch Terraform, I pick:</p>
+<ul>
+<li><code>REGION</code> from <code>allowed-regions.json</code></li>
+<li><code>VM size</code> from <code>vm-skus-${REGION}.tsv</code></li>
+</ul>
+<p>Then in Terraform I keep region as one variable and reuse it everywhere, so I don’t accidentally deploy a single resource into a blocked region.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li>If <code>allowed-regions.json</code> is empty:
+<ul>
+<li>Dump the full parameters and search for the actual allow-list key.</li>
+</ul>
+</li>
+<li>If you still hit <code>SkuNotAvailable</code> even after selecting a size from the TSV:
+<ul>
+<li>Azure capacity can change; the documented mitigation is still “choose a different size or region,” and regenerate the TSV.</li>
+</ul>
+</li>
+<li>If the TSV looks “broken” when pasted into chat:
+<ul>
+<li>That’s tabs/wrapping; open the file directly in Vim or print it with <code>sed</code> like above.</li>
+</ul>
+</li>
+</ul>
+
+            
+        </main>
+    
+
+    
+
+
+
+    
+    
+
+
+
+</article>
+
+                
+
+
+
+
+<footer id="site-footer">
+    
+    
+    
+</footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    
+
+    
+        
+    
+
+    
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"Why I wrote this I tried deploying my first infrastructure-as-code setup on Azure and immediately hit two blockers: a region restriction (403 RequestDisallowedByAzure) and a VM size availability error (409 SkuNotAvailable). After a bunch of trial and error, I ended up with a simple workflow: first ask Azure which regions my subscription is allowed to deploy into, then list the VM sizes that are actually deployable in a region I pick.","articleSection":"Posts","dateCreated":"2025-12-14T00:00:00Z","dateModified":"2025-12-14T00:00:00Z","headline":"List Available Azure Regions and VM Sizes for Your Subscription","inLanguage":"en-us","keywords":"Azure, Azure CLI, Azure Policy","name":"List Available Azure Regions and VM Sizes for Your Subscription","timeRequired":"PT6M","url":"http://localhost:1313/posts/azure-servers/","wordCount":1085}</script>
+    
+
+
+    <noscript>JavaScript is required</noscript>
+
+    
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="/js/toc.js"></script>
+
+
+
+<script src="/js/copy-code.js"></script>
+
+
+
+
+</body>
+</html>

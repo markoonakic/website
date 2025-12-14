@@ -379,14 +379,19 @@
                         <div class="toc-content">
                             <nav id="TableOfContents">
   <ul>
-    <li><a href="#flashing-the-iso">Flashing the ISO</a></li>
-    <li><a href="#inspecting-the-disks">Inspecting the disks</a></li>
-    <li><a href="#generate-config-with-the-right-install-disk">Generate config with the right install disk</a></li>
-    <li><a href="#enable-workloads-on-the-control-plane">Enable workloads on the control plane</a></li>
-    <li><a href="#apply-the-config">Apply the config</a></li>
-    <li><a href="#point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></a></li>
-    <li><a href="#bootstrap-kubernetes">Bootstrap Kubernetes</a></li>
-    <li><a href="#fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</a></li>
+    <li><a href="#what-is-talos">What is Talos?</a></li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#flashing-the-iso">Flashing the ISO</a></li>
+        <li><a href="#inspecting-the-disks">Inspecting the disks</a></li>
+        <li><a href="#generate-config-with-the-right-install-disk">Generate config with the right install disk</a></li>
+        <li><a href="#enable-workloads-on-the-control-plane">Enable workloads on the control plane</a></li>
+        <li><a href="#apply-the-config">Apply the config</a></li>
+        <li><a href="#point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></a></li>
+        <li><a href="#bootstrap-kubernetes">Bootstrap Kubernetes</a></li>
+        <li><a href="#fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
                         </div>
@@ -417,7 +422,7 @@
 
 
 
-<h1 id="what-is-talos">What is Talos?</h1>
+<h2 id="what-is-talos">What is Talos?</h2>
 <p>Talos Linux is an open‑source Linux distribution built specifically to run Kubernetes.
 The OS is immutable, and is managed via a declarative API which is protected with mutual TLS and role‑based access control.
 It does not have an interactive shell nor does it support SSH, which greatly reduces the surface area for attacks.
@@ -438,7 +443,7 @@ The whole OS is defined as infrastructure-as-code, which makes it easily reprodu
 
 
 
-<h1 id="installation">Installation</h1>
+<h2 id="installation">Installation</h2>
 
 
 
@@ -455,7 +460,7 @@ The whole OS is defined as infrastructure-as-code, which makes it easily reprodu
 
 
 
-<h2 id="flashing-the-iso">Flashing the ISO</h2>
+<h3 id="flashing-the-iso">Flashing the ISO</h3>
 <p>The first step is grabbing the right ISO for your machine from <a href="https://github.com/siderolabs/talos/releases">here</a>. Then flash the ISO and boot into the installation medium.</p>
 <p>At this point after the OS has booted Talos will be in <strong>maintenance mode</strong>.</p>
 <p>While Talos is in maintenance mode it is important to run all <code>talosctl</code> commands with the <code>--insecure</code> flag.
@@ -477,7 +482,7 @@ Once we apply the configuration and the OS is installed properly Talos will stop
 
 
 
-<h2 id="inspecting-the-disks">Inspecting the disks</h2>
+<h3 id="inspecting-the-disks">Inspecting the disks</h3>
 <p>Ensure <code>talosctl</code> is installed on your laptop (and ideally matches the ISO version).</p>
 <p>In a terminal on your laptop (or any other computer on the same network as the Talos machine) we need to run a command that will show us the drives available to the Talos machine.</p>
 <p>We can do this using a helper variable for convenience:</p>
@@ -500,7 +505,7 @@ Once we apply the configuration and the OS is installed properly Talos will stop
 
 
 
-<h2 id="generate-config-with-the-right-install-disk">Generate config with the right install disk</h2>
+<h3 id="generate-config-with-the-right-install-disk">Generate config with the right install disk</h3>
 <p>Now once you have listed your disks you will need to select the one you want Talos to be installed to.</p>
 <p>Helper variable for convenience:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">INSTALL_DISK=/dev/sda   # Replace with disk you decided on
@@ -526,7 +531,7 @@ Once we apply the configuration and the OS is installed properly Talos will stop
 
 
 
-<h2 id="enable-workloads-on-the-control-plane">Enable workloads on the control plane</h2>
+<h3 id="enable-workloads-on-the-control-plane">Enable workloads on the control plane</h3>
 <p><strong>NOTE</strong> - This step is optional, intended for clusters with a low number of nodes.</p>
 <p>Open <code>controlplane.yaml</code> and in the <code>cluster:</code> section add:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cluster:
@@ -548,7 +553,7 @@ Once we apply the configuration and the OS is installed properly Talos will stop
 
 
 
-<h2 id="apply-the-config">Apply the config</h2>
+<h3 id="apply-the-config">Apply the config</h3>
 <p>From the directory where <code>controlplane.yaml</code> and <code>talosconfig</code> were generated, run:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl apply-config --insecure \
 </span></span><span class="line"><span class="cl">  --nodes &#34;$NODE_IP&#34; \
@@ -575,7 +580,7 @@ Wait until Talos finishes booting and displays the dashboard again.</p>
 
 
 
-<h2 id="point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></h2>
+<h3 id="point-talosctl-at-this-node-using-talosconfig">Point <code>talosctl</code> at this node using <code>talosconfig</code></h3>
 <p>Now that the node is running from the disk with the keys we generated, stop using <code>--insecure</code> and instead use the <code>talosconfig</code> file that was created using <code>gen config</code>.</p>
 <p>From the same directory, run:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl --talosconfig=./talosconfig config endpoint &#34;$NODE_IP&#34;
@@ -601,7 +606,7 @@ Wait until Talos finishes booting and displays the dashboard again.</p>
 
 
 
-<h2 id="bootstrap-kubernetes">Bootstrap Kubernetes</h2>
+<h3 id="bootstrap-kubernetes">Bootstrap Kubernetes</h3>
 <p>Now we need to bootstrap the Kubernetes control plane (etcd, API server, etcd membership).</p>
 <p>To bootstrap, run:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl bootstrap \
@@ -627,8 +632,8 @@ Running it multiple times can break etcd.</p>
 
 
 
-<h2 id="fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</h2>
-<p>Once the bootstrap succeeds, grab <code>kubeconfig</code> so you can use <code>kubectl</code>:</p>
+<h3 id="fetch-kubeconfig-and-verify-the-cluster">Fetch <code>kubeconfig</code> and verify the cluster</h3>
+<p>Once the bootstrap succeeds, grab <code>kubeconfig</code>, so you can use <code>kubectl</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">talosctl kubeconfig \
 </span></span><span class="line"><span class="cl">  --nodes &#34;$NODE_IP&#34; \
 </span></span><span class="line"><span class="cl">  --endpoints &#34;$NODE_IP&#34; \
@@ -642,7 +647,7 @@ Running it multiple times can break etcd.</p>
 <p>If you set <code>allowSchedulingOnControlPlanes:true</code>, it will be scheduled for workloads.</p>
 <p><strong>Congratulations!!!</strong></p>
 <p>At this point you should have your Talos cluster up and running!</p>
-<p>If you are currently setting up your homelab, i now recommend you going with a <strong>GitOps</strong> deployment strategy.</p>
+<p>If you are currently setting up your homelab, I now recommend you going with a <strong>GitOps</strong> deployment strategy.</p>
 <p>The two main tools for this are <strong>Flux CD</strong> and <strong>Argo CD</strong>.</p>
 <p>For a simple enough homelab I recommend going with <strong>Flux CD</strong>.
 It is lightweight and similar to vanilla Kubernetes.</p>

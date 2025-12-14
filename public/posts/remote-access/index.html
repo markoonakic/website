@@ -64,12 +64,12 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
     
-        <title>Remote Access Architecture for my Kubernetes Cluster · Posts · Marko Nakić</title>
+        <title>Remote Access Architecture of My Kubernetes Homelab · Posts · Marko Nakić</title>
     
 
     <meta property="og:url" content="http://localhost:1313/posts/remote-access/">
   <meta property="og:site_name" content="Marko Nakić">
-  <meta property="og:title" content="Remote Access Architecture for my Kubernetes Cluster">
+  <meta property="og:title" content="Remote Access Architecture of My Kubernetes Homelab">
   <meta property="og:description" content="Why configure remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to your homelab is an internet connection. So you take some machines, place them somewhere physically in the world, configure your choice of software on it, and then you can go anywhere knowing you’re just a click away from accessing those same machines from a device of your choosing.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
@@ -82,7 +82,7 @@
 
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Remote Access Architecture for my Kubernetes Cluster">
+  <meta name="twitter:title" content="Remote Access Architecture of My Kubernetes Homelab">
   <meta name="twitter:description" content="Why configure remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to your homelab is an internet connection. So you take some machines, place them somewhere physically in the world, configure your choice of software on it, and then you can go anywhere knowing you’re just a click away from accessing those same machines from a device of your choosing.">
 
 
@@ -300,7 +300,7 @@
         
             <div class="d-flex align-items-center justify-content-center gap-3 mb-4" id="page-title-container">
                 
-                    <h1 class="fw-bold mb-0" id="page-title" >Remote Access Architecture for my Kubernetes Cluster</h1>
+                    <h1 class="fw-bold mb-0" id="page-title" >Remote Access Architecture of My Kubernetes Homelab</h1>
                 
                 
             </div>
@@ -381,7 +381,7 @@
   <ul>
     <li><a href="#why-configure-remote-homelab-access">Why configure remote homelab access?</a></li>
     <li><a href="#my-experience-with-remotely-accessing-my-homelab">My experience with remotely accessing my homelab</a></li>
-    <li><a href="#mappping-out-the-way-i-would-implement-headscale">Mappping out the way I would implement Headscale</a></li>
+    <li><a href="#mapping-out-how-headscale-should-be-implemented">Mapping out how Headscale should be implemented</a></li>
     <li><a href="#the-architecture-of-my-current-setup">The architecture of my current setup</a></li>
     <li><a href="#how-vpn-access-works">How VPN access works</a></li>
     <li><a href="#the-role-of-derp">The role of DERP</a></li>
@@ -488,7 +488,7 @@ That&rsquo;s when I decided that was the solution I would go with.</p>
 
 
 
-<h2 id="mappping-out-the-way-i-would-implement-headscale">Mappping out the way I would implement Headscale</h2>
+<h2 id="mapping-out-how-headscale-should-be-implemented">Mapping out how Headscale should be implemented</h2>
 <p>At first, I was oblivious to the amount of layers and complications the Talos + Kubernetes setup would bring.</p>
 <p>I knew I would need an ingress controller, for that I had already decided I would use Traefik.</p>
 <p>Then I realized that I can&rsquo;t just forward traffic from my router to a single machines IP address, since now I had a multi node cluster, and I couldn&rsquo;t know which node Headscale or any other service would be running on.</p>
@@ -756,7 +756,7 @@ All my services have proper HTTPS certificates, nice domain names, and everythin
     
 
     
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"Why configure remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to your homelab is an internet connection. So you take some machines, place them somewhere physically in the world, configure your choice of software on it, and then you can go anywhere knowing you’re just a click away from accessing those same machines from a device of your choosing.","articleSection":"Posts","dateCreated":"2025-12-07T00:00:00Z","dateModified":"2025-12-07T00:00:00Z","headline":"Remote Access Architecture for my Kubernetes Cluster","inLanguage":"en-us","keywords":"Homelab, Kubernetes, Remote Access","name":"Remote Access Architecture for my Kubernetes Cluster","timeRequired":"PT9M","url":"http://localhost:1313/posts/remote-access/","wordCount":1727}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","abstract":"Why configure remote homelab access? I think the concept of remotely accessing my homelab is really cool. Think about it - you can be anywhere in the world, and all you would need to connect to your homelab is an internet connection. So you take some machines, place them somewhere physically in the world, configure your choice of software on it, and then you can go anywhere knowing you’re just a click away from accessing those same machines from a device of your choosing.","articleSection":"Posts","dateCreated":"2025-12-07T00:00:00Z","dateModified":"2025-12-07T00:00:00Z","headline":"Remote Access Architecture of My Kubernetes Homelab","inLanguage":"en-us","keywords":"Homelab, Kubernetes, Remote Access","name":"Remote Access Architecture of My Kubernetes Homelab","timeRequired":"PT9M","url":"http://localhost:1313/posts/remote-access/","wordCount":1726}</script>
     
 
 

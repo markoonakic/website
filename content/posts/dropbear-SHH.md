@@ -1,7 +1,7 @@
 +++
 date = '2025-11-10'
 draft = false
-title = 'Remote decryption using Dropbear SSH'
+title = 'Remote Secryption Using Dropbear SSH'
 tags = ['Linux', 'Encryption', 'Remote Access']
 preview_summary = "Guide on how to remotely decrypt machine using Dropbear SSH"
 +++

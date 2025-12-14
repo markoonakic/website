@@ -1,22 +1,18 @@
 [
   {
-    "title": "Homelab Remote Access Architecture",
-    "url": "/posts/homelab-remote-access-architecture/"
+    "title": "List Available Azure Regions and VM Sizes for Your Subscription",
+    "url": "/posts/azure-servers/"
   },
   {
-    "title": "Remote Access Architecture for my Kubernetes Cluster",
+    "title": "Remote Access Architecture of My Kubernetes Homelab",
     "url": "/posts/remote-access/"
-  },
-  {
-    "title": "Test: Mermaid + Code Highlighting",
-    "url": "/posts/test-mermaid-and-code/"
   },
   {
     "title": "Installing Talos Linux",
     "url": "/posts/talos-install/"
   },
   {
-    "title": "Remote decryption using Dropbear SSH",
+    "title": "Remote Secryption Using Dropbear SSH",
     "url": "/posts/dropbear-shh/"
   }]
 
