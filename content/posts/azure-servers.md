@@ -194,6 +194,6 @@ Then in Terraform I keep region as one variable and reuse it everywhere, so I do
 - If `allowed-regions.json` is empty:
   - Dump the full parameters and search for the actual allow-list key.
 - If you still hit `SkuNotAvailable` even after selecting a size from the TSV:
-  - Azure capacity can change; the documented mitigation is still “choose a different size or region,” and regenerate the TSV.
-- If the TSV looks “broken” when pasted into chat:
-  - That’s tabs/wrapping; open the file directly in Vim or print it with `sed` like above.
+  - Azure capacity can change, the documented mitigation is still "choose a different size or region," and regenerate the TSV.
+- If the TSV looks "broken" when pasted into chat:
+  - That’s tabs/wrapping. Open the file directly in Vim or print it with `sed` like above.
