@@ -29,7 +29,7 @@ To fetch that allow-list reliably, I query the policy assignment by its resource
 
 This post is about preventing both by discovering "allowed regions" and "deployable VM sizes" _before_ you run `terraform apply`.
 
-## What "SKU" means (in plain terms)
+## What "SKU" means
 
 A VM "SKU" is basically the VM size name you pick when creating a VM, like `Standard_B2s_v2`.
 That string corresponds to a machine shape (vCPUs + memory, plus other capabilities), and Azure can restrict it per region and per subscription, which is why just because it exists doesn’t always mean you can deploy it there.
