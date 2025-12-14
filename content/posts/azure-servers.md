@@ -3,7 +3,7 @@ date = '2025-12-14'
 draft = false
 title = 'List Available Azure Regions and VM Sizes for Your Subscription'
 tags = ['Azure', 'Azure CLI', 'Azure Policy']
-preview_summary = "Bash commands to list the Azure regions your subscription allows and the VM sizes you can actually deploy there"
+preview_summary = "Commands to list the Azure regions your subscription allows and the VM sizes deployable there"
 +++
 
 ## Why I wrote this
